@@ -1,0 +1,27 @@
+<template name="FileUpload">
+	<div class="file-upload">
+		<div class="innerMain">
+			<h3>File Upload</h3>
+			<p>File size are limited to <storng>10MB</storng>, but there is no limitation on the type of the file</p>
+			<form class="add-file-form" action="add-file-form">
+				<div class="file-field input-field left-item">
+					<div class="btn">
+						<span>File</span>
+						<input id="uploadedFile" type="file">
+					</div>
+					<div class="file-path-wrapper">
+						<input id="file-path-input" class="file-path validate" type="text" placeholder="Upload PDF or PPTP">
+					</div>
+				</div>
+				<div class="input-field right-item">
+					<input id="fileName" name="fileName" type="text" class="validate">
+					<label id="fileName-label" for="fileName">File Name (Optional)</label>
+				</div>
+				<div class="row button-row">
+					<button class="waves-effect waves-light btn-flat" type="button" id="confirm-cancel">Cancel</button>
+					<button class="waves-effect waves-light btn-flat" type="submit">Upload</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</template>

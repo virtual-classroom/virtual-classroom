@@ -1,0 +1,15 @@
+### MeteorJS ###
+# default meteor build and local packages
+.meteor/local
+
+# meteor settings file
+settings.json
+
+# meteor build output files
+*.tar.gz
+
+# general swp files from vim
+*.swp
+
+# macOS
+*.DS_Store

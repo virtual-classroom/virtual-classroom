@@ -1,0 +1,73 @@
+<template name="Course">
+	<div class="main">
+		<div class="innerMain course">
+			{{#if course}}
+				{{#each course}}
+					<div class="flex-container course-title-container">
+						<h3 class="left-item">{{code}} {{title}}</h3>
+						{{#if userIsInstructorOrAdmin}}
+							<div class="right-item">
+								<a id="class-size-tooltip" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Class Size">
+									<img src="/icons/people.svg">
+									<span>{{numberOfEnrolledStudent code}}</span>
+								</a>
+							</div>
+						{{/if}}
+					</div>
+					
+					{{#if userIsInCourse code}}
+						{{#if studentIsEnrolledIn code}}
+							<strong>You've enrolled in this course</strong>
+						{{/if}}
+						{{#if courseIsOwnBy code}}
+							<strong>You're the instructor of this course</strong>
+
+							<div class="flex-container">
+								<h3>Lecture Sections</h3>
+								<button data-target="create-lecture-modal" id="create-lecture-trigger" class="waves-effect waves-light btn" type="button">Create Lecture</button>
+							</div>
+							<div id="create-lecture-modal" class="modal">
+								<div class="modal-content">
+									<h3>Create Lecture</h3>
+									<form class="create-lecture-form">
+										<div class="input-field">
+											<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
+											<label id="lectureName-label" for="lectureName">Lecture Title</label>
+										</div>
+										<div class="row button-row">
+											<button class="waves-effect waves-light btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+											<button class="waves-effect waves-light btn-flat" type="submit">Create</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							
+						{{/if}}
+						{{#if lectureAvailable}}
+							<div class="collection">
+								{{#each lectures}}
+									{{#with get_lecture this}}
+										<a href='/course/{{courseCode}}/{{lectureTitle}}' class="collection-item">
+											<div class="flex-container">
+												<div class="left-item">{{lectureTitle}}</div>
+												<div class="right-item">{{prettyDate createdAt}}</div>
+											</div>
+										</a>
+									{{/with}}
+								{{/each}}
+							</div>
+						{{else}}
+							<p><strong>No lecture available yet. Please create a new lecture</strong></p>
+						{{/if}}
+					{{else}}
+						<p>You haven't enroll in this course yet.</p>
+					{{/if}}
+					<strong>Instructor: {{#with course_owner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
+					<p>{{description}}</p>
+				{{/each}}
+			{{else}}
+				{{> NotFound}}
+			{{/if}}
+		</div>
+	</div>
+</template>

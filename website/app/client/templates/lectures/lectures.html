@@ -1,0 +1,93 @@
+<template name="Lectures">
+	<div class="main">
+		<div class="innerMain lectures">
+			{{#if lecture}}
+				{{#with lecture}}
+					<div class="row flex-container title-container">
+						<div class="flex-container title-sub-container">
+							{{#if userIsInstructor}}
+								<a id="lecture-settings-tooltip" class="tooltipped" data-position="top" data-delay="1000" data-tooltip="Lecture Settings">
+									<button data-target="lecture-settings-modal" id="lecture-settings-trigger" class="waves-effect waves-light btn-flat" type="button"><img src="/icons/adjust.svg"></button>
+								</a>
+								<div id="lecture-settings-modal" class="modal">
+									<div class="modal-content">
+										{{> LectureSettings}}
+									</div>
+								</div>
+							{{/if}}
+							<h3>{{courseCode}} {{lectureTitle}}</h3>
+						</div>
+						<div class="switch toggle-lecture-active-container">
+							{{#if lecIsActive lecture._id}}
+								<a id="lecture-active-tooltip" class="tooltipped" data-position="top" data-delay="50" data-tooltip="On going lecture! Focus!">
+									<span class="active-blink">
+										<img src="/icons/mic.svg">
+									</span>
+								</a>
+							{{else}}
+								<span>Offline</span>
+							{{/if}}
+							{{#if userIsInstructor}}
+							<label class="toggle-lecture-active">
+								Off
+								<input type="checkbox" checked="{{#if isActive}}true{{/if}}">
+								<span class="lever"></span>
+								On
+							</label>
+							{{/if}}
+						</div>
+					</div>
+					<strong>Lecture: {{lecture.lecture}}  {{prettyDate createdAt}}</strong>
+					{{#if userIsInstructorOrAdmin}}
+					<div class="row lecture-stats">
+						<div class="chip">
+							<img src="/icons/people.svg">
+							<span>{{numberOfOnlineStudents}}</span> online
+						</div>
+						<div class="chip">
+							<img src="/icons/sleep.svg">
+							<span>{{lecture.breakCount}}</span> want break
+						</div>
+					</div>
+					{{/if}}
+					{{#if userIsInCourse courseCode}}
+						<div class="row">
+							{{> Graph}}
+						</div>
+						<div class="lecture-files-container flex-container">
+							<h4>Lecture Files</h4>
+							{{#if userIsInstructorOrAdmin}}
+								<button data-target="lecture-file-upload-modal" id="lecture-file-upload-trigger" class="waves-effect waves-light btn" type="button">Upload Files</button>
+								<div id="lecture-file-upload-modal" class="modal">
+									<div class="modal-content">
+										{{> FileUpload}}
+									</div>
+								</div>
+							{{/if}}
+						</div>
+						{{#if hasLectureFiles}}
+							<div class="collection">
+								{{#each lectureFiles}}
+									<a href="{{this.url}}" class="collection-item" target="_blank">
+										<div class="flex-container">
+											<span class="left-item">{{filename}}</span>
+											<span class="right-item">{{prettyDate uploadedAt}}</span>
+										</div>
+									</a>
+								{{/each}}
+							</div>
+						{{else}}
+							{{#if userIsInstructor}}
+								<p>No files found for this lecture. Please upload any lecture related files so that students can see and download them.</p>
+							{{else}}
+								<p>No files found for this lecture.</p>
+							{{/if}}
+						{{/if}}
+					{{/if}}
+				{{/with}}
+			{{else}}
+				{{> NotFound}}
+			{{/if}}
+        </div>
+    </div>    
+</template>

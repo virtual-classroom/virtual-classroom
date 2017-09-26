@@ -1,0 +1,61 @@
+/*****************************************************************************/
+/* Lectures: Style */
+/*****************************************************************************/
+.lectures {
+	.title-container {
+		.title-sub-container {
+			flex:1;
+			h3 {
+				flex-grow:1;
+				margin:0;
+				display:inline-block;
+			}
+			#lecture-settings-trigger {
+				width:35px;
+				height:35px;
+				padding: 0 0.5em 0 0;
+				vertical-align: bottom;
+				cursor:pointer;
+				img {
+					width:100%;
+					height:100%;
+					vertical-align: inherit;
+					-webkit-transition: all 200ms ease;
+					transition: all 200ms ease;
+					&:hover {
+						-webkit-transform: scale(1.2);
+						-ms-transform: scale(1.2);
+						transform: scale(1.2);
+					}
+				}
+			}
+		}
+		
+		.toggle-lecture-active-container {
+			text-align: right;
+			img {
+				width:25px;
+				height:25px;
+				vertical-align: sub;
+			}
+			.toggle-lecture-active {
+				display:inline-block;
+				vertical-align: text-bottom;
+			}
+		}
+	}
+	.lecture-stats {
+		.chip {
+			span {
+				font-weight:bold;
+				font-size:1.8em;
+			}
+			img {
+				border-radius:0 0 50% 50%;
+			}
+		}
+	}
+	.lecture-files-container{
+		margin-top:2em;
+	}
+}

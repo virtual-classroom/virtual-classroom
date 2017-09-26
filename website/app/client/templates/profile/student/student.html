@@ -1,0 +1,53 @@
+<template name="Student">
+	<div class="student">
+		{{#if enrolledCourses}}
+			<h3>Enrolled Courses</h3>
+			{{#each enrolledCourses}}
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title">
+							{{title}} {{code}}
+						</div>
+						<strong>Instructor: {{#with course_owner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
+						<p>{{description}}</p>
+					</div>
+					<div class="card-action">
+						<a href="/course/{{code}}">Course Page</a>
+					</div>
+				</div>
+			{{/each}}
+		{{/if}}
+		<div class="flex-container">
+			<h3>Available Courses</h3>
+			<div class="input-field course-search-container">
+				<input id="course-search" name="course-search" type="text" class="validate course-input" autocomplete="off">
+				<label id="course-search-label" for="course-search">Search</label>
+			</div>
+		</div>
+		{{#if coursesAvailable}}
+			{{#each courses}}
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title">
+							{{title}} {{code}}
+						</div>
+						<strong>Instructor: {{#with course_owner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
+						<p>{{description}}</p>
+					</div>
+					<div class="card-action">
+						<a href="/course/{{code}}">Course Page</a>
+						<button data-target="enroll-course-modal" class="btn-flat modal-trigger" id="enroll-model-trigger">Enroll</button>
+					</div>
+				</div>
+			{{/each}}
+		{{else}}
+			<p>No course are available yet</p>
+		{{/if}}
+
+		<div id="enroll-course-modal" class="modal">
+			<div class="modal-content">
+				{{> Enroll courseID=enroll_course_code}}
+			</div>
+		</div>
+	</div>
+</template>

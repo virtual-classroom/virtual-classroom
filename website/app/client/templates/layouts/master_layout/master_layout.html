@@ -1,0 +1,46 @@
+<template name="MasterLayout">
+	<ul id="dropdown-menu" class="dropdown-content">
+		{{#unless route_is '/profile'}}
+			<li><a href="/profile"><img src="/icons/profile.svg">Profile</a></li>
+		{{/unless}}
+		{{#unless route_is '/profile/settings'}}
+		<li><a href="/profile/settings"><img src="/icons/setting.svg">Settings</a></li>
+		{{/unless}}
+		<li><a href="#" id="logout"><img src="/icons/unlock.svg" class="menu-icon">Logout</a></li>
+	</ul>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="/" class="brand-logo"><img class="logo" src="/icons/cardboard.png"></a>
+			<div class="breadcrumb-container">
+				{{#if onCoursePage}}
+					<a href="/course/{{onCoursePage}}" class="breadcrumb">{{onCoursePage}}</a>
+				{{/if}}
+				{{#if onLecturePage}}
+					<a href="/course/{{onCoursePage}}/{{onLecturePage}}" class="breadcrumb">{{onLecturePage}}</a>
+				{{/if}}
+			</div>
+			<ul id="nav-mobile" class="right">
+				{{#if currentUser}}
+					<li><a id="dropdown-button" class="dropdown-button" href="" data-activates="dropdown-menu" data-beloworigin="true" data-alignment="right"><img src="/icons/setting.svg" class="spin"></a></li>
+				{{else}}
+					<li><a class="modal-trigger" href="#" id="login-model-trigger">Login</a></li>
+					<li><a class="modal-trigger" href="#" id="register-model-trigger">Register</a></li>
+				{{/if}}
+			</ul>
+		</div>
+	</nav>
+	<div id="login-modal" class="modal">
+		<div class="modal-content">
+			{{> Login}}
+		</div>
+	</div>
+	<div id="register-modal" class="modal">
+		<div class="modal-content">
+			{{> Register}}
+		</div>
+	</div>
+	<div class="master-main">
+	{{> yield}}
+	</div>
+	{{> Footer}}
+</template>
