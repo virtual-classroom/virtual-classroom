@@ -1,0 +1,27 @@
+/*****************************************************************************/
+/* Profile: Style */
+/*****************************************************************************/
+.profile {
+	.welcome-message {
+		.left-item {
+			flex:1;
+			margin:0;
+		}
+		.right-item {
+			img {
+				width:20px;
+				height:20px;
+			}
+			span {
+				color:initial;
+				font-size:1.2em;
+				margin-left: -5px;
+			}
+		}
+	}
+	.course-search-container {
+		@media only screen and (min-width:600px) {
+			min-width:250px;
+		}
+	}
+}

@@ -1,0 +1,40 @@
+<template name="Graph">
+	<div class="graph">
+		{{#if userIsInstructorOrAdmin}}
+			{{#if graphHasDataOrActive}}
+				<h3 class="graphTitle">Rate of Confusion</h3>
+				<div id="chart">
+					<svg style="height:400px;width:700px"/>
+				</div>
+				<div class="flex-container graph-control-container">
+					<button id="resetDataButton" class="waves-effect waves-light btn-flat left-item">Reset Data</button>
+					<div class="flex-container breakCountContainer right-item">
+						<button id="resetBreakButton" class="waves-effect waves-light btn-flat">Break</button>
+					</div>
+				</div>
+			{{/if}}
+		{{/if}}
+		{{#if userIsStudent}}
+			{{#if lecIsActive lecture._id}}
+				<p>Press this button and the instructor will see you don't understand.
+					<small>Please note, you can only press this button every 30 seconds.</small></p>
+				<div id="confusedWrap">
+					<button id="confusedButton" class="waves-effect waves-light btn-large {{#if justClicked}}disabled{{/if}}">
+						{{#if justClicked}}
+							{{timeLeft}} sec
+						{{else}}
+							<img src="/icons/stop.png"> Confused!
+						{{/if}}
+					</button>
+					<button id="breakButton" class="waves-effect waves-light btn-large {{#if hasRequested}}disabled{{/if}}">
+						{{#if hasRequested}}
+							Break Requested
+						{{else}}
+							<img src="/icons/sleep.svg"> Break!
+						{{/if}}
+					</button>
+				</div>
+			{{/if}}
+		{{/if}}
+	</div>
+</template>

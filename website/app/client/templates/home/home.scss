@@ -1,0 +1,30 @@
+/*****************************************************************************/
+/* Home: Style */
+/*****************************************************************************/
+.home {
+	.parallax-container {
+		.title {
+			color:#fff;
+			font-weight: 600;
+			text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+			top: 50%;
+			margin:0 auto;
+		}
+		.parallax {
+			background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+			img {
+				opacity: 0.6;
+			}
+		}
+	}
+	.welcome {
+		line-height:2;
+		font-size:1.1em;
+	}
+	.landing {
+		margin-top: 2em;
+		p {
+			margin:0;
+		}
+	}
+}

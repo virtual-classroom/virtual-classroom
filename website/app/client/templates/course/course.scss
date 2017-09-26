@@ -1,0 +1,22 @@
+/*****************************************************************************/
+/* Course: Style */
+/*****************************************************************************/
+.course {
+	.course-title-container {
+		.left-item {
+			flex:1;
+			margin:0;
+		}
+		.right-item {
+			img {
+				width:20px;
+				height:20px;
+			}
+			span {
+				color:initial;
+				font-size:1.2em;
+				margin-left: -5px;
+			}
+		}
+	}
+}

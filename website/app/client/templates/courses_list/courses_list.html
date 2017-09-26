@@ -1,0 +1,21 @@
+<template name="CoursesList">
+	<div class="main courses-list">
+		<div class="innerMain">
+			<h3>Currently Offering Courses</h3>
+			{{#each courses}}
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title">
+							{{title}} {{code}}
+						</div>
+						<strong>Instructor: {{#with course_owner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
+						<p>{{description}}</p>
+					</div>
+					<div class="card-action">
+						<a href="/course/{{code}}">Course Page</a>
+					</div>
+				</div>
+			{{/each}}
+		</div>
+	</div>
+</template>
