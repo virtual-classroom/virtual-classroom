@@ -82,8 +82,8 @@ Template.registerHelper('prettyDate', function(date) {
 
 Template.registerHelper('lecIsActive', function(id) {
 	// return true if this course is own by this instructor
-	lec = Lectures.findOne({'_id': id})
-	if (lec) return lec.status === 'active'
+	var lecture = Lectures.findOne({'_id': id})
+	if (lecture) return lecture.active
 })
 
 Template.registerHelper('numberOfEnrolledStudent', function(code) {

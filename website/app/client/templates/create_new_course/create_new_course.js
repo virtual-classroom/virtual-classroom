@@ -37,27 +37,20 @@ Template.CreateNewCourse.events({
 			$('#newCoursePassword-label').attr("data-error", "Unique key cannot be empty")
 			Session.set("validPassword", false)
 		} else if (Session.get("validCourseCode") && Session.get("validPassword")) {
-			// Insert a course into the collection
-			Courses.insert({
-				ownerId: Meteor.userId(),
-				instructors: [Meteor.userId()],
-				title: title,
-				code: code,
-				status: "active",
-				lectures: [],
-				description: description,
-				key: key,
-				students: [],
-				createdAt: new Date()
-			}, function(error) {
+			var courseInfo = {}
+			courseInfo.title = title
+			courseInfo.code = code.toUpperCase()
+			courseInfo.description = description
+			courseInfo.key = key
+			Meteor.call('addCourse', courseInfo, function(error, result) {
 				if (error) {
-					console.log(error.message)
+					console.log(error)
+					Materialize.toast('Error: ' + error.message, 8000)
 				} else {
-					Router.go('/')
-					console.log("Created Course " + code + " " + title + " by " + Meteor.user().username)
-					Materialize.toast('Course ' + code + 'has been created!', 4000)
+					Materialize.toast('Course ' + code + " added.", 4000)
+					Router.go('/course/' + courseInfo.code)
 				}
-			});
+			})
 		}
 	},
 	'click #cancel': function() {

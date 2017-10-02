@@ -34,7 +34,7 @@ Template.Register.events({
 					target.registerLastName.value = ""
 					target.registerEmail.value = ""
 					target.registerPassword.value = ""
-					$('#register-modal').closeModal();
+					$('#register-modal').modal('close');
 					Router.go('/profile');
 				}
 			});
@@ -71,7 +71,7 @@ Template.Register.events({
 		}
 	},
 	'click #cancel':function() {
-		$('#register-modal').closeModal();
+		$('#register-modal').modal('close');
 	}
 });
 

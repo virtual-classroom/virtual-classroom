@@ -4,7 +4,7 @@
 Template.Student.events({
 	'click #enroll-model-trigger': function() {
 		Session.set("enroll_course_code", this._id)
-		$('#enroll-course-modal').openModal()
+		$('#enroll-course-modal').modal('open')
 	}
 });
 
@@ -66,6 +66,7 @@ Template.Student.onCreated(function () {
 });
 
 Template.Student.onRendered(function () {
+	$('#enroll-course-modal').modal()
 });
 
 Template.Student.onDestroyed(function () {

@@ -3,13 +3,13 @@
 /*****************************************************************************/
 Template.Course.events({
 	'click #create-lecture-trigger': function() {
-		$('#create-lecture-modal').openModal()
+		$('#create-lecture-modal').modal('open')
 	},
 	'click #cancel-create-lecture': function() {
 		//Reset form
 		$('#lectureName').val('')
 		$('#lectureName').removeClass("invalid")
-		$('#create-lecture-modal').closeModal()
+		$('#create-lecture-modal').modal('close')
 	},
 	'submit .create-lecture-form': function(event) {
 		event.preventDefault();
@@ -29,38 +29,17 @@ Template.Course.events({
 			Session.set("validLectureSection", false)
 		} else {
 			// get course
-			var url = Router.current().params.code.toUpperCase();
-			const course = Courses.findOne({ 'code' : url});
-
-			// generate lecture id
-			id = Random.id()
-			//Create Lecture
-			Lectures.insert({
-				_id: id,
-				createdAt: new Date(),
-				courseTitle: course.title,
-				courseCode: course.code,
-				lectureTitle: title,
-				files: [],
-				threshold: 5,
-				onlineStudents:[],
-				status: 'inactive'
-			}, function(error) {
+			var courseCode = Router.current().params.code.toUpperCase();
+			Meteor.call('addLecture', title, courseCode, function(error, result) {
 				if (error) {
 					console.log(error)
+					Materialize.toast('Error: ' + error.message, 8000)
 				} else {
-					//Reset form
 					$('#lectureName').val('')
 					$('#lectureName').removeClass("invalid")
-					$('#create-lecture-modal').closeModal()
+					$('#create-lecture-modal').modal('close')
 					Materialize.toast('Lecture ' + title + ' has been created!', 4000)
 				}
-			})
-			//Add Lecture to Course
-			var updatedLectures = course.lectures
-			updatedLectures.push(id)
-			Courses.update(course._id, {
-				$set: {lectures: updatedLectures}
 			})
 		}
 	}
@@ -103,8 +82,9 @@ Template.Course.onCreated(function () {
 
 Template.Course.onRendered(function () {
 	Session.set("validLectureSection", false)
-	// initialize tooltip
+	$('#create-lecture-modal').modal()
 	$('#class-size-tooltip').tooltip({delay: 50})
+
 });
 
 Template.Course.onDestroyed(function () {
