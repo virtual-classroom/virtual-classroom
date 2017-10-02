@@ -23,6 +23,10 @@ var CoursesSchema = new SimpleSchema({
 		unique: true,
 		min: 1
 	},
+	status: {
+		type: String,
+		defaultValue: 'active',
+	},
 	description: {
 		type: String,
 		label: 'Course Description',
@@ -38,6 +42,10 @@ var CoursesSchema = new SimpleSchema({
 		label: 'List of Students',
 		defaultValue: [],
 		optional: true
+	},
+	lectures: {
+		type: [String],
+		defaultValue: []
 	},
 	createdAt: {
 		type: Date,

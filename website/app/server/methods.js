@@ -33,7 +33,7 @@ Meteor.methods({
 			var errror = false
 			// Add lecture
 			id = Lectures.insert({
-				owerId: user._id,
+				ownerId: user._id,
 				courseTitle: course.title,
 				courseCode: course.code,
 				title: lectureTitle,

@@ -43,17 +43,15 @@
 							</div>
 							
 						{{/if}}
-						{{#if lectureAvailable}}
+						{{#if lectures}}
 							<div class="collection">
 								{{#each lectures}}
-									{{#with get_lecture this}}
-										<a href='/course/{{courseCode}}/{{title}}' class="collection-item">
-											<div class="flex-container">
-												<div class="left-item">{{title}}</div>
-												<div class="right-item">{{prettyDate createdAt}}</div>
-											</div>
-										</a>
-									{{/with}}
+									<a href='/course/{{courseCode}}/{{title}}' class="collection-item">
+										<div class="flex-container">
+											<div class="left-item">{{title}}</div>
+											<div class="right-item">{{prettyDate createdAt}}</div>
+										</div>
+									</a>
 								{{/each}}
 							</div>
 						{{else}}
