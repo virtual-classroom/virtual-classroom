@@ -37,7 +37,19 @@
 							{{/if}}
 						</div>
 					</div>
-					<strong>Lecture: {{lecture.lecture}}  {{prettyDate createdAt}}</strong>
+					<strong>Lecture: {{lecture.title}}  {{prettyDate createdAt}}</strong>
+					{{#if isActive}}
+						<div class="card">
+								<div class="card-content">
+										<div class="card-title">Live Stream</div>
+										<video src="/videos/demo.mp4" autoplay loop muted></video>
+								</div>
+								<div class="card-action">
+									<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="button">Watch Stream</a>
+								</div>
+						</div>
+						
+					{{/if}}
 <!-- 					{{#if userIsInstructorOrAdmin}}
 					<div class="row lecture-stats">
 						<div class="chip">
