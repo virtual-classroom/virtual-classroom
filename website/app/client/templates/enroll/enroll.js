@@ -15,15 +15,17 @@ Template.Enroll.events({
 				$("#enrollKey").addClass("invalid")
 				$("#enrollKey-label").attr("data-error", "Key does not match.")
 			} else {
-				var temp = course.students
-				temp.push(Meteor.userId())
-				Courses.update(course._id, {
-					$set: {students: temp}
+				Meteor.call('enrollCourse', code, key, function(error, result) {
+					if (error) {
+						console.log(error)
+						Materialize.toast('Error: ' + error.message, 8000)
+					} else {
+						target.enrollKey.value = ""
+						$('#enroll-course-modal').modal('close')
+						Materialize.toast('Enrolled in ' + code, 4000)
+						Router.go('/course/' + code)
+					}
 				})
-				target.enrollKey.value = ""
-				$('#enroll-course-modal').closeModal();
-				Materialize.toast("You've successfully enrolled in " + code + "!", 4000)
-				//Router.go('/profile')
 			}
 		}
 	},
@@ -31,10 +33,7 @@ Template.Enroll.events({
 		//Clear form
 		$('#enrollKey').val('')
 		$('#enrollKey').removeClass("invalid")
-		$('#enroll-course-modal').closeModal()
-	},
-	'click #enroll-model-trigger': function() {
-		$('#enroll-modal').openModal()
+		$('#enroll-course-modal').modal('close')
 	}
 });
 

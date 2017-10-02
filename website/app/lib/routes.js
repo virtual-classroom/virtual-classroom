@@ -36,8 +36,8 @@ Router.route('course/:code', {
 });
 
 Router.route('course/:code/:lecture', {
-	name: 'lectures',
-	controller: 'LecturesController',
+	name: 'lecture',
+	controller: 'LectureController',
 	where: 'client'
 });
 

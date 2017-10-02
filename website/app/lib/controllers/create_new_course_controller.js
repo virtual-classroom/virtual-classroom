@@ -6,7 +6,8 @@ CreateNewCourseController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		Meteor.subscribe('courses')
+		this.subscribe('userData').wait()
+		this.subscribe('Courses').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
@@ -36,14 +37,11 @@ CreateNewCourseController = RouteController.extend({
 	},
 	onBeforeAction: function () {
 		// check if user is logged in and if user is instructor
-		/*
 		if (Meteor.user() && Meteor.user().profile.accountType === "instructor") {
 			this.next();
 		} else {
 			Router.go('/');
 		}
-		*/
-		this.next();
 	},
   
 	// The same thing as providing a function as the second parameter. You can

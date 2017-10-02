@@ -6,6 +6,8 @@ HomeController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
+		this.subscribe('Courses').wait()
+		this.subscribe('userData').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
@@ -28,10 +30,10 @@ HomeController = RouteController.extend({
 	// You can provide any of the hook options
 
 	onRun: function () {
-	this.next();
+		this.next();
 	},
 	onRerun: function () {
-	this.next();
+		this.next();
 	},
 	onBeforeAction: function () {
 		// if user logged in, route to profile page
@@ -51,7 +53,7 @@ HomeController = RouteController.extend({
 	//  action: 'myActionFunction'
 
 	action: function () {
-	this.render();
+		this.render();
 	},
 	onAfterAction: function () {
 	},

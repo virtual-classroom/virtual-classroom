@@ -1,4 +1,4 @@
-LecturesController = RouteController.extend({
+LectureController = RouteController.extend({
 
 	// A place to put your subscriptions
 	// this.subscribe('items');
@@ -6,6 +6,8 @@ LecturesController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
+		this.subscribe('Courses').wait()
+		this.subscribe('Lectures').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
@@ -34,8 +36,10 @@ LecturesController = RouteController.extend({
 		this.next();
 	},
 	onBeforeAction: function () {
+		var user = Meteor.user()
+		var course = Courses.findOne({code: Router.current().params.code.toUpperCase()})
 		// redirect if user is not logged in
-		if (Meteor.user()) {
+		if (user && course && (course.instructors.indexOf(user._id >= 0 || course.students.indexOf(user._id) >= 0))) {
 			this.next();
 		} else {
 			Router.go('/');

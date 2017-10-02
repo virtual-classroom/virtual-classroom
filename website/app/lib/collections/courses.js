@@ -1,10 +1,10 @@
-Courses = new Mongo.Collection("courses");
+Courses = new Mongo.Collection("Courses");
 
 // create schema for Courses
 var CoursesSchema = new SimpleSchema({
 	ownerId: {
 		type: String,
-		label: 'Ownder ID',
+		label: 'Owner ID',
 		defaultValue: this.userId
 	},
 	instructors: {
@@ -20,6 +20,7 @@ var CoursesSchema = new SimpleSchema({
 	code: {
 		type: String,
 		label: 'Course Code',
+		unique: true,
 		min: 1
 	},
 	description: {
@@ -44,46 +45,18 @@ var CoursesSchema = new SimpleSchema({
 		defaultValue: new Date()
 	}
 })
-/*
-if (Meteor.isServer) {
-	Courses.allow({
-		insert: function (userId, doc) {
-			console.log(doc)
-			return true;
-		},
 
-		update: function (userId, doc, fieldNames, modifier) {
-			console.log(doc)
-			return true;
-		},
+Courses.attachSchema(CoursesSchema)
 
-		remove: function (userId, doc) {
-			console.log(doc)
-			return true;
-		}
-	});
-
-	// only instructors are allowed to create course
-	function userIsInstructor(doc) {
-		return true
-		//return Meteor.user().profile.accountType === 'instructor'
-	}
-
-	Courses.deny({
-		insert: function (userId, doc) {
-			console.log(doc)
-			return userIsInstructor(doc)
-		},
-
-		update: function (userId, doc, fieldNames, modifier) {
-			console.log(doc)
-			return userIsInstructor(doc)
-		},
-
-		remove: function (userId, doc) {
-			console.log(doc)
-			return userIsInstructor(doc)
-		}
-	});
+if (Meteor.isClient) {
 }
-*/
+
+if (Meteor.isServer) {
+	Meteor.publish('Courses', function () {
+		return Courses.find({})
+	})
+	Courses.deny({
+		update() { return true },
+		remove() { return true }
+	})
+}

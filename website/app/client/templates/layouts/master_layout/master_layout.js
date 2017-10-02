@@ -14,11 +14,11 @@ Template.MasterLayout.helpers({
 });
 
 Template.MasterLayout.events({
-	'click #login-model-trigger': function() {
-		$('#login-modal').openModal()
+	'click #login-modal-trigger': function() {
+		$('#login-modal').modal('open');
 	},
-	'click #register-model-trigger': function() {
-		$('#register-modal').openModal()
+	'click #register-modal-trigger': function() {
+		$('#register-modal').modal('open');
 	},
 	'click #logout': function(event){
 		event.preventDefault();
@@ -28,7 +28,8 @@ Template.MasterLayout.events({
 });
 
 Template.MasterLayout.onRendered(function() {
+	$('#login-modal').modal();
+	$('#register-modal').modal();
 	// initialize dropdown menu
-	$("#dropdown-button").dropdown();
-	$("#dropdown-button").dropdown();
+	$(".dropdown-button").dropdown();
 });

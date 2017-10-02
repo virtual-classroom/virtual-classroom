@@ -1,6 +1,6 @@
-<template name="Lectures">
+<template name="Lecture">
 	<div class="main">
-		<div class="innerMain lectures">
+		<div class="innerMain lecture">
 			{{#if lecture}}
 				{{#with lecture}}
 					<div class="row flex-container title-container">
@@ -9,11 +9,11 @@
 								<a id="lecture-settings-tooltip" class="tooltipped" data-position="top" data-delay="1000" data-tooltip="Lecture Settings">
 									<button data-target="lecture-settings-modal" id="lecture-settings-trigger" class="waves-effect waves-light btn-flat" type="button"><img src="/icons/adjust.svg"></button>
 								</a>
-								<div id="lecture-settings-modal" class="modal">
+								<!-- <div id="lecture-settings-modal" class="modal">
 									<div class="modal-content">
 										{{> LectureSettings}}
 									</div>
-								</div>
+								</div> -->
 							{{/if}}
 							<h3>{{courseCode}} {{lectureTitle}}</h3>
 						</div>
@@ -38,7 +38,7 @@
 						</div>
 					</div>
 					<strong>Lecture: {{lecture.lecture}}  {{prettyDate createdAt}}</strong>
-					{{#if userIsInstructorOrAdmin}}
+<!-- 					{{#if userIsInstructorOrAdmin}}
 					<div class="row lecture-stats">
 						<div class="chip">
 							<img src="/icons/people.svg">
@@ -49,8 +49,8 @@
 							<span>{{lecture.breakCount}}</span> want break
 						</div>
 					</div>
-					{{/if}}
-					{{#if userIsInCourse courseCode}}
+					{{/if}} -->
+<!-- 					{{#if userIsInCourse courseCode}}
 						<div class="row">
 							{{> Graph}}
 						</div>
@@ -83,7 +83,7 @@
 								<p>No files found for this lecture.</p>
 							{{/if}}
 						{{/if}}
-					{{/if}}
+					{{/if}} -->
 				{{/with}}
 			{{else}}
 				{{> NotFound}}
