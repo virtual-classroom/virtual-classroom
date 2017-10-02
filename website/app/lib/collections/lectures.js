@@ -19,7 +19,7 @@ var LecturesSchema = new SimpleSchema({
 		defaultValue: []
 	},
 	active: {
-		type: String,
+		type: Boolean,
 		defaultValue: false
 	},
 	others: {

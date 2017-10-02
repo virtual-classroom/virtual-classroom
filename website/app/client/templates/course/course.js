@@ -49,10 +49,9 @@ Template.Course.events({
 /* Course: Helpers */
 /*****************************************************************************/
 Template.Course.helpers({
-	lectureAvailable: function() {
-		// return if there is any lecture created under this course
+	lectures: function() {
 		var lectures = Lectures.find({courseCode: course.code})
-		return lectures.count() > 0
+		if (lectures.count() > 0) return lectures
 	},
 	course: function() {
 		//return course
