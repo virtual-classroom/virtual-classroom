@@ -69,7 +69,6 @@ Meteor.methods({
 		var user = Meteor.user()
 		var lecture = Lectures.findOne(lectureId)
 		if (user && lecture && lecture.ownerId == user._id) {
-			console.log(lecture.active)
 			Lectures.update(lectureId, {
 				$set: {active: !lecture.active}
 			})

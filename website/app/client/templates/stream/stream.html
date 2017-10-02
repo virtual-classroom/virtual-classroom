@@ -1,0 +1,13 @@
+<template name="Stream">
+	<div class="main stream">
+		<div class="innerMain">
+			<p>Loading Lecture Stream...</p>
+			{{#aScene}}
+				{{#aAssets}}
+					<video id="video" src="/videos/demo.mp4" autoplay loop muted></video>
+				{{/aAssets}}
+				{{#aVideosphere src="#video" rotation="0 180 0"}}{{/aVideosphere}}
+			{{/aScene}}
+		</div>
+	</div>
+</template>

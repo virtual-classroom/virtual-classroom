@@ -41,9 +41,15 @@ Router.route('course/:code/:lecture', {
 	where: 'client'
 });
 
-Router.route('/profile/settings', {
+Router.route('profile/settings', {
 	name: 'settings',
 	controller: 'SettingsController',
 	where: 'client'
 });
 
+
+Router.route('course/:code/:lecture/stream', {
+  name: 'stream',
+  controller: 'StreamController',
+  where: 'client'
+});
