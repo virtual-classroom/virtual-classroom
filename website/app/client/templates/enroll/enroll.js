@@ -21,7 +21,8 @@ Template.Enroll.events({
 						Materialize.toast('Error: ' + error.message, 8000)
 					} else {
 						target.enrollKey.value = ""
-						$('#enroll-course-modal').modal('close')
+						// $('#enroll-course-modal').modal('close')
+						$('#enroll-course-modal').closeModal()
 						Materialize.toast('Enrolled in ' + code, 4000)
 						Router.go('/course/' + code)
 					}
@@ -33,7 +34,8 @@ Template.Enroll.events({
 		//Clear form
 		$('#enrollKey').val('')
 		$('#enrollKey').removeClass("invalid")
-		$('#enroll-course-modal').modal('close')
+		// $('#enroll-course-modal').modal('close')
+		$('#enroll-course-modal').closeModal()
 	}
 });
 

@@ -3,7 +3,8 @@
 /*****************************************************************************/
 Template.Course.events({
 	'click #create-lecture-trigger': function() {
-		$('#create-lecture-modal').modal('open')
+		// $('#create-lecture-modal').modal('open')
+		$('#create-lecture-modal').openModal()
 	},
 	'click #cancel-create-lecture': function() {
 		//Reset form
@@ -37,7 +38,8 @@ Template.Course.events({
 				} else {
 					$('#lectureName').val('')
 					$('#lectureName').removeClass("invalid")
-					$('#create-lecture-modal').modal('close')
+					// $('#create-lecture-modal').modal('close')
+					$('#create-lecture-modal').closeModal()
 					Materialize.toast('Lecture ' + title + ' has been created!', 4000)
 				}
 			})
@@ -81,7 +83,7 @@ Template.Course.onCreated(function () {
 
 Template.Course.onRendered(function () {
 	Session.set("validLectureSection", false)
-	$('#create-lecture-modal').modal()
+	// $('#create-lecture-modal').modal()
 	$('#class-size-tooltip').tooltip({delay: 50})
 
 });

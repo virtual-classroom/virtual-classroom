@@ -28,14 +28,16 @@ Template.Login.events({
 					// reset all input fields
 					target.loginEmail.value = ""
 					target.loginPassword.value = ""
-					$('#login-modal').modal('close');
+					// $('#login-modal').modal('close');
+					$('#login-modal').closeModal()
 					Router.go('/profile');
 				}
 			});
 		}
 	},
 	'click #cancel':function(event) {
-		$('#login-modal').modal('close');
+		// $('#login-modal').modal('close');
+		$('#login-modal').closeModal()
 	}
 });
 

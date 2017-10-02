@@ -6,7 +6,8 @@ Template.Instructor.events({
 		// store the course code and course ID in session
 		Session.set('remove_course_code', this.code)
 		Session.set('remove_course_id', this._id)
-		$('#confirm-remove-course').modal('open')
+		$('#confirm-remove-course').openModal()
+		// $('#confirm-remove-course').modal('open')
 	},
 	'click #confirm-remove': function() {
 		var code = Session.get('remove_course_code')
@@ -21,14 +22,16 @@ Template.Instructor.events({
 				if (error) {
 					console.log(error)
 				} else {
-					$('#confirm-remove-course').modal('close')
+					$('#confirm-remove-course').closeModal()
+					// $('#confirm-remove-course').modal('close')
 					Materialize.toast('Course ' + Session.get('remove_course_code') + ' has been removed', 4000)
 				}
 			})
 		}
 	},
 	'click #confirm-cancel':function() {
-		$('#confirm-remove-course').modal('close')
+		$('#confirm-remove-course').closeModal()
+		// $('#confirm-remove-course').modal('close')
 	}
 });
 
@@ -69,9 +72,8 @@ Template.Instructor.onCreated(function () {
 });
 
 Template.Instructor.onRendered(function () {
-	// initialize tooltip
 	$('#class-size-tooltip').tooltip({delay: 50})
-	$('#confirm-remove-course').modal()
+	// $('#confirm-remove-course').modal()
 });
 
 Template.Instructor.onDestroyed(function () {
