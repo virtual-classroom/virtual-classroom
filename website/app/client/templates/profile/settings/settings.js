@@ -12,6 +12,7 @@ Template.Settings.events({
 		// check if there is any changes compare to the value in db
 		if (Session.get('validFirstName') && Session.get('validLastName') && Session.get('validEmail')) {
 			if (dbFirstName != firstName || dbLastName != lastName) {
+				// $('#edit-personal-modal').modal('open')
 				$('#edit-personal-modal').openModal()
 			}
 		}
@@ -75,6 +76,7 @@ Template.Settings.events({
 			if (error) {
 				console.log(error)
 			} else {
+				// $('#edit-personal-modal').modal('close')
 				$('#edit-personal-modal').closeModal()
 				Materialize.toast('Personal information updated successfully', 4000)
 				Router.go('/profile')
@@ -83,6 +85,7 @@ Template.Settings.events({
 		
 	},
 	'click #confirm-cancel': function() {
+		// $('#edit-personal-modal').modal('close')
 		$('#edit-personal-modal').closeModal();
 	}
 });
@@ -105,6 +108,7 @@ Template.Settings.onRendered(function () {
 	Session.set('validFirstName', true)
 	Session.set('validLastName', true)
 	Session.set('validEmail', true)
+	// $('#edit-personal-modal').modal()
 });
 
 Template.Settings.onDestroyed(function () {

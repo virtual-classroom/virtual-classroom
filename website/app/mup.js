@@ -13,7 +13,7 @@ module.exports = {
 
   app: {
     // TODO: change app name and path
-    name: 'VirtualClass',
+    name: 'vr',
     path: '../app',
 
     servers: {
@@ -27,7 +27,7 @@ module.exports = {
     env: {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
-      ROOT_URL: 'http://rtmp.bryanli.xyz',
+      ROOT_URL: 'http://vr.bryanli.xyz',
       MONGO_URL: 'mongodb://localhost/meteor',
     },
 
@@ -47,7 +47,8 @@ module.exports = {
 
     // Show progress bar while uploading bundle to server
     // You might need to disable it on CI servers
-    enableUploadProgressBar: true
+    enableUploadProgressBar: true,
+    deployCheckWaitTime: 240
   },
 
   mongo: {
