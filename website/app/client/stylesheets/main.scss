@@ -1,6 +1,24 @@
 /*****************************************************************************/
 /* main: Style */
 /*****************************************************************************/
+html {
+	overflow: auto;
+}
+
+body {
+	font-size:18px;
+	font-family: 'Ubuntu Mono';
+	font-weight:400;
+	letter-spacing:0.5px;
+	background-color:#f8f8f8;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    overflow: auto !important;
+}
+
 .main {
 	margin: 2em 0 3em !important;
 }
@@ -67,7 +85,7 @@ strong {
 		transition:0.2s ease all; 
 		&:after {
 			font-size:0.8em;
-			margin-top:-35px;
+			margin-top:-30px;
 		}
 		&.active {
 			font-size: 0.8em;
@@ -76,7 +94,19 @@ strong {
 			transform: translateY(-110%);
 			&:after {
 				font-size:inherit;
-				margin-top:0;
+				margin-top: -5px;
+			}
+		}
+		@media only screen and (max-width:600px) {
+			&:after {
+				font-size:0.8em;
+				margin-top:-35px;
+			}
+			&.active {
+				&:after {
+					font-size:inherit;
+					margin-top: -10px;
+				}
 			}
 		}
 	}
