@@ -79,9 +79,6 @@ var audiosSchema = new SimpleSchema({
 		type: String,
 		optional: true
 	},
-	lectureId: {
-		type: String,
-	},
 	updatedAt: {
 		type: Date,
 		optional: true
@@ -99,7 +96,7 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
 	//Attachments.allowClient()
-	Meteor.publish('audiosData', function(lectureId) {
+	Meteor.publish('Audios', function(lectureId) {
 		if (lectureId) {
 			return Audios.collection.find(lectureId: lectureId)
 		} else {
