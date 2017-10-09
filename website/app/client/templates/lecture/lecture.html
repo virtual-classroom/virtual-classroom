@@ -50,6 +50,13 @@
 						</div>
 						
 					{{/if}}
+					<a class="modal-trigger waves-effect waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger">Record</a>
+					<div id="recorder-modal" class="modal">
+						<div class="modal-content">
+							{{> Recorder}}
+						</div>
+					</div>
+
 <!-- 					{{#if userIsInstructorOrAdmin}}
 					<div class="row lecture-stats">
 						<div class="chip">

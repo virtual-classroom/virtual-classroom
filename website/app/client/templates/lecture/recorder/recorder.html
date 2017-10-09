@@ -1,0 +1,18 @@
+<template name="Recorder">
+	<div class="recorder">
+		<p>Please recorder your question</p>
+		<form class="recorder-form">
+			{{#if showPlayer}}
+				<audio id="player" controls src={{getAudioURL}}></audio>
+			{{/if}}
+
+			<button id="recorder-start" class="waves-effect waves-light btn-flat" type="button">Record</button>
+			<button id="recorder-stop" class="waves-effect waves-light btn-flat" type="button">Stop</button>
+			<button id="recorder-download" class="waves-effect waves-light btn-flat" type="button">Download</button>
+			<div class="row">
+				<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
+				<button class="waves-effect waves-light btn-flat" type="button">Submit</button>	
+			</div>
+		</form>
+	</div>
+</template>
