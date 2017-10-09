@@ -3,8 +3,6 @@
 /*****************************************************************************/
 Template.Recorder.events({
 	'click #recorder-start': function() {
-
-		// request permission to access audio stream
 		navigator.mediaDevices.getUserMedia({ audio:true, video:false}).then(function(stream) {
 			// store streaming data chunks in array
 			const chunks = [];
@@ -16,20 +14,49 @@ Template.Recorder.events({
 				chunks.push(e.data);
 				// if recorder is 'inactive' then recording has finished
 				if (recorder.state == 'inactive') {
+					const blob = new Blob(chunks, { type: 'audio/webm' });
+					blob.name = Session.get('lectureId') + '-' + Meteor.userId() + '.webm'
+					console.log(blob)
 					// convert stream data chunks to a 'webm' audio format as a blob
-					var url = URL.createObjectURL(new Blob(chunks, { type: 'audio/webm' }))
+					var url = URL.createObjectURL(blob)
 					console.log(url)
 					Session.set('url', url)
+
+					var lectureId = Session.get('lectureId')
+					var upload = Audios.insert({
+						file: blob,
+						streams: 'dynamic',
+						chunkSize: 'dynamic',
+						meta: {
+							lectureId: lectureId,
+							read: false,
+						}
+					}, false);
+
+					upload.on('end', function(error, fileObj) {
+						if (error) {
+							alert('Error during upload: ' + error.reason);
+						} else {
+							Materialize.toast('Audio uploaded', 4000)
+						}
+					});
+
+					upload.start();
 				}
 			};
 			recorder.start()
-
 			Session.set("recording", true)
 			document.getElementById("recorder-stop").addEventListener("click", function(){
 				recorder.stop()
 				Session.set("recording", 'done')
 			});
 		}).catch(console.error);
+	},
+	'click #submit': function() {
+		if (Session.get('lectureId') && Session.get('blob')) {
+			console.log(Session.get('blob'))
+			
+		}
 	},
 	'click #cancel':function(event) {
 		// $('#recorder-modal').modal('close');
@@ -58,6 +85,11 @@ Template.Recorder.onCreated(function () {
 Template.Recorder.onRendered(function () {
 	Session.set("recording", false)
 	Session.set("url", false)
+
+	var courseCode = Router.current().params.code
+	var title = Router.current().params.lecture
+	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
+	Session.set('lectureId', lecture._id)
 });
 
 Template.Recorder.onDestroyed(function () {
