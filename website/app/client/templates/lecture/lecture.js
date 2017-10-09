@@ -11,6 +11,10 @@ Template.Lecture.events({
 	},
 	'click #lecture-settings-trigger': function() {
 		$('#lecture-settings-modal').openModal()
+	},
+	'click #recorder-modal-trigger': function() {
+		// #('#recorder-modal').modal('open')
+		$('#recorder-modal').openModal()
 	}
 });
 
@@ -29,7 +33,11 @@ Template.Lecture.helpers({
 	numberOfOnlineStudents: function() {
 		// return the number of online students
 		return Lectures.findOne({_id: this._id}).onlineStudents.length
-	}
+	},
+	'click #recorder-modal-trigger': function() {
+		// $('#recorder-modal').modal('open');
+		$('#recorder-modal').openModal()
+	},
 });
 
 /*****************************************************************************/
@@ -43,32 +51,13 @@ Template.Lecture.onRendered(function () {
 	$('#lecture-active-tooltip').tooltip({delay: 50});
 	$('#lecture-settings-tooltip').tooltip({delay: 1000});
 
+	//$('#recorder-modal').modal()
+
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	Session.set('lectureId', lecture._id)
-	// if (Meteor.user()) {
-	// 	// if user is student, increment lecture online student counter 
-	// 	if (course.students.indexOf(Meteor.userId()) >= 0) {
-	// 		if (Lectures.findOne({_id:lecture._id}).onlineStudents.indexOf(Meteor.userId()) < 0) {
-	// 			Lectures.update(lecture._id, {
-	// 				$push: {onlineStudents: Meteor.userId()}
-	// 			})
-	// 		}
-	// 	}
-	// }
 });
 
 Template.Lecture.onDestroyed(function () {
-	// if (Meteor.user()) {
-	// 	// if user is student, increment lecture online student counter 
-	// 	var course = Courses.findOne({code: courseCode})
-	// 	if (course.students.indexOf(Meteor.userId()) >= 0) {
-	// 		if (Lectures.findOne({_id:lecture._id}).onlineStudents.indexOf(Meteor.userId()) >= 0) {
-	// 			Lectures.update(lecture._id, {
-	// 				$pull: {onlineStudents: Meteor.userId()}
-	// 			})
-	// 		}
-	// 	}
-	// }
 });
