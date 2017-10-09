@@ -1,16 +1,3 @@
-body {
-	font-size:18px;
-	font-family: 'Ubuntu Mono';
-	font-weight:400;
-	letter-spacing:0.5px;
-	background-color:#f8f8f8;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-}
-
 nav {
 	background-color:#2196F3;
 	.nav-wrapper {
