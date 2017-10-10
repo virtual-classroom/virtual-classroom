@@ -8,4 +8,21 @@
 	.row {
 		text-align: right;
 	}
+	#recorder-start {
+		&:hover {
+			.filled {
+				height: 80px;
+				transition: height 1s ease;
+			}
+		}
+		.filled {
+			position: absolute;
+	        bottom: 0px;
+	        left: 0px;
+	        width: 90px;
+	        height: 10px;
+	        background-color: green;
+	        transform-origin: 10px;
+		}
+	}
 }

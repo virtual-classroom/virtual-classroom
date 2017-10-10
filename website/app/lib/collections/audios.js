@@ -17,7 +17,7 @@ Audios = new FilesCollection({
 	}
 });
 
-var audiosSchema = new SimpleSchema({
+var AudiosSchema = new SimpleSchema({
 	createdAt: {
 		type: Date,
 		label: 'Uploaded time',
@@ -89,16 +89,15 @@ var audiosSchema = new SimpleSchema({
 	}
 });
 
-Audios.collection.attachSchema(audiosSchema)
+Audios.collection.attachSchema(AudiosSchema)
 
 if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	//Attachments.allowClient()
-	Meteor.publish('Audios', function(lectureId) {
-		if (lectureId) {
-			return Audios.collection.find(lectureId: lectureId)
+	Meteor.publish('Audios', function(lecture) {
+		if (lecture) {
+			return Audios.collection.find({meta: {lectureId: lecture._id}})
 		} else {
 			return Audios.collection.find()
 		}

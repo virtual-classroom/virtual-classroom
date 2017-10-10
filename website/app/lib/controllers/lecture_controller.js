@@ -8,7 +8,10 @@ LectureController = RouteController.extend({
 	subscriptions: function() {
 		this.subscribe('Courses').wait()
 		this.subscribe('Lectures').wait()
-		this.subscribe('Audios', false).wait()
+		var courseCode = Router.current().params.code
+		var title = Router.current().params.lecture
+		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
+		if (lecture) this.subscribe('Audios', false).wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

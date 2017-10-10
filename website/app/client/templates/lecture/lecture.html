@@ -56,6 +56,9 @@
 							{{> Recorder}}
 						</div>
 					</div>
+					{{#if userIsInstructorOrAdmin}}
+						{{> DisplayRecordings}}
+					{{/if}}
 
 <!-- 					{{#if userIsInstructorOrAdmin}}
 					<div class="row lecture-stats">
