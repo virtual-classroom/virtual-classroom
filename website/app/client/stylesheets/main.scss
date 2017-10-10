@@ -260,6 +260,7 @@ select {
 .switch {
 	label {
 		.lever {
+			margin: 0 5px;
 			vertical-align: sub;
 		}
 		input[type=checkbox]:checked + .lever {
@@ -292,4 +293,14 @@ select {
 video {
 	width: 100%;
 	height: auto;
+}
+
+
+.live-now {
+	color: #e62117;
+	border: 1px solid #e62117;
+	border-radius: 2px;
+	padding: 1px 5px 2px;
+	font-size: 0.9em;
+	font-weight: bold;
 }
