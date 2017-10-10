@@ -73,5 +73,24 @@ Meteor.methods({
 				$set: {active: !lecture.active}
 			})
 		}
+	},
+	'displayAudioQuestion': function(lectureId, audioId) {
+		var user = Meteor.user()
+		var lecture = Lectures.findOne(lectureId)
+		var audio = Audios.collection.findOne(audioId)
+		if (lecture && audio && user._id == audio.userId) {
+			var transcript = audio.meta.transcript
+			var confidence = audio.meta.confidence
+			var read = audio.meta.read
+			Audios.update(audioId, {
+				$set: {meta: {
+					lectureId: lectureId,
+					transcript: transcript,
+					confidence: confidence,
+					read: false,
+					display: true
+				}}
+			})
+		}
 	}
 });

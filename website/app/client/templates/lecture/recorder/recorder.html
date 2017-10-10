@@ -5,11 +5,13 @@
 			{{#if showPlayer}}
 				<audio id="player" controls src={{getAudioURL}}></audio>
 			{{/if}}
-			<button id="recorder-start" class="waves-effect waves-light btn-flat" type="button">Record</button>
-			<button id="recorder-stop" class="waves-effect waves-light btn-flat" type="button">Stop</button>
+			<button id="recorder-start" class="waves-effect waves-light btn-flat" type="button">
+				<div class="{{#if getAudioLevel}}active-blink{{/if}}"><img src="/icons/mic.svg"></div>
+			</button>
+			{{#if getAudioLevel}}<p>Audio Level: {{getAudioLevel}}</p>{{/if}}
 			<div class="row">
 				<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-				<button class="waves-effect waves-light btn-flat" type="button" id="submit">Submit</button>	
+				<button class="waves-effect waves-light btn-flat" type="button" id="submit">Submit</button>
 			</div>
 		</form>
 	</div>
