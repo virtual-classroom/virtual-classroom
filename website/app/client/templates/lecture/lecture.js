@@ -11,10 +11,6 @@ Template.Lecture.events({
 	},
 	'click #lecture-settings-trigger': function() {
 		$('#lecture-settings-modal').openModal()
-	},
-	'click #recorder-modal-trigger': function() {
-		// #('#recorder-modal').modal('open')
-		$('#recorder-modal').openModal()
 	}
 });
 
@@ -33,10 +29,6 @@ Template.Lecture.helpers({
 	numberOfOnlineStudents: function() {
 		// return the number of online students
 		return Lectures.findOne({_id: this._id}).onlineStudents.length
-	},
-	'click #recorder-modal-trigger': function() {
-		// $('#recorder-modal').modal('open');
-		$('#recorder-modal').openModal()
 	},
 	questions: function() {
 		var questions = Questions.collection.find({
@@ -57,8 +49,6 @@ Template.Lecture.onRendered(function () {
 	// initialize tooltips in this tempplate
 	$('#lecture-active-tooltip').tooltip({delay: 50});
 	$('#lecture-settings-tooltip').tooltip({delay: 1000});
-
-	//$('#recorder-modal').modal()
 
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture

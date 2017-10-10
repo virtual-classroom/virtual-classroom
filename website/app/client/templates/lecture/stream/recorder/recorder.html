@@ -6,7 +6,7 @@
 				<audio id="player" controls src={{getAudioURL}}></audio>
 			{{/if}}
 			<button id="recorder-start" class="waves-effect waves-light btn-flat" type="button">
-				<div class="{{#if getAudioLevel}}active-blink{{/if}}"><img src="/icons/mic.svg"></div>
+				<img class="{{#if getAudioLevel}}active-blink{{/if}}" src="/icons/mic.svg">
 			</button>
 			{{#if getAudioLevel}}<p>Audio Level: {{getAudioLevel}}</p>{{/if}}
 			<div class="row">

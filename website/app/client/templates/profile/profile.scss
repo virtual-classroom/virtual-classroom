@@ -20,8 +20,11 @@
 		}
 	}
 	.course-search-container {
+		margin-right:0.5em;
 		@media only screen and (min-width:600px) {
 			min-width:250px;
+			margin-left:5em;
+			margin-right: 0;
 		}
 	}
 }

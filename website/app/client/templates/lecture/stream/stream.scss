@@ -2,4 +2,17 @@
 /* Stream: Style */
 /*****************************************************************************/
 .stream {
+	#recorder-modal-trigger {
+		z-index:1000;
+		width: 50px;
+		height:50px;
+		position:absolute;
+		top:50px;
+		left: 50px;
+		padding: 0;
+		img {
+			width: 50px;
+			height:50px;
+		}
+	}
 }

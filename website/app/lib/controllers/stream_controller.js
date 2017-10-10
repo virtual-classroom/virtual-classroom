@@ -38,8 +38,11 @@ StreamController = RouteController.extend({
 	onBeforeAction: function () {
 		var user = Meteor.user()
 		var course = Courses.findOne({code: Router.current().params.code.toUpperCase()})
+		var courseCode = Router.current().params.code
+		var title = Router.current().params.lecture
+		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 		// redirect if user is not logged in
-		if (user && course && (course.instructors.indexOf(user._id >= 0 || course.students.indexOf(user._id) >= 0))) {
+		if (user && course && (course.instructors.indexOf(user._id) >= 0 || course.students.indexOf(user._id) >= 0) && lecture.active) {
 			this.next();
 		} else {
 			Router.go('/');
