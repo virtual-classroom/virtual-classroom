@@ -74,15 +74,15 @@ Meteor.methods({
 			})
 		}
 	},
-	'displayAudioQuestion': function(lectureId, audioId) {
+	'displayQuestion': function(lectureId, audioId) {
 		var user = Meteor.user()
 		var lecture = Lectures.findOne(lectureId)
-		var audio = Audios.collection.findOne(audioId)
+		var audio = Questions.collection.findOne(audioId)
 		if (lecture && audio && user._id == audio.userId) {
 			var transcript = audio.meta.transcript
 			var confidence = audio.meta.confidence
 			var read = audio.meta.read
-			Audios.update(audioId, {
+			Questions.update(audioId, {
 				$set: {meta: {
 					lectureId: lectureId,
 					transcript: transcript,

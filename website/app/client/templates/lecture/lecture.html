@@ -57,7 +57,15 @@
 						</div>
 					</div>
 					{{#if userIsInstructorOrAdmin}}
-						{{> DisplayRecordings}}
+						{{#if questions}}
+						<ul class="collection">
+							{{#each question in questions}}
+							<li class="collection-item avatar">
+								{{> DisplayRecordings question=question._id}}
+							</li>
+							{{/each}}
+						</ul>
+						{{/if}}
 					{{/if}}
 
 <!-- 					{{#if userIsInstructorOrAdmin}}
