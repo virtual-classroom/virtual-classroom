@@ -38,7 +38,7 @@ Template.Recorder.events({
 					Session.set('url', url)
 
 					var lectureId = Session.get('lectureId')
-					var upload = Audios.insert({
+					var upload = Questions.insert({
 						file: blob,
 						streams: 'dynamic',
 						chunkSize: 'dynamic',
@@ -74,7 +74,7 @@ Template.Recorder.events({
 	},
 	'click #submit': function() {
 		if (Session.get('audioId')) {
-			Meteor.call('displayAudioQuestion', Session.get('lectureId'), 
+			Meteor.call('displayQuestion', Session.get('lectureId'), 
 				Session.get('audioId'))
 			Materialize.toast('Question sent', 4000)
 			$('#recorder-modal').closeModal()

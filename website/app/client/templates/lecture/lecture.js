@@ -38,6 +38,13 @@ Template.Lecture.helpers({
 		// $('#recorder-modal').modal('open');
 		$('#recorder-modal').openModal()
 	},
+	questions: function() {
+		var questions = Questions.collection.find({
+			"meta.lectureId": Session.get("lectureId"),
+			"meta.display": true
+		})
+		if (questions.count()) return questions
+	},
 });
 
 /*****************************************************************************/
