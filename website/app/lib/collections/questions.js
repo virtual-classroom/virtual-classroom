@@ -97,7 +97,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
 	Meteor.publish('Questions', function(lectureId) {
 		if (lectureId) {
-			return Questions.collection.find({"meta.lectureId": lectureId}, {sort: {createdAt: -1}})
+			return Questions.collection.find({"meta.lectureId": lectureId})
 		} else {
 			return Audios.collection.find()
 		}

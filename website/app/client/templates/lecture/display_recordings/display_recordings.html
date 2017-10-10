@@ -1,8 +1,8 @@
 <template name="DisplayRecordings">
 	{{#if question}}
 	<div class="display-recordings">
-		<img class="play-button circle" src="/icons/stop.png">
-		{{storeURL question.link}}
+		<audio id={{question._id}} src={{question.link}}></audio>
+		<i id="{{question._id}}-button" class="play-button material-icons circle">play_arrow</i>
 		<div class="title flex-container">
 			<span class="left-item">Speech recognition confidence: {{getPercentage question.meta.confidence}}</span>
 			<span class="right-item">{{livestamp question.createdAt}}</span>

@@ -3,10 +3,14 @@
 /*****************************************************************************/
 Template.DisplayRecordings.events({
 	'click .play-button': function() {
-		console.log(Session.get('url'))
-		if (Session.get('url')) {
-			recording = new Audio(Session.get('url'))
-			recording.play()
+		var player = document.getElementById(this.question)
+		var button = document.getElementById(this.question + '-button')
+		if (player.paused) {
+			player.play()
+			// button.classList.add("active-blink")
+		} else {
+			player.pause()
+			// button.classList.remove("active-blink")
 		}
 	}
 });
@@ -20,10 +24,6 @@ Template.DisplayRecordings.helpers({
 	},
 	getPercentage: function(value) {
 		return value.toFixed(2) * 100 + "%"
-	},
-	storeURL: function(url) {
-		console.log(url)
-		Session.set('url', url)
 	}
 });
 
