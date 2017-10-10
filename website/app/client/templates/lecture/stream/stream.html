@@ -4,10 +4,16 @@
 			<p>Loading Lecture Stream...</p>
 			{{#aScene}}
 				{{#aAssets}}
-					<video id="video" src="/videos/demo.mp4" autoplay loop></video>
+					<video id="video" src="/videos/demo.mp4" autoplay loop {{recorderIsActive}}></video>
 				{{/aAssets}}
 				{{#aVideosphere src="#video" rotation="0 180 0"}}{{/aVideosphere}}
 			{{/aScene}}
+			<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger" style="z-index:9999"><img src="/icons/mic.svg"></a>
+			<div id="recorder-modal" class="modal">
+				<div class="modal-content">
+					{{> Recorder}}
+				</div>
+			</div>
 		</div>
 	</div>
 </template>

@@ -9,20 +9,14 @@
 		text-align: right;
 	}
 	#recorder-start {
-		&:hover {
-			.filled {
-				height: 80px;
-				transition: height 1s ease;
-			}
-		}
-		.filled {
-			position: absolute;
-	        bottom: 0px;
-	        left: 0px;
-	        width: 90px;
-	        height: 10px;
-	        background-color: green;
-	        transform-origin: 10px;
+		display: block;
+		width: 50px;
+		height: 50px;
+		padding: 0;
+		margin: 2em auto;
+		img {
+			width: 100%;
+			height: 100%;
 		}
 	}
 }

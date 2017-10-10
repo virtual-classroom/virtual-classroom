@@ -78,11 +78,15 @@ Template.Recorder.events({
 				Session.get('audioId'))
 			Materialize.toast('Question sent', 4000)
 			$('#recorder-modal').closeModal()
+			Session.set('recorder', false)
+			Session.set('recording', 'inactive')
 		}
 	},
 	'click #cancel':function(event) {
 		// $('#recorder-modal').modal('close');
 		$('#recorder-modal').closeModal()
+		Session.set('recorder', false)
+		Session.set('recording', 'inactive')
 	}
 });
 
