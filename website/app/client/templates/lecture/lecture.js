@@ -42,7 +42,7 @@ Template.Lecture.helpers({
 		var questions = Questions.collection.find({
 			"meta.lectureId": Session.get("lectureId"),
 			"meta.display": true
-		})
+		}, {sort: {createdAt: -1}})
 		if (questions.count()) return questions
 	},
 });

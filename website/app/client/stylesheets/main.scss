@@ -33,6 +33,7 @@ body {
 .master-main {
 	flex: 1 0 auto;
 }
+
 h1 {
 	text-align: center;
 }
@@ -115,6 +116,7 @@ strong {
 		display: flex;
 	}
 }
+
 .range-field {
 	white-space: inherit !important;
 	input[type=range] {
@@ -127,6 +129,7 @@ strong {
 		background-color: #2196F3!important;
 	}
 }
+
 .dropdown-content {
 	li , span{
 		color:#2196F3 !important;
@@ -168,6 +171,7 @@ select {
 		}
 	}
 }
+
 .row {
 	margin:0;
 }
@@ -266,9 +270,11 @@ select {
 		}
 	}
 }
+
 .active-blink {
 	animation: active-blink 4s linear infinite;
 }
+
 @keyframes active-blink {  
 	50% {opacity: 0.2;}
 }
