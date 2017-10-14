@@ -47,8 +47,8 @@ Template.Lecture.onCreated(function () {
 
 Template.Lecture.onRendered(function () {
 	// initialize tooltips in this tempplate
-	//$('#lecture-active-tooltip').tooltip({delay: 50});
-	//$('#lecture-settings-tooltip').tooltip({delay: 1000});
+	// $('#lecture-active-tooltip').tooltip({delay: 50});
+	// $('#lecture-settings-tooltip').tooltip({delay: 1000});
 
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
