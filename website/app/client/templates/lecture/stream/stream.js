@@ -34,7 +34,10 @@ Template.Stream.onRendered(function () {
 
 	Session.set('recorder', false)
 	//$('#recorder-modal').modal()
+
+	document.documentElement.style.overflow = "hidden"
 });
 
 Template.Stream.onDestroyed(function () {
+	document.documentElement.style.overflow = "auto"
 });

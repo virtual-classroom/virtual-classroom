@@ -7,6 +7,9 @@
 		padding:0;
 		background-color:#2196F3;
 		.footer-copyright {
+			.container {
+				max-width: 800px;
+			}
 			a {
 				img {
 					width:25px;
