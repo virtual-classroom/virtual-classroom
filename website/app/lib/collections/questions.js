@@ -21,7 +21,9 @@ var QuestionsSchema = new SimpleSchema({
 	createdAt: {
 		type: Date,
 		label: 'Uploaded time',
-		defaultValue: new Date()
+		autoValue: function() {
+			if (!this.isSet) return new Date()
+		}
 	},
 	size: {
 		type: Number
