@@ -40,6 +40,8 @@ ejson@1.0.14
 email@1.2.3
 es5-shim@4.6.15
 flyandi:reactive-countdown@0.0.3
+force-ssl@1.0.15
+force-ssl-common@1.0.15
 fourseven:scss@4.5.4
 geojson-utils@1.0.10
 hot-code-push@1.0.4
