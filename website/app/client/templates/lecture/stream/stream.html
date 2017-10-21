@@ -24,5 +24,12 @@
 			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
 			<a-sky color="#ECECEC"></a-sky>
 		</a-scene>
+
+		<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger" style="z-index:9999"><img src="/icons/mic.svg"></a>
+		<div id="recorder-modal" class="modal">
+			<div class="modal-content">
+				{{> Recorder}}
+			</div>
+		</div>
 	</div>
 </template>
