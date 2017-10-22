@@ -60,12 +60,6 @@ Template.Profile.helpers({
 				return false
 			}
 		}
-	},
-	totalUsers: function() {
-		// return the total number of users
-		if (Meteor.user().roles == 'admin') {
-			return Meteor.users.find().count()
-		}
 	}
 });
 

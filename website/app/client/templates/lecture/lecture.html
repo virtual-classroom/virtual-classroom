@@ -18,23 +18,18 @@
 							<h3>{{courseCode}} {{lectureTitle}}</h3>
 						</div>
 						<div class="switch toggle-lecture-active-container">
-							{{#if lecIsActive lecture._id}}
+							{{#if active}}
 								<span class="live-now active-blink">LIVE NOW</span>
-							{{else}}
-								<span>Offline</span>
 							{{/if}}
 							{{#if userIsInstructor}}
-							<label class="toggle-lecture-active">
-								Off
-								<input type="checkbox" checked="{{#if isActive}}true{{/if}}">
-								<span class="lever"></span>
-								On
-							</label>
+								{{#if active}}
+								{{/if}}
+								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if isActive}}true{{/if}}"><span class="lever"></span>ON</label>
 							{{/if}}
 						</div>
 					</div>
 					<strong>Lecture: {{lecture.title}}  {{prettyDate createdAt}}</strong>
-					{{#if isActive}}
+					{{#if active}}
 						<div class="card">
 								<div class="card-content">
 										<div class="card-title">Live Stream</div>
@@ -44,7 +39,6 @@
 									<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="button">Watch Stream</a>
 								</div>
 						</div>
-						
 					{{/if}}
 					{{#if userIsInstructorOrAdmin}}
 						{{#if questions}}

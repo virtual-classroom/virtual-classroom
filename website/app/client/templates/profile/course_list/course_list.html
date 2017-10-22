@@ -1,0 +1,54 @@
+<template name="CourseList">
+	<div class="course-list">
+		<div class="flex-container">
+			{{#if userIsInstructor}}
+				<h5>Current Courses</h5>
+				<a href="/create_new_course" class="waves-effect waves-light btn">Create</a>
+			{{/if}}
+			{{#if userIsStudent}}
+				<h5>Enrolled Courses</h5>
+			{{/if}}
+		</div>
+		{{#if coursesAvailable}}
+			{{#each courses}}
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title flex-container">
+							<div class="course-titile">
+								<p>{{title}} {{code}}</p>
+								<p class="card-subtitle">Instructor: {{#with course_owner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</p>
+							</div>
+							<div class="course-size">
+								<a id="class-size-tooltip" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Class Size">
+									<img src="/icons/people.svg">
+									<span>{{numberOfEnrolledStudent code}}</span>
+								</a>
+							</div>
+						</div>
+						<p>{{description}}</p>
+					</div>
+					<div class="card-action">
+						<a class="btn-flat" href="/course/{{code}}">Visit</a>
+						{{#if courseIsOwnBy code}}
+							<button class="btn-flat" type="button" id="remove-course">Remove</button>
+						{{/if}}
+					</div>
+				</div>
+			{{/each}}
+		{{else}}
+			{{#if userIsInstructor}}<p>There are no course available yet. Please create a course</p>{{/if}}
+		{{/if}}
+		{{#if userIsInstructor}}
+			<div id="confirm-remove-course" class="modal">
+				<div class="modal-content">
+					<h3>Remove Course {{remove_course_code}}</h3>
+					<p>Are you sure you want to remove this course? This cannot be undone.</p>
+				</div>
+				<div class="modal-footer row button-row">
+					<button class="waves-effect waves-light modal-action btn-flat" type="button" id="confirm-cancel">Cancel</button>
+					<button class="waves-effect waves-light modal-action btn-flat" type="button" id="confirm-remove">Confirm</button>
+				</div>
+			</div>
+		{{/if}}
+	</div>
+</template>

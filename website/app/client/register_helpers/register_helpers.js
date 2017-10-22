@@ -80,16 +80,16 @@ Template.registerHelper('prettyDate', function(date) {
 	return prettyDate
 })
 
-Template.registerHelper('lecIsActive', function(id) {
+Template.registerHelper('lectureIsActive', function(id) {
 	// return true if this course is own by this instructor
 	var lecture = Lectures.findOne({'_id': id})
 	if (lecture) return lecture.active
 })
 
-Template.registerHelper('numberOfEnrolledStudent', function(code) {
-	// return the number of students that are currently enrolled in this course
-	var course = Courses.find({code: code})
-	return course.fetch()[0].students.length
+Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
+	// return a list of students who enrolled into courseId
+	var course = Courses.findOne({code:courseId})
+	if (course) return course.students.length
 })
 
 //****************************************************************************************************

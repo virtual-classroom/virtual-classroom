@@ -2,20 +2,9 @@
 	<div class="main profile">
 		<div class="innerMain">
 			{{#if currentUser}}
-				{{#with this_user}}
-					<div class="welcome-message flex-container">
-						<h3 class="left-item">Welcome To Virtual Class, {{profile.first_name}}</h3>
-						{{#if userIsAdmin}}
-							<div class="right-item">
-								<img src="/icons/people.svg">
-								<span>{{totalUsers}}</span>
-							</div>
-						{{/if}}
-					</div>
-				{{/with}}
-
+				{{> CourseList}}
 				{{#if userIsInstructor}}
-					{{> Instructor}}
+					<!--{{> Instructor}}-->
 				{{else}}
 					{{> Student}}
 				{{/if}}
