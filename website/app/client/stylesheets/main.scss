@@ -6,8 +6,8 @@ html {
 }
 
 body {
-	font-size:18px;
-	font-family: 'Ubuntu Mono';
+	font-size:16px;
+	font-family: 'Roboto', sans-serif;
 	font-weight:400;
 	letter-spacing:0.5px;
 	background-color:#fafafa;
@@ -40,6 +40,7 @@ h1 {
 
 h3 {
 	font-size:1.8em;
+	font-weight:500;
 }
 
 h4 {
@@ -136,6 +137,15 @@ strong {
 	}
 }
 
+.btn, .btn-large, .btn-flat {
+	font-weight: 500;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+
 .btn, .btn-large {
 	background-color:#2196F3;
 	&:hover, &:focus {
@@ -145,31 +155,15 @@ strong {
 
 .btn-flat {
 	padding: 0 0.5em;
-	&:hover, &:focus {
-		color:#2196F3;
-		background-color: transparent;
+	color: #2196F3;
+	border-radius: 2px;
+	&:focus {
+		background-color: rgba(153,153,153, 0.4);
 	}
 }
 
 select {
 	border: 1px solid #9e9e9e;
-}
-
-.modal {
-	max-height:80%;
-	max-width:600px;
-	.modal-footer {
-		padding:0 24px;
-	}
-	@media only screen and (max-width:600px) {
-		top: 0 !important;
-		width: 100%;
-		height: 100%;
-		max-height: inherit;
-		.modal-content {
-			padding: 2em 1.5em;
-		}
-	}
 }
 
 .row {
@@ -202,13 +196,48 @@ select {
 }
 
 .card {
+	.card-content {
+		padding: 24px 16px 16px;
+		.card-title {
+			padding: 0 0 12px;
+			line-height:inherit;
+			.card-subtitle {
+				line-height: normal;
+				font-size:0.6em;
+				color: grey;
+				font-weight: 400;
+			}
+		}
+	}
 	.card-action {
+		padding: 8px 10px 8px;
 		a, button {
 			color: #2196F3 !important;
 			letter-spacing:normal;
+			margin: 0;
 			&:hover {
 				color:#90caf9 !important;
 			}
+		}
+	}
+}
+
+.modal {
+	max-height:80%;
+	max-width:600px;
+	.modal-footer {
+		padding:0 24px;
+		.btn-flat {
+			float:inherit;
+		}
+	}
+	@media only screen and (max-width:600px) {
+		top: 0 !important;
+		width: 100%;
+		height: 100%;
+		max-height: inherit;
+		.modal-content {
+			padding: 2em 1.5em;
 		}
 	}
 }
@@ -260,7 +289,7 @@ select {
 .switch {
 	label {
 		.lever {
-			margin: 0 5px;
+			margin: 0 8px;
 			vertical-align: sub;
 		}
 		input[type=checkbox]:checked + .lever {
@@ -299,7 +328,7 @@ video {
 	color: #e62117;
 	border: 1px solid #e62117;
 	border-radius: 2px;
-	padding: 1px 5px 2px;
-	font-size: 0.9em;
+	padding: 1px 5px;
+	font-size: 0.8em;
 	font-weight: bold;
 }
