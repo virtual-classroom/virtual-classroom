@@ -22,11 +22,11 @@
 						{{#if userIsCourseInstructor code}}
 							<strong>You're the instructor of this course</strong>
 						{{/if}}
-						<ul class="lecture-list collection with-header">
-							<li class="collection-header flex-container">
+						<ul class="lecture-list collection with-header card">
+							<li class="collection-header flex-container flex-container-mobile">
 								<h5>Lectures</h5>
 								{{#if userIsCourseInstructor code}}
-									<button id="create-lecture-trigger" class="btn-flat" type="button"><i class="material-icons">add</i></button>
+									<button id="create-lecture-trigger" class="waves-effect waves-teal btn-flat" type="button"><i class="material-icons">add</i></button>
 								{{/if}}
 							</li>
 							{{#if lectures}}
@@ -56,8 +56,8 @@
 								</div>
 						</div>
 						<div class="modal-footer">
-							<button class="waves-effect waves-light btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
-							<button class="waves-effect waves-light btn-flat" type="submit">Create</button>
+							<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+							<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
 						</div>
 					</form>
 				</div>

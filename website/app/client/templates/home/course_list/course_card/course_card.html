@@ -20,12 +20,12 @@
 				<p>{{course.description}}</p>
 			</div>
 			<div class="card-action">
-				<a class="btn-flat" href="/course/{{course.code}}">View</a>
+				<a class="waves-effect waves-teal btn-flat modal-trigger" href="/course/{{course.code}}">View</a>
 				{{#if userIsCourseInstructor course.code}}
-					<button class="btn-flat modal-trigger remove-course-modal-trigger" type="button" id="{{course.code}}">Remove</button>
+					<button class="waves-effect waves-teal btn-flat modal-trigger remove-course-modal-trigger" type="button" id="{{course.code}}">Remove</button>
 				{{/if}}
 				{{#if studentNotInCourse course.code}}
-					<button class="btn-flat modal-trigger enroll-modal-trigger" type="button" id="{{course.code}}">Enroll</button>
+					<button class="waves-effect waves-teal btn-flat modal-trigger enroll-modal-trigger" type="button" id="{{course.code}}">Enroll</button>
 				{{/if}}
 			</div>
 		</div>

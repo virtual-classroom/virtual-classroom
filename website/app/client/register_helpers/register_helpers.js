@@ -29,13 +29,6 @@ Template.registerHelper('userIsInstructorOrAdmin', function() {
 	}
 })
 
-Template.registerHelper('this_user', function() {
-	// return user object
-	if (Meteor.user()) {
-		return Meteor.user()
-	}
-})
-
 Template.registerHelper('getCourseOwner', function(code) {
 	// return course owner with the given course code otherwise false
 	var course = Courses.findOne({'code':code})
