@@ -23,6 +23,9 @@
 				{{#if onLecturePage}}
 					<a href="/course/{{onCoursePage}}/{{onLecturePage}}" class="breadcrumb">{{onLecturePage}}</a>
 				{{/if}}
+				{{#if route_is "/settings"}}
+					<a href="/Settings" class="breadcrumb">Settings</a>
+				{{/if}}
 			</div>
 			<ul id="nav-mobile" class="right">
 				<li><a id="dropdown-button" class="dropdown-button" href="" data-activates="dropdown-menu" data-beloworigin="true" data-alignment="right"><img src="/icons/setting.svg" class="spin"></a></li>

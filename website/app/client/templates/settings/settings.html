@@ -7,7 +7,7 @@
 						<div class="card-title">
 							<p>Personal Information</p>
 						</div>
-						{{#with this_user}}
+						{{#with currentUser}}
 							<div class="flex-container">
 								<div class="input-field left-item">
 									<input id="firstName" name="firstName" type="text" value="{{profile.first_name}}">
@@ -21,8 +21,8 @@
 						{{/with}}
 					</div>
 					<div class="card-action">
-						<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-						<button class="waves-effect waves-light btn-flat" type="button" id="confirm-modal-trigger">Change</button>
+						<button class="waves-effect waves-teal btn-flat" type="button" id="cancel">Cancel</button>
+						<button class="waves-effect waves-teal btn-flat" type="button" id="confirm-modal-trigger">Change</button>
 					</div>	
 				</div>
 			</form>
@@ -31,8 +31,8 @@
 					<p>Are you sure you want to change your personal information?</p>
 				</div>
 				<div class="modal-footer">
-					<button class="waves-effect waves-light btn-flat" type="button" id="confirm-cancel">Cancel</button>
-					<button class="waves-effect waves-light btn-flat" type="submit" id="confirm-change">Confirm</button>
+					<button class="waves-effect waves-teal btn-flat" type="button" id="confirm-cancel">Cancel</button>
+					<button class="waves-effect waves-teal btn-flat" type="submit" id="confirm-change">Confirm</button>
 				</div>
 			</div>
 		</div>

@@ -2,7 +2,7 @@ nav {
 	background-color:#2196F3;
 	.nav-wrapper {
 		width:80%;
-		max-width:800px;
+		max-width: 760px;
 		margin:0 auto;
 		display:flex;
 		@media only screen and (max-width:600px) {
@@ -13,7 +13,7 @@ nav {
 			img {
 				width: 35px;
 				height: 35px;
-				vertical-align: sub;
+				vertical-align: text-top;
 			}
 			@media only screen and (max-width: 992px) {
 				left:inherit;
@@ -44,11 +44,11 @@ nav {
 			vertical-align: middle;
 		}
 	}
-	/** css for dropdown menu */
 	.dropdown-content {
-		background-color: #f9f9f9;
+		background-color: #fafafa;
 		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 		min-width:160px;
+		border-radius: 2px;
 		img {
 			width:30px;
 			height:30px;
