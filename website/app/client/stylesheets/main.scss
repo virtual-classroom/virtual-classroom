@@ -197,7 +197,7 @@ select {
 
 .card {
 	.card-content {
-		padding: 24px 16px 16px;
+		padding: 24px 24px 16px;
 		.card-title {
 			padding: 0 0 12px;
 			line-height:inherit;
@@ -210,7 +210,7 @@ select {
 		}
 	}
 	.card-action {
-		padding: 8px 10px 8px;
+		padding: 8px 24px 8px;
 		a, button {
 			color: #2196F3 !important;
 			letter-spacing:normal;

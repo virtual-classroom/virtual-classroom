@@ -2,9 +2,23 @@
 // 	return Meteor.users.find({}, {fields: {'emails': 1}});
 // });
 Meteor.publish('userData', function () {
-	return Meteor.users.find({}, {
-		fields: {'emails': 1, 'profile': 1}
-	})
+	var user = Meteor.user()
+	if (user) {
+		if (user.profile.accountType === 'instructor') {
+			return Meteor.users.find({}, {
+				fields: {
+					'profile': 1
+				}
+			})
+		} else {
+			return Meteor.users.find({}, {
+				fields: {
+					'profile.first_name': 1,
+					'profile.last_name': 1
+				}
+			})
+		}
+	}
 })
 
 Meteor.publish('courses', function() {

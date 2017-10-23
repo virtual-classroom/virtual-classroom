@@ -7,15 +7,18 @@
 			flex:1;
 			margin:0;
 		}
-		.right-item {
+		.course-size {
+			cursor:default;
 			img {
-				width:20px;
-				height:20px;
+				width:15px;
+				height:15px;
 			}
 			span {
 				color:initial;
-				font-size:1.2em;
-				margin-left: -5px;
+				font-size: 0.8em;
+				vertical-align: super;
+				margin-left:-2px;
+				color: grey;
 			}
 		}
 	}

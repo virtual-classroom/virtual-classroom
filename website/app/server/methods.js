@@ -51,10 +51,10 @@ Meteor.methods({
 			})
 		} else throw new Meteor.Error("Insert Error", "Access denied", "Access denied")
 	},
-	'enrollCourse': function(courseCode, key) {
+	'enrollCourse': function(courseId, key) {
 		var user = Meteor.user()
-		var course = Courses.findOne({'code': courseCode})
-		if (user && user.profile.accountType == 'student' && course.status == 'active') {
+		var course = Courses.findOne(courseId)
+		if (user && user.profile.accountType === 'student' && course.status === 'active') {
 			// Add user ID into existing course enrollment list
 			var temp = course.students
 			temp.push(user._id)

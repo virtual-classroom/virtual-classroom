@@ -2,11 +2,11 @@
 	<div class="main">
 		<div class="innerMain course">
 			{{#if course}}
-				{{#each course}}
+				{{#with course}}
 					<div class="flex-container course-title-container">
 						<h3 class="left-item">{{code}} {{title}}</h3>
 						{{#if userIsInstructorOrAdmin}}
-							<div class="right-item">
+							<div class="right-item course-size">
 								<a id="class-size-tooltip" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Class Size">
 									<img src="/icons/people.svg">
 									<span>{{numberOfEnrolledStudent code}}</span>
@@ -19,7 +19,7 @@
 						{{#if studentIsInCourse code}}
 							<strong>You've enrolled in this course</strong>
 						{{/if}}
-						{{#if courseIsOwnBy code}}
+						{{#if userIsCourseInstructor code}}
 							<strong>You're the instructor of this course</strong>
 
 							<div class="flex-container">
@@ -41,10 +41,9 @@
 									</form>
 								</div>
 							</div>
-							
 						{{/if}}
-						{{#if lectures}}
-							<div class="lecture-list collection">
+						<div class="lecture-list collection">
+							{{#if lectures}}
 								{{#each lectures}}
 									<a href='/course/{{courseCode}}/{{title}}' class="collection-item">
 										<div class="flex-container">
@@ -53,16 +52,16 @@
 										</div>
 									</a>
 								{{/each}}
-							</div>
-						{{else}}
-							<p><strong>No lecture available yet. Please create a new lecture</strong></p>
-						{{/if}}
+							{{else}}
+								<p class="collection-item">No lecture available yet.</p>
+							{{/if}}
+						</div>
 					{{else}}
 						<p>You haven't enroll in this course yet.</p>
 					{{/if}}
 					<strong>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
 					<p>{{description}}</p>
-				{{/each}}
+				{{/with}}
 			{{else}}
 				{{> NotFound}}
 			{{/if}}

@@ -42,7 +42,7 @@ Template.registerHelper('getCourseOwner', function(code) {
 	if (course) return Meteor.users.findOne({'_id':course.ownerId})
 })
 
-Template.registerHelper('courseIsOwnBy', function(code) {
+Template.registerHelper('userIsCourseInstructor', function(code) {
 	// return true if this course is own by this instructor
 	var course = Courses.findOne({'code': code})
 	if (course) return Meteor.userId() === course.ownerId

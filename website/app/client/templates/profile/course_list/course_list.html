@@ -17,6 +17,35 @@
 			{{#each unrelatedCourses}}
 				{{> CourseCard courseId=_id}}
 			{{/each}}
+			{{#if userIsInstructor}}
+				<div id="remove-course-modal" class="modal">
+					<div class="modal-content">
+						<h3>Remove course {{getSelectedCourseCode}}</h3>
+						<p>Are you sure you want to remove this course?</p>
+					</div>
+					<div class="modal-footer row button-row">
+						<button class="waves-effect waves-light modal-action btn-flat" type="button" id="remove-course-cancel">Cancel</button>
+						<button class="waves-effect waves-light modal-action btn-flat" type="button" id="confirm-remove">Confirm</button>
+					</div>
+				</div>
+			{{/if}}
+			{{#if userIsStudent}}
+				<div id="enroll-course-modal" class="modal">
+					<div class="modal-content">
+						<h3>Enroll course {{getSelectedCourseCode}}</h3>
+						<form id="enroll-form" class="enroll-form">
+							<div class="input-field">
+								<input id="enrollKey" name="enrollKey" type="text" class="validate" autocomplete="off">
+								<label id="enrollKey-label" for="enrollKey">Course Key</label>
+							</div>
+							<div class="modal-footer row button-row">
+								<button class="waves-effect waves-light modal-action btn-flat" id="enroll-course-cancel" type="button">Cancel</button>
+								<button class="waves-effect waves-light modal-action btn-flat" type="submit">Enroll</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			{{/if}}
 		{{else}}
 			{{#if userIsInstructor}}
 				<p>There are no course available yet. Please create a course</p>
