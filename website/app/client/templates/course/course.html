@@ -21,50 +21,50 @@
 						{{/if}}
 						{{#if userIsCourseInstructor code}}
 							<strong>You're the instructor of this course</strong>
-
-							<div class="flex-container">
-								<h3>Lecture Sections</h3>
-								<button data-target="create-lecture-modal" id="create-lecture-trigger" class="waves-effect waves-light btn" type="button">Create Lecture</button>
-							</div>
-							<div id="create-lecture-modal" class="modal">
-								<div class="modal-content">
-									<h3>Create Lecture</h3>
-									<form class="create-lecture-form">
-										<div class="input-field">
-											<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
-											<label id="lectureName-label" for="lectureName">Lecture Title</label>
-										</div>
-										<div class="row button-row">
-											<button class="waves-effect waves-light btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
-											<button class="waves-effect waves-light btn-flat" type="submit">Create</button>
-										</div>
-									</form>
-								</div>
-							</div>
 						{{/if}}
-						<div class="lecture-list collection">
+						<ul class="lecture-list collection with-header">
+							<li class="collection-header flex-container">
+								<h5>Lectures</h5>
+								{{#if userIsCourseInstructor code}}
+									<button id="create-lecture-trigger" class="btn-flat" type="button"><i class="material-icons">add</i></button>
+								{{/if}}
+							</li>
 							{{#if lectures}}
 								{{#each lectures}}
-									<a href='/course/{{courseCode}}/{{title}}' class="collection-item">
-										<div class="flex-container">
-											<div class="left-item">{{title}}  {{#if lectureIsActive _id}}<span class="live-now active-blink">LIVE NOW</span>{{/if}}</div>
-											<div class="right-item">{{prettyDate createdAt}}</div>
-										</div>
+									<a href='/course/{{courseCode}}/{{title}}' class="collection-item flex-container">
+										<div class="left-item">{{title}}  {{#if lectureIsActive _id}}<span class="live-now active-blink">LIVE NOW</span>{{/if}}</div>
+										<div class="right-item">{{prettyDate createdAt}}</div>
 									</a>
 								{{/each}}
 							{{else}}
-								<p class="collection-item">No lecture available yet.</p>
+								<li class="collection-item">No lecture available yet.</li>
 							{{/if}}
-						</div>
+						</ul>
 					{{else}}
 						<p>You haven't enroll in this course yet.</p>
 					{{/if}}
 					<strong>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
 					<p>{{description}}</p>
 				{{/with}}
+				<div id="create-lecture-modal" class="modal">
+					<form id="create-lecture-form">
+						<div class="modal-content">
+							<h3>Create Lecture</h3>
+								<div class="input-field">
+									<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
+									<label id="lectureName-label" for="lectureName">Lecture Title</label>
+								</div>
+						</div>
+						<div class="modal-footer">
+							<button class="waves-effect waves-light btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+							<button class="waves-effect waves-light btn-flat" type="submit">Create</button>
+						</div>
+					</form>
+				</div>
 			{{else}}
 				{{> NotFound}}
 			{{/if}}
+
 		</div>
 	</div>
 </template>

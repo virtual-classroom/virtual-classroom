@@ -29,7 +29,7 @@ Router.route('course/:code/:lecture', {
 	where: 'client'
 });
 
-Router.route('profile/settings', {
+Router.route('settings', {
 	name: 'settings',
 	controller: 'SettingsController',
 	where: 'client'
