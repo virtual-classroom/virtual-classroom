@@ -1,0 +1,61 @@
+<template name="CourseCard">
+	<div class="course-card">
+		{{#if course}}
+		<div class="card">
+			<div class="card-content">
+				<div class="card-title flex-container">
+					<div class="course-titile">
+						<p>{{course.title}} {{course.code}}</p>
+						<p class="card-subtitle">Instructor: {{#with getCourseOwner course.code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</p>
+					</div>
+					<div class="course-size">
+						<a id="class-size-tooltip" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Class Size">
+							<img src="/icons/people.svg">
+							<span>{{numberOfEnrolledStudent code}}</span>
+						</a>
+					</div>
+				</div>
+				<p>{{course.description}}</p>
+			</div>
+			<div class="card-action">
+				<a class="btn-flat" href="/course/{{course.code}}">Visit</a>
+				{{#if courseIsOwnBy course.code}}
+					<button class="btn-flat modal-trigger" type="button" id="remove-course-modal-trigger">Remove</button>
+				{{/if}}
+				{{#if studentNotInCourse course.code}}
+					<button class="btn-flat modal-trigger" type="button" id="enroll-modal-trigger">Enroll</button>
+				{{/if}}
+			</div>
+		</div>
+			{{#if userIsInstructor}}
+				<div id="remove-course-modal" class="modal">
+					<div class="modal-content">
+						<h3>Remove course {{getSelectedCourseCode}}</h3>
+						<p>Are you sure you want to remove this course?</p>
+					</div>
+					<div class="modal-footer row button-row">
+						<button class="waves-effect waves-light modal-action btn-flat" type="button" id="remove-course-cancel">Cancel</button>
+						<button class="waves-effect waves-light modal-action btn-flat" type="button" id="confirm-remove">Confirm</button>
+					</div>
+				</div>
+			{{/if}}
+			{{#if userIsStudent}}
+				<div id="enroll-course-modal" class="modal">
+					<div class="modal-content">
+						<h3>Enroll course {{getSelectedCourseCode}}</h3>
+						<form id="enroll-form" class="enroll-form">
+							<div class="input-field">
+								<input id="enrollKey" name="enrollKey" type="text" class="validate" autocomplete="off">
+								<label id="enrollKey-label" for="enrollKey">Course Key</label>
+							</div>
+							<div class="modal-footer row button-row">
+								<button class="waves-effect waves-light modal-action btn-flat" id="cancel" type="button">Cancel</button>
+								<button class="waves-effect waves-light modal-action btn-flat" type="submit">Enroll</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			{{/if}}
+		{{/if}}
+	</div>
+</template>

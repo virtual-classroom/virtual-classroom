@@ -332,3 +332,32 @@ video {
 	font-size: 0.8em;
 	font-weight: bold;
 }
+
+.search-bar {
+	display: flex;
+	input {
+		width: 100%;
+		display: block;
+		font-size: 0.9em;
+		height: 45px;
+		margin: 0;
+		padding: 0 45px;
+		border: none;
+		box-shadow: none !important;
+		outline: none;
+	}
+	.left {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		opacity: 0.5;
+	}
+	button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		cursor: pointer;
+		border: none;
+		background: inherit;
+	}
+}
