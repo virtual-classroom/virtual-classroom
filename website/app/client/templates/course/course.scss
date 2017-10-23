@@ -23,5 +23,14 @@
 		}
 	}
 	.lecture-list {
+		#create-lecture-trigger {
+			border-radius: 50%;
+			i {
+				font-size: 1.5em;
+			}
+		}
+		.collection-item {
+			display: flex;
+		}
 	}
 }

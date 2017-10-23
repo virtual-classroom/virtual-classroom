@@ -10,12 +10,15 @@ Template.Course.events({
 		//Reset form
 		$('#lectureName').val('')
 		$('#lectureName').removeClass("invalid")
-		$('#create-lecture-modal').modal('close')
+		//$('#create-lecture-modal').modal('close')
+		$('#create-lecture-modal').closeModal()
 	},
-	'submit .create-lecture-form': function(event) {
+	'submit #create-lecture-form': function(event) {
 		event.preventDefault();
 		target = event.target
 		var title = target.lectureName.value
+		var user = Meteor.user()
+		var course = Courses.findOne({code: Session.get('courseCode')})
 		if (title == "") {
 			$("#lectureName").removeClass("validate")
 			$("#lectureName").removeClass("valid")
@@ -28,10 +31,8 @@ Template.Course.events({
 			$("#lectureName").addClass("invalid")
 			$("#lectureName-label").attr("data-error", "This lecture already exists")
 			Session.set("validLectureSection", false)
-		} else {
-			// get course
-			var courseCode = Router.current().params.code.toUpperCase();
-			Meteor.call('addLecture', title, courseCode, function(error, result) {
+		} else if (course && course.instructors.indexOf(user._id) >= 0) {
+			Meteor.call('addLecture', title, course.code, function(error, result) {
 				if (error) {
 					console.log(error)
 					Materialize.toast('Error: ' + error.message, 8000)

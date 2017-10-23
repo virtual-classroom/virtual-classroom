@@ -1,22 +1,29 @@
 <template name="Settings">
 	<div class="main settings">
 		<div class="innerMain">
-			<h3>Personal Information</h3>
-			{{#with this_user}}
-			<form class="edit-profile row">
-				<div class="flex-container">
-					<div class="input-field left-item">
-						<input id="firstName" name="firstName" type="text" value="{{profile.first_name}}">
-						<label id="firstName-label" class="active" for="firstName">First Name</label>
+			<form class="edit-profile">
+				<div class="card">
+					<div class="card-content">
+						<div class="card-title">
+							<p>Personal Information</p>
+						</div>
+						{{#with this_user}}
+							<div class="flex-container">
+								<div class="input-field left-item">
+									<input id="firstName" name="firstName" type="text" value="{{profile.first_name}}">
+									<label id="firstName-label" class="active" for="firstName">First Name</label>
+								</div>
+								<div class="input-field right-item">
+									<input id="lastName" name="lastName" type="text" value="{{profile.last_name}}">
+									<label id="lastName-label" class="active" for="lastName">Last Name</label>
+								</div>
+							</div>
+						{{/with}}
 					</div>
-					<div class="input-field right-item">
-						<input id="lastName" name="lastName" type="text" value="{{profile.last_name}}">
-						<label id="lastName-label" class="active" for="lastName">Last Name</label>
-					</div>
-				</div>
-				<div class="row button-row">
-					<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-					<button class="waves-effect waves-light btn-flat" type="button" id="confirm-trigger">Change</button>
+					<div class="card-action">
+						<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
+						<button class="waves-effect waves-light btn-flat" type="button" id="confirm-modal-trigger">Change</button>
+					</div>	
 				</div>
 			</form>
 			<div id="edit-personal-modal" class="modal">
@@ -28,7 +35,6 @@
 					<button class="waves-effect waves-light btn-flat" type="submit" id="confirm-change">Confirm</button>
 				</div>
 			</div>
-			{{/with}}
 		</div>
 	</div>
 </template>

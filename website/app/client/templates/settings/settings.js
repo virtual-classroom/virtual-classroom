@@ -2,7 +2,7 @@
 /* Settings: Event Handlers */
 /*****************************************************************************/
 Template.Settings.events({
-	'click #confirm-trigger': function() {
+	'click #confirm-modal-trigger': function() {
 		var firstName = document.getElementById('firstName').value; 
 		var lastName = document.getElementById('lastName').value;
 		// get the currently stored user details
@@ -36,7 +36,7 @@ Template.Settings.events({
 		$('#email').addClass("valid")
 		$("#email").removeClass("invalid")
 		Session.set("validEmail", true)
-		Router.go('/profile')
+		Router.go('/')
 	},
 	'keyup #firstName': function() {
 		var input = $('#firstName').val()
@@ -79,7 +79,7 @@ Template.Settings.events({
 				// $('#edit-personal-modal').modal('close')
 				$('#edit-personal-modal').closeModal()
 				Materialize.toast('Personal information updated successfully', 4000)
-				Router.go('/profile')
+				Router.go('/')
 			}
 		})
 		

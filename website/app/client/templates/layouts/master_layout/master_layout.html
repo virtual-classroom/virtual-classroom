@@ -1,11 +1,11 @@
 <template name="MasterLayout">
 	<ul id="dropdown-menu" class="dropdown-content">
 		{{#if currentUser}}
-			{{#unless route_is '/profile'}}
-				<li><a href="/profile"><img src="/icons/profile.svg">Profile</a></li>
+			{{#unless route_is '/'}}
+				<li><a href="/"><img src="/icons/profile.svg">Home</a></li>
 			{{/unless}}
-			{{#unless route_is '/profile/settings'}}
-			<li><a href="/profile/settings"><img src="/icons/setting.svg">Settings</a></li>
+			{{#unless route_is '/settings'}}
+			<li><a href="/settings"><img src="/icons/setting.svg">Settings</a></li>
 			{{/unless}}
 			<li><a href="#" id="logout"><img src="/icons/unlock.svg" class="menu-icon">Logout</a></li>
 		{{else}}
