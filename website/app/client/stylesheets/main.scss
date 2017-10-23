@@ -169,10 +169,6 @@ select {
 .row {
 	margin:0;
 }
-.button-row {
-	margin:0;
-	text-align: right;
-}
 
 .spin {
 	cursor: pointer;
@@ -225,8 +221,12 @@ select {
 .modal {
 	max-height:80%;
 	max-width:600px;
+	h3 {
+		margin: 0;
+	}
 	.modal-footer {
 		padding:0 24px;
+		text-align: right;
 		.btn-flat {
 			float:inherit;
 		}
@@ -289,7 +289,7 @@ select {
 .switch {
 	label {
 		.lever {
-			margin: 0 8px;
+			margin: 0 10px;
 			vertical-align: sub;
 		}
 		input[type=checkbox]:checked + .lever {

@@ -11,21 +11,9 @@ Router.route('/', {
 	where: 'client'
 });
 
-Router.route('profile', {
-	name: 'profile',
-	controller: 'ProfileController',
-	where: 'client'
-});
-
 Router.route('create_new_course', {
 	name: 'createNewCourse',
 	controller: 'CreateNewCourseController',
-	where: 'client'
-});
-
-Router.route('course', {
-	name: 'coursesList',
-	controller: 'CoursesListController',
 	where: 'client'
 });
 

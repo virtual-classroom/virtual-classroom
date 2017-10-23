@@ -36,7 +36,6 @@ Template.Register.events({
 					target.registerPassword.value = ""
 					// $('#register-modal').modal('close');
 					$('#register-modal').closeModal()
-					Router.go('/profile');
 				}
 			});
 		}

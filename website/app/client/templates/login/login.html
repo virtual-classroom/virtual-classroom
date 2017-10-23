@@ -1,7 +1,7 @@
 <template name="Login">
-	<div class="login">
-		<h3>Login</h3>
-		<form class="login-form">
+	<form class="login-form">
+		<div class="login modal-content">
+			<h3>Login</h3>
 			<div class="input-field">
 				<input id="loginEmail" name="loginEmail" type="email" class="validate">
 				<label id="loginEmail-label" for="loginEmail" data-error="Invalide Email Address">Email</label>
@@ -10,10 +10,10 @@
 				<input id="loginPassword" name="loginPassword" type="password" class="validate">
 				<label id="loginPassword-label" for="loginPassword">Password</label>
 			</div>
-			<div class="row">
-				<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-				<button class="waves-effect waves-light btn-flat" type="submit">Login</button>
-			</div>
-		</form>
-	</div>
+		</div>
+		<div class="modal-footer">
+			<button class="waves-effect waves-light modal-action btn-flat" type="button" id="cancel">Cancel</button>
+			<button class="waves-effect waves-light modal-action btn-flat" type="submit">Login</button>
+		</div>
+	</form>
 </template>
