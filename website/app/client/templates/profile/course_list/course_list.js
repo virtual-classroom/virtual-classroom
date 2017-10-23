@@ -5,6 +5,65 @@ Template.CourseList.events({
 	'keyup #search': function() {
 		var input = $('#search').val()
 		Session.set("search", input)
+	},
+	'click #confirm-remove': function() {
+		var user = Meteor.user()
+		var course = Session.get('course')
+		console.log("remove course " + Session.get('course'))
+		$('#remove-course-modal').closeModal()
+		// if (user && course && (user._id === course.ownerId || (user.roles === 'admin'))) {
+		// 	Courses.update(course._id, {
+		// 		$set: {
+		// 			'status':'inactive'
+		// 		} 
+		// 	}, function(error) {
+		// 		if (error) {
+		// 			console.log(error)
+		// 		} else {
+		// 			$('#remove-course-modal').closeModal()
+		// 			// $('#confirm-remove-course').modal('close')
+		// 			Materialize.toast('Course ' + Session.get('remove_course_code') + ' has been removed', 4000)
+		// 		}
+		// 	})
+		// }
+	},
+	'click #remove-course-cancel':function() {
+		$('#remove-course-modal').closeModal()
+		// $('#confirm-remove-course').modal('close')
+	},
+	'submit #enroll-form': function(event) {
+		event.preventDefault()
+		target = event.target
+		var key = $('#enrollKey').val()
+		var course = Courses.findOne(Session.get('course'))
+		if (course && key != "") {
+			if (course.key != key) {
+				$("#enrollKey").removeClass("validate")
+				$("#enrollKey").removeClass("valid")
+				$("#enrollKey").addClass("invalid")
+				$("#enrollKey-label").attr("data-error", "Key does not match.")
+			} else {
+				Meteor.call('enrollCourse', course._id, key, function(error, result) {
+					if (error) {
+						console.log(error)
+						Materialize.toast('Error: ' + error.message, 8000)
+					} else {
+						target.enrollKey.value = ""
+						// $('#enroll-course-modal').modal('close')
+						$('#enroll-course-modal').closeModal()
+						Materialize.toast('Enrolled in ' + course.code, 4000)
+						Router.go('/course/' + course.code)
+					}
+				})
+			}
+		}
+	},
+	'click #enroll-course-cancel':function(event) {
+		//Clear form
+		$('#enrollKey').val('')
+		$('#enrollKey').removeClass("invalid")
+		// $('#enroll-course-modal').modal('close')
+		$('#enroll-course-modal').closeModal()
 	}
 });
 
@@ -54,8 +113,9 @@ Template.CourseList.helpers({
 			}
 		}
 	},
-	remove_course_code: function() {
-		return Session.get('remove_course_code')
+	getSelectedCourseCode: function() {
+		var course = Courses.findOne(Session.get('course'))
+		if (course) return course.code
 	}
 });
 

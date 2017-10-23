@@ -8,6 +8,7 @@ CourseController = RouteController.extend({
 	subscriptions: function() {
 		this.subscribe('Courses').wait()
 		this.subscribe('Lectures').wait()
+		this.subscribe('userData').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

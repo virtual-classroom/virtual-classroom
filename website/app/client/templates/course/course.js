@@ -52,22 +52,16 @@ Template.Course.events({
 /*****************************************************************************/
 Template.Course.helpers({
 	lectures: function() {
-		var lectures = Lectures.find({courseCode: course.code})
+		var lectures = Lectures.find({courseCode: Session.get('courseCode')})
 		if (lectures.count() > 0) return lectures
 	},
 	course: function() {
 		//return course
-		var courseCode = Router.current().params.code
-		if (courseCode) {
-			courseCode = courseCode.toUpperCase()
-			var course = Courses.find({
-				'code': courseCode,
-				'status': 'active'
-			})
-			if (course.count()) {
-				return course
-			}
-		}
+		var course = Courses.findOne({
+			'code': Session.get('courseCode'),
+			'status': 'active'
+		})
+		if (course) return course
 	},
 	get_lecture: function(lecture_id) {
 		var this_lecture = Lectures.findOne({_id: lecture_id});
@@ -83,6 +77,8 @@ Template.Course.onCreated(function () {
 
 Template.Course.onRendered(function () {
 	Session.set("validLectureSection", false)
+	var courseCode = Router.current().params.code
+	if (courseCode) Session.set('courseCode', courseCode.toUpperCase())
 	// $('#create-lecture-modal').modal()
 	$('#class-size-tooltip').tooltip({delay: 50})
 
