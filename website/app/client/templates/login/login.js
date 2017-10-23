@@ -30,7 +30,6 @@ Template.Login.events({
 					target.loginPassword.value = ""
 					// $('#login-modal').modal('close');
 					$('#login-modal').closeModal()
-					Router.go('/profile');
 				}
 			});
 		}

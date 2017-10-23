@@ -1,7 +1,7 @@
 <template name="Register">
-	<div class="register">
-		<h3>Register</h3>
-		<form class="register-form row">
+	<form class="register-form">
+		<div class="register modal-content">
+			<h3>Register</h3>
 			<div class="flex-container">
 				<div class="input-field left-item">
 					<input id="registerFirstName" name="registerFirstName" type="text" autocomplete="off">
@@ -13,6 +13,13 @@
 				</div>
 			</div>
 			<div class="input-field">
+				<select name="registerAccountType">
+					<option value="" disabled selected>Choose your account type</option>
+					<option value="student">Student</option>
+					<option value="instructor">Instructor</option>
+				</select>
+			</div>
+			<div class="input-field">
 				<input id="registerEmail" name="registerEmail" type="email">
 				<label id="registerEmail-label" for="registerEmail">Email</label>
 			</div>
@@ -20,17 +27,10 @@
 				<input id="registerPassword" name="registerPassword" type="password">
 				<label id="registerPassword-label" for="registerPassword">Password</label>
 			</div>
-			<div class="input-field">
-				<select name="registerAccountType">
-					<option value="" disabled selected>Choose your account type</option>
-					<option value="student">Student</option>
-					<option value="instructor">Instructor</option>
-				</select>
-			</div>
-			<div class="row">
-				<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-				<button class="waves-effect waves-light btn-flat" type="submit">Register</button>
-			</div>
-		</form>
-	</div>
+		</div>
+		<div class="modal-footer">
+			<button class="waves-effect waves-light modal-action btn-flat" type="button" id="cancel">Cancel</button>
+			<button class="waves-effect waves-light modal-action btn-flat" type="submit">Register</button>
+		</div>
+	</form>
 </template>

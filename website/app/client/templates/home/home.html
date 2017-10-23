@@ -1,15 +1,23 @@
 <template name="Home">
 	<div class="home">
-		<div class="parallax-container valign-wrapper">
-			<h1 class="title">Virtual Class</h1>
-			<div class="parallax"><img src="{{background_image}}"></div>
-		</div>
-		<div class="main">
-			<div class="innerMain">
-				<div class="welcome">
-					<p>As virtual reality (VR) becoming mature, and reasonable priced 360 cameras entering the consumer market; it is possible to visualize a workspace (classroom, meeting room, office etc.) using 360 cameras to record the space, stream through the Internet and view through a VR headset. This project explores this idea and will create a prototype by the end of the semester.</p>
+		{{#if currentUser}}
+			<div class="main">
+				<div class="innerMain">
+					{{> CourseList}}
 				</div>
 			</div>
-		</div>
+		{{else}}
+			<div class="parallax-container valign-wrapper">
+				<h1 class="title">Virtual Class</h1>
+				<div class="parallax"><img src="{{background_image}}"></div>
+			</div>
+			<div class="main">
+				<div class="innerMain">
+					<div class="welcome">
+						<p>As virtual reality (VR) becoming mature, and reasonable priced 360 cameras entering the consumer market; it is possible to visualize a workspace (classroom, meeting room, office etc.) using 360 cameras to record the space, stream through the Internet and view through a VR headset. This project explores this idea and will create a prototype by the end of the semester.</p>
+					</div>
+				</div>
+			</div>
+		{{/if}}
 	</div>
 </template>

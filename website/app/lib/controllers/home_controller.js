@@ -6,8 +6,10 @@ HomeController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		this.subscribe('Courses').wait()
-		this.subscribe('userData').wait()
+		if (Meteor.user()) {
+			this.subscribe('Courses').wait()
+			this.subscribe('userData').wait()
+		}
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
@@ -36,12 +38,7 @@ HomeController = RouteController.extend({
 		this.next();
 	},
 	onBeforeAction: function () {
-		// if user logged in, route to profile page
-		if (Meteor.user()) {
-			Router.go('/profile');
-		} else {
-			this.next();
-		}
+		this.next();
 	},
   
 	// The same thing as providing a function as the second parameter. You can
