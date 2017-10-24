@@ -20,7 +20,7 @@ body {
 }
 
 .main {
-	margin: 80px 0 100px;
+	margin: 40px 0 100px;
 }
 
 .innerMain {
@@ -39,12 +39,12 @@ h1 {
 }
 
 h3 {
-	font-size:1.8em;
-	font-weight: 400;
+	font-size: 1.5em;
+	font-weight: 300;
 }
 
 h4 {
-	font-size:1.5em;
+	font-size: 1.3em;
 	margin:0;
 }
 
@@ -193,11 +193,26 @@ select {
 	}
 }
 
+.title {
+	font-size: 1.5em;
+	font-weight: 300;
+	p {
+		margin: 0;
+	}
+	.subtitle {
+		line-height: normal;
+		font-size: 0.6em;
+		color: grey;
+		font-weight: 400;
+	}
+}
+
 .card {
 	margin: 1em 0 2em;
 	.card-content {
 		padding: 24px 24px 16px;
 		.card-title {
+			font-size: 1.5em;
 			padding: 0 0 12px;
 			line-height:inherit;
 			.card-subtitle {
@@ -246,7 +261,7 @@ select {
 }
 
 .flex-container {
-	display: flex !important;
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	.input-field {
@@ -287,7 +302,12 @@ select {
 	a {
 		color: #2196F3 !important;
 	}	
+	.collection-item.avatar {
+		min-height: auto;
+		padding: 15px 20px 20px 72px;
+	}
 }
+
 
 .add-file-form {
 	.file-field {
