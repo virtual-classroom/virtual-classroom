@@ -4,12 +4,13 @@
 			<input id="search" placeholder="Search course">
 			<i class="material-icons left">search</i>
 		</div>
-		<div class="flex-container">
-			{{#if userIsInstructor}}
-				<h5>Current Courses</h5>
-				<a href="/create_new_course" class="waves-effect waves-light btn">Create</a>
-			{{/if}}
-		</div>
+		{{#if userIsInstructor}}
+			<div class="fixed-action-btn">
+				<a href="/create_new_course" class="btn-floating btn-large blue">
+					<i class="large material-icons">add</i>
+				</a>
+			</div>
+		{{/if}}
 		{{#if courses}}
 			{{#each relatedCourses}}
 				{{> CourseCard courseId=_id}}

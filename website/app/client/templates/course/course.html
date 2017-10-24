@@ -4,7 +4,15 @@
 			{{#if course}}
 				{{#with course}}
 					<div class="flex-container course-title-container">
-						<h3 class="left-item">{{code}} {{title}}</h3>
+						<div class="title left-item">
+							<p>{{code}} {{title}}</p>
+							{{#if studentIsInCourse code}}
+								<p class="subtitle">You've enrolled in this course</p>
+							{{/if}}
+							{{#if userIsCourseInstructor code}}
+								<p class="subtitle">You're the instructor of this course</p>
+							{{/if}}
+						</div>
 						{{#if userIsInstructorOrAdmin}}
 							<div class="right-item course-size">
 								<a id="class-size-tooltip" class="tooltipped" data-position="top" data-delay="50" data-tooltip="Class Size">
@@ -16,18 +24,9 @@
 					</div>
 					
 					{{#if userIsInCourse code}}
-						{{#if studentIsInCourse code}}
-							<strong>You've enrolled in this course</strong>
-						{{/if}}
-						{{#if userIsCourseInstructor code}}
-							<strong>You're the instructor of this course</strong>
-						{{/if}}
 						<ul class="lecture-list collection with-header card">
-							<li class="collection-header flex-container flex-container-mobile">
-								<h5>Lectures</h5>
-								{{#if userIsCourseInstructor code}}
-									<button id="create-lecture-trigger" class="waves-effect waves-teal btn-flat" type="button"><i class="material-icons">add</i></button>
-								{{/if}}
+							<li class="collection-header">
+								<p>Lectures</p>
 							</li>
 							{{#if lectures}}
 								{{#each lectures}}
@@ -41,11 +40,20 @@
 							{{/if}}
 						</ul>
 					{{else}}
-						<p>You haven't enroll in this course yet.</p>
+						<p style="font-weight: 300;">You haven't enroll in this course yet.</p>
 					{{/if}}
-					<strong>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</strong>
-					<p>{{description}}</p>
+					<div class="card-panel course-info">
+						<span>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</span>
+						<p>{{description}}</p>
+					</div>
 				{{/with}}
+				{{#if userIsInstructor}}
+					<div class="fixed-action-btn">
+						<button id="create-lecture-trigger" class="btn-floating btn-large blue">
+							<i class="large material-icons">add</i>
+						</button>
+					</div>
+				{{/if}}
 				<div id="create-lecture-modal" class="modal">
 					<form id="create-lecture-form">
 						<div class="modal-content">
