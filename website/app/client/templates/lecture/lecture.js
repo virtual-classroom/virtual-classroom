@@ -27,8 +27,13 @@ Template.Lecture.helpers({
 		if (lecture) return lecture.active
 	},
 	numberOfOnlineStudents: function() {
-		// return the number of online students
-		return Lectures.findOne({_id: this._id}).onlineStudents.length
+		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
+		var onlineStudents = []
+		enrolledStudents.forEach(function(studentId) {
+			var user = Meteor.users.findOne(studentId)
+			if (user.profile.online) onlineStudents.push(studentId)
+		})
+		return onlineStudents.length
 	},
 	questions: function() {
 		var questions = Questions.collection.find({
@@ -53,7 +58,9 @@ Template.Lecture.onRendered(function () {
 	$('#lecture-settings-modal').modal()
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
+	var course = Courses.findOne({code: courseCode})
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
+	Session.set('courseId', course._id)
 	Session.set('lectureId', lecture._id)
 });
 

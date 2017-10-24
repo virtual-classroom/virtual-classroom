@@ -22,8 +22,7 @@
 								<span class="live-now active-blink">LIVE NOW</span>
 							{{/if}}
 							{{#if userIsInstructor}}
-								{{#if active}}
-								{{/if}}
+								<span>{{numberOfOnlineStudents}} online students</span>
 								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if isActive}}true{{/if}}"><span class="lever"></span>ON</label>
 							{{/if}}
 						</div>

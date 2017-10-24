@@ -14,17 +14,10 @@ Meteor.publish('userData', function () {
 			return Meteor.users.find({}, {
 				fields: {
 					'profile.first_name': 1,
-					'profile.last_name': 1
+					'profile.last_name': 1,
+					'profile.picture': 1
 				}
 			})
 		}
 	}
 })
-
-Meteor.publish('courses', function() {
-	return Courses.find();
-});
-
-Meteor.publish('course', function () {
-	return Course.find();
-});
