@@ -24,14 +24,20 @@
 	}
 	.lecture-list {
 		margin: 20px 0;
-		#create-lecture-trigger {
-			border-radius: 50%;
-			i {
-				font-size: 1.5em;
+		.collection-header {
+			p {
+				margin: 0;
+				font-weight: 300;
 			}
 		}
 		.collection-item {
-			display: flex;
+			display:flex;
+		}
+	}
+	.course-info {
+		span {
+			font-weight: 300;
+			margin-bottom: 10px;
 		}
 	}
 }

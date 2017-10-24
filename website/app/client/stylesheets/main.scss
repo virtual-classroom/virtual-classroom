@@ -160,6 +160,12 @@ strong {
 	}
 }
 
+.fixed-action-btn {
+	@media only screen and (min-width:600px) {
+		bottom: 69px;
+	}
+}
+
 .waves-effect.waves-teal .waves-ripple {
 	background-color: #ddd;
 }
@@ -208,13 +214,17 @@ select {
 }
 
 .card {
-	margin: 1em 0 2em;
+	margin: 0.5em 0 1em;
 	.card-content {
 		padding: 24px 24px 16px;
 		.card-title {
+			display:flex;
 			font-size: 1.5em;
 			padding: 0 0 12px;
 			line-height:inherit;
+			@media only screen and (max-width:600px) {
+				display:block;
+			}
 			.card-subtitle {
 				line-height: normal;
 				font-size:0.6em;
@@ -361,6 +371,7 @@ video {
 	padding: 1px 5px;
 	font-size: 0.8em;
 	font-weight: bold;
+	white-space: nowrap;
 }
 
 .search-bar {
@@ -372,7 +383,7 @@ video {
 		height: 45px;
 		margin: 0;
 		padding: 0 45px;
-		border: none;
+		border: none !important;
 		box-shadow: none !important;
 		outline: none;
 	}
