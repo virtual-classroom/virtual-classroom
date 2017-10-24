@@ -91,11 +91,6 @@ Template.Settings.events({
 /* Settings: Helpers */
 /*****************************************************************************/
 Template.Settings.helpers({
-	getProfile: function(shortname) {
-		var emoji = emojione.toImage(shortname)
-		if (emoji) console.log(emoji)
-		return emoji
-	}
 });
 
 /*****************************************************************************/

@@ -84,6 +84,14 @@ Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
 	if (course) return course.students.length
 })
 
+Template.registerHelper('getUserAvatar', function(userId) {
+	var user = Meteor.users.findOne(userId)
+	if (user) {
+		var avatar = Avatars.findOne(user.profile.picture)
+		if (avatar) return avatar.url
+	}
+})
+
 //****************************************************************************************************
 //											Route based
 //****************************************************************************************************
