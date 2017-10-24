@@ -6,9 +6,10 @@ CourseController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		this.subscribe('Courses').wait()
-		this.subscribe('Lectures').wait()
 		this.subscribe('userData').wait()
+		this.subscribe('Courses').wait()
+		var course = Courses.findOne({'code':Router.current().params.code.toUpperCase()})
+		if (course) this.subscribe('Lectures', course.code).wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
@@ -57,16 +58,12 @@ CourseController = RouteController.extend({
 		if (!Meteor.isClient) {
 			return;
 		}
-		var course_code = Router.current().params.code.toUpperCase()
-		var course = Courses.findOne({'code':course_code})
+		var course = Courses.findOne({'code':Router.current().params.code.toUpperCase()})
 		if (course) {
-			// get instructor info, course title and course description
-			var title = course.title
-			var description = course.description
 			SEO.set({
-				title: course_code + " " + title + " | PlzStopMe",
+				title: course.code + " " + course.title + " | PlzStopMe",
 				meta: {
-					"description": description
+					"description": course.description
 				}
 			});
 		}

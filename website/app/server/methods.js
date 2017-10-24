@@ -106,5 +106,14 @@ Meteor.methods({
 				if (error) throw new Meteor.Error("Update error", error.message, error.message)
 			})
 		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
+	},
+	'updateLectureDisplayQuestion': function(lectureId, question) {
+		var user = Meteor.user()
+		var lecture = Lectures.findOne(lectureId)
+		if (user && lecture && lecture.ownerId == user._id) {
+			Lectures.update(lectureId, {
+				$set: {displayQuestion: question}
+			})
+		}
 	}
 });

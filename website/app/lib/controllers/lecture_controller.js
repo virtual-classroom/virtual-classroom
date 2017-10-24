@@ -6,13 +6,18 @@ LectureController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		this.subscribe('Courses').wait()
-		this.subscribe('Lectures').wait()
 		this.subscribe('userData').wait()
 		var courseCode = Router.current().params.code
 		var title = Router.current().params.lecture
+		this.subscribe('Courses').wait()
+		this.subscribe('Lectures', courseCode).wait()
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
-		if (lecture) this.subscribe('Questions', lecture._id).wait()
+		var user = Meteor.user()
+		if (user && lecture && 
+			((user.profile.accountType === 'instructor') || 
+				(user.roles === 'admin'))) {
+			this.subscribe('Questions', lecture._id).wait()
+		}
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

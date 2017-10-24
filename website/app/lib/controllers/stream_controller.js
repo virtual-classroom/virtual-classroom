@@ -6,8 +6,9 @@ StreamController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
+		var courseCode = Router.current().params.code
 		this.subscribe('Courses').wait()
-		this.subscribe('Lectures').wait()
+		this.subscribe('Lectures', courseCode).wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
