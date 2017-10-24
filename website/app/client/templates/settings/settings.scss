@@ -2,4 +2,14 @@
 /* Settings: Style */
 /*****************************************************************************/
 .settings {
+	.edit-personal-information {
+		.profile-picture-container {
+			text-align: center;
+			img {
+				width:35%;
+				height: 35%;
+				margin: 0 auto;
+			}
+		}
+	}
 }

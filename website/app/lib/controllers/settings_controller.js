@@ -7,6 +7,7 @@ SettingsController = RouteController.extend({
 
 	subscriptions: function() {
 		this.subscribe('userData').wait()
+		this.subscribe('Avatars').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

@@ -9,11 +9,24 @@ _.map(admin, function(email) {
 	}
 })
 
-var users = Meteor.users.find().fetch()
-_.map(users, function(user) {
-	Meteor.users.update(user._id, {$set: {'profile.picture': ':slight_smile:'}})
+var avatars = ['1F602.svg', '1F606.svg', '1F610.svg', '1F611.svg', '1F626.svg', '1F634.svg', '1F642.svg', '1F913.svg']
+_.map(avatars, function(avatarName) {
+	var avatar = Avatars.findOne({name: avatarName})
+	if (!avatar) {
+		Avatars.insert({
+			name: avatarName,
+			url : 'avatars/' + avatarName
+		}, function(error) {
+			if (error) console.log(error)
+		})
+	}
 })
 
+var users = Meteor.users.find().fetch()
+_.map(users, function(user) {
+	var avatar = Avatars.findOne({name: '1F642.svg'})
+	if (avatar) Meteor.users.update(user._id, {$set: {'profile.picture': avatar._id}})
+})
 
 // initialize SEO for each page
 SeoCollection.update(
