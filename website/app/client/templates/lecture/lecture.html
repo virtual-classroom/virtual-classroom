@@ -15,19 +15,22 @@
 									</div>
 								</div>
 							{{/if}} -->
-							<h3>{{courseCode}} {{lectureTitle}}</h3>
+							<div class="title">
+								<p>{{lecture.title}}</p>
+								{{#if userIsCourseInstructor lecture.courseCode}}
+									<p class="subtitle">{{numberOfOnlineStudents}} online students</p>
+								{{/if}}
+							</div>
 						</div>
 						<div class="switch toggle-lecture-active-container">
 							{{#if active}}
 								<span class="live-now active-blink">LIVE NOW</span>
 							{{/if}}
-							{{#if userIsInstructor}}
-								<span>{{numberOfOnlineStudents}} online students</span>
+							{{#if userIsCourseInstructor lecture.courseCode}}
 								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if isActive}}true{{/if}}"><span class="lever"></span>ON</label>
 							{{/if}}
 						</div>
 					</div>
-					<strong>Lecture: {{lecture.title}}  {{prettyDate createdAt}}</strong>
 					{{#if active}}
 						<div class="card">
 								<div class="card-content">
