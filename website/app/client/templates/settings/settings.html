@@ -3,11 +3,15 @@
 		<div class="innerMain">
 			<form class="edit-profile">
 				<div class="card">
-					<div class="card-content">
-						<div class="card-title">
-							<p>Personal Information</p>
-						</div>
-						{{#with currentUser}}
+					{{#with currentUser}}
+					<form class="edit-personal-information">
+						<div class="card-content">
+							<div class="card-title">
+								<p>Personal Information</p>
+							</div>
+							<div class="profile-picture-container">
+								{{getProfile profile.picture}}
+							</div>
 							<div class="flex-container">
 								<div class="input-field left-item">
 									<input id="firstName" name="firstName" type="text" value="{{profile.first_name}}">
@@ -18,12 +22,13 @@
 									<label id="lastName-label" class="active" for="lastName">Last Name</label>
 								</div>
 							</div>
-						{{/with}}
-					</div>
-					<div class="card-action">
-						<button class="waves-effect waves-teal btn-flat" type="button" id="cancel">Cancel</button>
-						<button class="waves-effect waves-teal btn-flat" type="button" id="confirm-modal-trigger">Change</button>
-					</div>	
+						</div>
+						<div class="card-action">
+							<button class="waves-effect waves-teal btn-flat" type="button" id="cancel">Cancel</button>
+							<button class="waves-effect waves-teal btn-flat" type="button" id="confirm-modal-trigger">Change</button>
+						</div>
+					</form>
+					{{/with}}
 				</div>
 			</form>
 			<div id="edit-personal-modal" class="modal">

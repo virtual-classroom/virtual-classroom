@@ -9,6 +9,12 @@ _.map(admin, function(email) {
 	}
 })
 
+var users = Meteor.users.find().fetch()
+_.map(users, function(user) {
+	Meteor.users.update(user._id, {$set: {'profile.picture': ':slight_smile:'}})
+})
+
+
 // initialize SEO for each page
 SeoCollection.update(
 	{

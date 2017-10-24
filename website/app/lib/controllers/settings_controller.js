@@ -6,7 +6,7 @@ SettingsController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		if (Meteor.user()) this.subscribe('userData').wait()
+		this.subscribe('userData').wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

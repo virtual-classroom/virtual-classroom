@@ -87,7 +87,6 @@ strong {
 		transition:0.2s ease all; 
 		&:after {
 			font-size:0.8em;
-			margin-top:-30px;
 		}
 		&.active {
 			font-size: 0.8em;
@@ -96,7 +95,6 @@ strong {
 			transform: translateY(-110%);
 			&:after {
 				font-size:inherit;
-				margin-top: -5px;
 			}
 		}
 		@media only screen and (max-width:600px) {
