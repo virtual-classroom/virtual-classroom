@@ -25,18 +25,15 @@ Template.Login.events({
 						$("#loginEmail-label").attr("data-error", error.reason)
 					}
 				} else {
-					// reset all input fields
 					target.loginEmail.value = ""
 					target.loginPassword.value = ""
-					// $('#login-modal').modal('close');
-					$('#login-modal').closeModal()
+					$('#login-modal').modal('close');
 				}
 			});
 		}
 	},
 	'click #cancel':function(event) {
-		// $('#login-modal').modal('close');
-		$('#login-modal').closeModal()
+		$('#login-modal').modal('close')
 	}
 });
 

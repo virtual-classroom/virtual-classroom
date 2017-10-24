@@ -29,13 +29,11 @@ Template.Register.events({
 					}
 				} else {
 					console.log("successfully registered!")
-					// reset all input fields
 					target.registerFirstName.value = ""
 					target.registerLastName.value = ""
 					target.registerEmail.value = ""
 					target.registerPassword.value = ""
-					// $('#register-modal').modal('close');
-					$('#register-modal').closeModal()
+					$('#register-modal').modal('close')
 				}
 			});
 		}
@@ -71,8 +69,7 @@ Template.Register.events({
 		}
 	},
 	'click #cancel':function() {
-		// $('#register-modal').modal('close');
-		$('#register-modal').closeModal()
+		$('#register-modal').modal('close')
 	}
 });
 

@@ -15,12 +15,10 @@ Template.MasterLayout.helpers({
 
 Template.MasterLayout.events({
 	'click #login-modal-trigger': function() {
-		// $('#login-modal').modal('open');
-		$('#login-modal').openModal()
+		$('#login-modal').modal('open')
 	},
 	'click #register-modal-trigger': function() {
-		// $('#register-modal').modal('open');
-		$('#register-modal').openModal()
+		$('#register-modal').modal('open')
 	},
 	'click #logout': function(event){
 		event.preventDefault();
@@ -30,8 +28,7 @@ Template.MasterLayout.events({
 });
 
 Template.MasterLayout.onRendered(function() {
-	// $('#login-modal').modal();
-	// $('#register-modal').modal();
-	// initialize dropdown menu
-	$(".dropdown-button").dropdown();
+	$('#login-modal').modal()
+	$('#register-modal').modal()
+	$(".dropdown-button").dropdown()
 });

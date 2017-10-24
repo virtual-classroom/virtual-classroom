@@ -10,7 +10,7 @@ Template.CourseList.events({
 		var user = Meteor.user()
 		var course = Session.get('course')
 		console.log("remove course " + Session.get('course'))
-		$('#remove-course-modal').closeModal()
+		$('#remove-course-modal').modal('close')
 		// if (user && course && (user._id === course.ownerId || (user.roles === 'admin'))) {
 		// 	Courses.update(course._id, {
 		// 		$set: {
@@ -20,16 +20,14 @@ Template.CourseList.events({
 		// 		if (error) {
 		// 			console.log(error)
 		// 		} else {
-		// 			$('#remove-course-modal').closeModal()
-		// 			// $('#confirm-remove-course').modal('close')
+		// 			$('#remove-course-modal').modal('close')
 		// 			Materialize.toast('Course ' + Session.get('remove_course_code') + ' has been removed', 4000)
 		// 		}
 		// 	})
 		// }
 	},
 	'click #remove-course-cancel':function() {
-		$('#remove-course-modal').closeModal()
-		// $('#confirm-remove-course').modal('close')
+		$('#remove-course-modal').modal('close')
 	},
 	'submit #enroll-form': function(event) {
 		event.preventDefault()
@@ -49,8 +47,7 @@ Template.CourseList.events({
 						Materialize.toast('Error: ' + error.message, 8000)
 					} else {
 						target.enrollKey.value = ""
-						// $('#enroll-course-modal').modal('close')
-						$('#enroll-course-modal').closeModal()
+						$('#enroll-course-modal').modal('close')
 						Materialize.toast('Enrolled in ' + course.code, 4000)
 						Router.go('/course/' + course.code)
 					}
@@ -62,8 +59,7 @@ Template.CourseList.events({
 		//Clear form
 		$('#enrollKey').val('')
 		$('#enrollKey').removeClass("invalid")
-		// $('#enroll-course-modal').modal('close')
-		$('#enroll-course-modal').closeModal()
+		$('#enroll-course-modal').modal('close')
 	}
 });
 
@@ -127,8 +123,8 @@ Template.CourseList.onCreated(function () {
 
 Template.CourseList.onRendered(function () {
 	$('#class-size-tooltip').tooltip({delay: 25})
-	// $('#confirm-remove-course').modal()
-
+	$('#remove-course-modal').modal()
+	$('#enroll-course-modal').modal()
 	Session.set('search', '')
 });
 

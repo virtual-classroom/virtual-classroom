@@ -3,8 +3,7 @@
 /*****************************************************************************/
 Template.Stream.events({
 	'click #recorder-modal-trigger': function() {
-		// #('#recorder-modal').modal('open')
-		$('#recorder-modal').openModal()
+		$('#recorder-modal').modal('open')
 		Session.set('recorder', true)
 	}
 });
@@ -15,7 +14,6 @@ Template.Stream.events({
 Template.Stream.helpers({
 	recorderIsActive: function() {
 		var modal = document.getElementById('recorder-modal')
-
 		if (Session.get('recorder') === true) return "muted"
 	}
 });
@@ -31,10 +29,8 @@ Template.Stream.onRendered(function () {
 	var title = Router.current().params.lecture
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	Session.set('lectureId', lecture._id)
-
 	Session.set('recorder', false)
-	//$('#recorder-modal').modal()
-
+	$('#recorder-modal').modal()
 	document.documentElement.style.overflow = "hidden"
 });
 
