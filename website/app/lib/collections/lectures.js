@@ -26,6 +26,16 @@ var LecturesSchema = new SimpleSchema({
 		type: String,
 		optional: true
 	},
+	displayQuestion: {
+		type: String,
+		defaultValue: "",
+		optional: true
+	},
+	mode: {
+		type: String,
+		defaultValue: "lecture",
+		optional:true
+	},
 	createdAt: {
 		type: Date,
 		defaultValue: new Date()
@@ -38,8 +48,10 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	Meteor.publish('Lectures', function () {
-		return Lectures.find({})
+	Meteor.publish('Lectures', function (courseCode) {
+		if (courseCode) {
+			return Lectures.find({courseCode: courseCode})
+		}
 	})
 	Lectures.deny({
 		update() { return true },

@@ -74,12 +74,11 @@ Template.Course.onCreated(function () {
 });
 
 Template.Course.onRendered(function () {
+	$('#create-lecture-modal').modal()
 	Session.set("validLectureSection", false)
 	var courseCode = Router.current().params.code
 	if (courseCode) Session.set('courseCode', courseCode.toUpperCase())
-	$('#create-lecture-modal').modal()
 	$('#class-size-tooltip').tooltip({delay: 50})
-
 });
 
 Template.Course.onDestroyed(function () {

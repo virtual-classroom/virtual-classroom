@@ -7,7 +7,8 @@ Accounts.onCreateUser(function(options, user) {
 	user.profile.first_name = options.first_name
 	user.profile.last_name = options.last_name
 	user.profile.accountType = options.accountType
-	user.profile.picture =  "1F642.svg"
+	var avatar = Avatars.findOne({name:"1F642.svg"})
+	user.profile.picture = avatar._id
 	// Basic Role Setup
 	user.roles = 'user'
 	// Returns the user object

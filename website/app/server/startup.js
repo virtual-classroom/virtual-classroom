@@ -9,6 +9,7 @@ _.map(admin, function(email) {
 	}
 })
 
+// Initialize Avatars collections
 var avatars = ['1F602.svg', '1F606.svg', '1F610.svg', '1F611.svg', '1F626.svg', '1F634.svg', '1F642.svg', '1F913.svg']
 _.map(avatars, function(avatarName) {
 	var avatar = Avatars.findOne({name: avatarName})
@@ -22,10 +23,21 @@ _.map(avatars, function(avatarName) {
 	}
 })
 
+// Add user default avatar if they don't have one
 var users = Meteor.users.find().fetch()
 _.map(users, function(user) {
 	var avatar = Avatars.findOne({name: '1F642.svg'})
 	if (avatar) Meteor.users.update(user._id, {$set: {'profile.picture': avatar._id}})
+})
+
+var lectures = Lectures.find().fetch()
+_.map(lectures, function(lecture) {
+	if (!lecture.mode) {
+		Lectures.update(lecture._id, {$set: {
+			mode: "lecture",
+			displayQuestion: ""
+		}})		
+	}
 })
 
 // initialize SEO for each page

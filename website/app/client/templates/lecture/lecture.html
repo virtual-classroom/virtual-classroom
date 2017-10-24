@@ -33,14 +33,28 @@
 					</div>
 					{{#if active}}
 						<div class="card">
-								<div class="card-content">
-										<div class="card-title">Live Stream</div>
-										<video src="/videos/demo.mp4" autoplay loop muted></video>
-								</div>
-								<div class="card-action">
-									<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
-								</div>
+							<div class="card-content">
+								<div class="card-title">Live Stream</div>
+								<video src="/videos/demo.mp4" autoplay loop muted></video>
+							</div>
+							<div class="card-action">
+								<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
+							</div>
 						</div>
+						{{#if userIsCourseInstructor lecture.courseCode}}
+						<div class="card">
+							<div class="card-content">
+								<div class="input-field">
+									<textarea id="displayQuestion" name="displayQuestion" class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
+									<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
+								</div>
+							</div>
+							<div class="card-action">
+								<button id="send-display-question" class="waves-effect waves-teal btn-flat" type="button">Send</button>
+								<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
+							</div>
+						</div>
+						{{/if}}
 					{{/if}}
 					{{#if userIsInstructorOrAdmin}}
 						{{#if questions}}

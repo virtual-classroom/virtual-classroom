@@ -15,6 +15,12 @@ Template.Stream.helpers({
 	recorderIsActive: function() {
 		var modal = document.getElementById('recorder-modal')
 		if (Session.get('recorder') === true) return "muted"
+	},
+	getDisplayQuestion: function() {
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		if (lecture && lecture.displayQuestion) {
+			return "align: center; width: 6; color: #000; value: " + lecture.displayQuestion
+		}
 	}
 });
 

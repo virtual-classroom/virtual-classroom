@@ -6,24 +6,6 @@ Template.Settings.events({
 		$('#edit-personal-modal').modal('open')
 	},
 	'click #cancel': function() {
-		// reset all values back the what is on db when user click cancel
-		var user = Meteor.user()
-		var dbFirstName = user.profile.first_name
-		var dbLastName = user.profile.last_name
-		var dbEmail = user.emails[0].address
-		$('#firstName').val(dbFirstName)
-		$('#lastName').val(dbLastName)
-		$('#email').val(dbEmail)
-		// reset validate check for all fields
-		$('#firstName').addClass('valid')
-		$('#firstName').removeClass('invalid')
-		Session.set("validFirstName", true)
-		$('#lastName').addClass('valid')
-		$('#lastName').removeClass('invalid')
-		Session.set("validLastName", true)
-		$('#email').addClass("valid")
-		$("#email").removeClass("invalid")
-		Session.set("validEmail", true)
 		Router.go('/')
 	},
 	'keyup #firstName': function() {
@@ -89,7 +71,7 @@ Template.Settings.helpers({
 	},
 	getSelectedAvatar: function() {
 		var avatar = Avatars.findOne(Session.get('avatar'))
-		return avatar.url
+		if (avatar) return avatar.url
 	},
 	isSelectedAvatar: function(avatarId) {
 		if (avatarId == Session.get('avatar')) return 'selected'
