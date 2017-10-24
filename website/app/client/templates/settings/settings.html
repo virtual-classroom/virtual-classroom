@@ -8,9 +8,15 @@
 						<div class="card-title">
 							<p>Personal Information</p>
 						</div>
-						<div class="profile-picture-container">
-							<img src={{getUserAvatar _id}}>
+						<div class="avatar-container">
+							<img class="avatar" src={{getSelectedAvatar}}>
+							<div class="avatar-selector row">
+								{{#each getAvatars}}
+									<button class="avatar-btn btn-flat {{isSelectedAvatar _id}}" type="button"><img src={{url}}></button>
+								{{/each}}
+							</div>
 						</div>
+						
 						<div class="flex-container">
 							<div class="input-field left-item">
 								<input id="firstName" name="firstName" type="text" value="{{profile.first_name}}">

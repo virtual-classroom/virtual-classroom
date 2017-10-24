@@ -3,18 +3,7 @@
 /*****************************************************************************/
 Template.Settings.events({
 	'click #confirm-modal-trigger': function() {
-		var firstName = document.getElementById('firstName').value; 
-		var lastName = document.getElementById('lastName').value;
-		// get the currently stored user details
-		var user = Meteor.user()
-		var dbFirstName = user.profile.first_name
-		var dbLastName = user.profile.last_name
-		// check if there is any changes compare to the value in db
-		if (Session.get('validFirstName') && Session.get('validLastName') && Session.get('validEmail')) {
-			if (dbFirstName != firstName || dbLastName != lastName) {
-				$('#edit-personal-modal').modal('open')
-			}
-		}
+		$('#edit-personal-modal').modal('open')
 	},
 	'click #cancel': function() {
 		// reset all values back the what is on db when user click cancel
@@ -64,26 +53,30 @@ Template.Settings.events({
 		}
 	},
 	'click #confirm-change':function() {
-		var firstName = document.getElementById('firstName').value; 
-		var lastName = document.getElementById('lastName').value;
-		Meteor.users.update(Meteor.userId(), {
-			$set: {
-				'profile.first_name':firstName,
-				'profile.last_name':lastName
-			}
-		},function(error){
-			if (error) {
-				console.log(error)
-			} else {
-				$('#edit-personal-modal').modal('close')
-				Materialize.toast('Personal information updated successfully', 4000)
-				Router.go('/')
-			}
-		})
-		
+		var firstname = document.getElementById('firstName').value
+		var lastname = document.getElementById('lastName').value
+		if (firstname != "" && lastname != "" && Session.get('avatar')) {
+			var userInfo = {}
+			userInfo.firstname = firstname
+			userInfo.lastname = lastname
+			userInfo.avatar = Session.get('avatar')
+			Meteor.call('updateUserInfo', Meteor.userId(), userInfo, function(error, result) {
+				if (error) {
+					console.log(error)
+					Materialize.toast('Error: ' + error.message, 8000)
+				} else {
+					$('#edit-personal-modal').modal('close')
+					Materialize.toast('Information updated', 4000)
+					Router.go('/')
+				}
+			})
+		}
 	},
 	'click #confirm-cancel': function() {
 		$('#edit-personal-modal').modal('close')
+	},
+	'click .avatar-btn': function() {
+		Session.set('avatar', this._id)
 	}
 });
 
@@ -91,6 +84,19 @@ Template.Settings.events({
 /* Settings: Helpers */
 /*****************************************************************************/
 Template.Settings.helpers({
+	getAvatars: function() {
+		return Avatars.find({})
+	},
+	getSelectedAvatar: function() {
+		var avatar = Avatars.findOne(Session.get('avatar'))
+		return avatar.url
+	},
+	isSelectedAvatar: function(avatarId) {
+		if (avatarId == Session.get('avatar')) return 'selected'
+	},
+	updateSelectedAvatar: function(avatarId) {
+		Session.set('avatar', avatarId)
+	}
 });
 
 /*****************************************************************************/
@@ -104,6 +110,9 @@ Template.Settings.onRendered(function () {
 	Session.set('validLastName', true)
 	Session.set('validEmail', true)
 	$('#edit-personal-modal').modal()
+	var user = Meteor.user()
+	var avatar = Avatars.findOne(user.profile.picture)
+	if (avatar) Session.set('avatar', avatar._id)
 });
 
 Template.Settings.onDestroyed(function () {
