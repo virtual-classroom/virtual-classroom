@@ -64,12 +64,12 @@ strong {
 		font-size: 1em !important;
 		&:focus, &.valid {
 			border-bottom: 1px solid #2196F3 !important;
-			box-shadow: 0 2px 0 -1px #2196F3!important;
+			box-shadow: 0 1px 0 0 #2196F3 !important;
 			outline:none !important;
 		}
 		&.invalid {
 			border-bottom: 1px solid #F44336 !important;
-			box-shadow: 0 2px 0 -1px #F44336 !important;
+			box-shadow: 0 1px 0 0 #F44336 !important;
 		}
 	}
 	input {
@@ -252,9 +252,13 @@ select {
 	h3 {
 		margin: 0;
 	}
+	.modal-content {
+		padding: 24px 24px 10px;
+	}
 	.modal-footer {
 		padding:0 24px;
 		text-align: right;
+		height: inherit;
 		.btn-flat {
 			float:inherit;
 		}

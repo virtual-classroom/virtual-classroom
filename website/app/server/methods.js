@@ -92,5 +92,19 @@ Meteor.methods({
 				}}
 			})
 		}
+	},
+	'updateUserInfo': function(userId, userInfo) {
+		var user = Meteor.user()
+		if (user._id == userId) {
+			Meteor.users.update(user._id, {
+				$set: {
+					'profile.first_name': userInfo.firstname,
+					'profile.last_name': userInfo.lastname,
+					'profile.picture': userInfo.avatar
+				}
+			}, function(error) {
+				if (error) throw new Meteor.Error("Update error", error.message, error.message)
+			})
+		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	}
 });
