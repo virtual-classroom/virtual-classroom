@@ -65,7 +65,7 @@ localstorage@1.1.1
 logging@1.1.17
 manuelschoebel:ms-seo@0.4.1
 matb33:collection-hooks@0.8.4
-materialize:materialize@0.97.2
+materialize:materialize@0.100.2
 mdg:validation-error@0.2.0
 meteor@1.7.2
 meteor-base@1.1.0

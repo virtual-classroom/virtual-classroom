@@ -77,14 +77,13 @@ Template.Recorder.events({
 			Meteor.call('displayQuestion', Session.get('lectureId'), 
 				Session.get('audioId'))
 			Materialize.toast('Question sent', 4000)
-			$('#recorder-modal').closeModal()
+			$('#recorder-modal').modal('close')
 			Session.set('recorder', false)
 			Session.set('recording', 'inactive')
 		}
 	},
 	'click #cancel':function(event) {
-		// $('#recorder-modal').modal('close');
-		$('#recorder-modal').closeModal()
+		$('#recorder-modal').modal('close')
 		Session.set('recorder', false)
 		Session.set('recording', 'inactive')
 	}

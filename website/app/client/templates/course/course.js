@@ -3,15 +3,13 @@
 /*****************************************************************************/
 Template.Course.events({
 	'click #create-lecture-trigger': function() {
-		// $('#create-lecture-modal').modal('open')
-		$('#create-lecture-modal').openModal()
+		$('#create-lecture-modal').modal('open')
 	},
 	'click #cancel-create-lecture': function() {
 		//Reset form
 		$('#lectureName').val('')
 		$('#lectureName').removeClass("invalid")
-		//$('#create-lecture-modal').modal('close')
-		$('#create-lecture-modal').closeModal()
+		$('#create-lecture-modal').modal('close')
 	},
 	'submit #create-lecture-form': function(event) {
 		event.preventDefault();
@@ -39,8 +37,7 @@ Template.Course.events({
 				} else {
 					$('#lectureName').val('')
 					$('#lectureName').removeClass("invalid")
-					// $('#create-lecture-modal').modal('close')
-					$('#create-lecture-modal').closeModal()
+					$('#create-lecture-modal').modal('close')
 					Materialize.toast('Lecture ' + title + ' has been created!', 4000)
 				}
 			})
@@ -80,7 +77,7 @@ Template.Course.onRendered(function () {
 	Session.set("validLectureSection", false)
 	var courseCode = Router.current().params.code
 	if (courseCode) Session.set('courseCode', courseCode.toUpperCase())
-	// $('#create-lecture-modal').modal()
+	$('#create-lecture-modal').modal()
 	$('#class-size-tooltip').tooltip({delay: 50})
 
 });

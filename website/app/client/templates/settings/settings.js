@@ -12,8 +12,7 @@ Template.Settings.events({
 		// check if there is any changes compare to the value in db
 		if (Session.get('validFirstName') && Session.get('validLastName') && Session.get('validEmail')) {
 			if (dbFirstName != firstName || dbLastName != lastName) {
-				// $('#edit-personal-modal').modal('open')
-				$('#edit-personal-modal').openModal()
+				$('#edit-personal-modal').modal('open')
 			}
 		}
 	},
@@ -76,8 +75,7 @@ Template.Settings.events({
 			if (error) {
 				console.log(error)
 			} else {
-				// $('#edit-personal-modal').modal('close')
-				$('#edit-personal-modal').closeModal()
+				$('#edit-personal-modal').modal('close')
 				Materialize.toast('Personal information updated successfully', 4000)
 				Router.go('/')
 			}
@@ -85,8 +83,7 @@ Template.Settings.events({
 		
 	},
 	'click #confirm-cancel': function() {
-		// $('#edit-personal-modal').modal('close')
-		$('#edit-personal-modal').closeModal();
+		$('#edit-personal-modal').modal('close')
 	}
 });
 
@@ -94,7 +91,6 @@ Template.Settings.events({
 /* Settings: Helpers */
 /*****************************************************************************/
 Template.Settings.helpers({
-
 });
 
 /*****************************************************************************/
@@ -104,11 +100,10 @@ Template.Settings.onCreated(function () {
 });
 
 Template.Settings.onRendered(function () {
-	// initiate valid check for first name, last name and email
 	Session.set('validFirstName', true)
 	Session.set('validLastName', true)
 	Session.set('validEmail', true)
-	// $('#edit-personal-modal').modal()
+	$('#edit-personal-modal').modal()
 });
 
 Template.Settings.onDestroyed(function () {

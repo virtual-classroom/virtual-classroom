@@ -3,7 +3,7 @@
 /*****************************************************************************/
 Template.LectureSettings.events({
 	'click #confirm-cancel': function() {
-		$('#lecture-settings-modal').closeModal()
+		$('#lecture-settings-modal').modal('close')
 	},
 	'click #confirm-changes': function() {
 		var threshold = $('#notification-threshold').val()
@@ -17,7 +17,7 @@ Template.LectureSettings.events({
 				} else {
 					Materialize.toast('Changes saved!', 4000)
 				}
-				$('#lecture-settings-modal').closeModal()
+				$('#lecture-settings-modal').modal('close')
 			})
 		}
 	},

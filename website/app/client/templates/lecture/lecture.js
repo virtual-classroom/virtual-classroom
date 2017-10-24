@@ -7,10 +7,10 @@ Template.Lecture.events({
 		Meteor.call('toggleLecture', Session.get('lectureId'))
 	},
 	'click #lecture-file-upload-trigger': function() {
-		$('#lecture-file-upload-modal').openModal()
+		$('#lecture-file-upload-modal').modal('open')
 	},
 	'click #lecture-settings-trigger': function() {
-		$('#lecture-settings-modal').openModal()
+		$('#lecture-settings-modal').modal('open')
 	}
 });
 
@@ -49,7 +49,8 @@ Template.Lecture.onRendered(function () {
 	// initialize tooltips in this tempplate
 	// $('#lecture-active-tooltip').tooltip({delay: 50});
 	// $('#lecture-settings-tooltip').tooltip({delay: 1000});
-
+	$('#lecture-file-upload-modal').modal()
+	$('#lecture-settings-modal').modal()
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})

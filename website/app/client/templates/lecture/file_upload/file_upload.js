@@ -3,7 +3,7 @@
 /*****************************************************************************/
 Template.FileUpload.events({
 	'click #confirm-cancel':function() {
-		$('#lecture-file-upload-modal').closeModal()
+		$('#lecture-file-upload-modal').modal('close')
 	},
 	'change .add-file-form': function(event) {
 		$('#fileName').removeClass("invalid")
@@ -59,7 +59,7 @@ Template.FileUpload.events({
 				//empty fileName field & upload field
 				$('#fileName').val("")
 				$('#file-path-input').val('')
-				$('#lecture-file-upload-modal').closeModal()
+				$('#lecture-file-upload-modal').modal('close')
 			}
 		} else {
 			$('#fileName').removeClass("validate")

@@ -36,13 +36,13 @@
 										<video src="/videos/demo.mp4" autoplay loop muted></video>
 								</div>
 								<div class="card-action">
-									<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="button">Watch Stream</a>
+									<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
 								</div>
 						</div>
 					{{/if}}
 					{{#if userIsInstructorOrAdmin}}
 						{{#if questions}}
-						<ul class="collection">
+						<ul class="collection card">
 							{{#each question in questions}}
 							<li class="collection-item avatar">
 								{{> DisplayRecordings question=question._id}}
