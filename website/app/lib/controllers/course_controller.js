@@ -7,9 +7,11 @@ CourseController = RouteController.extend({
 
 	subscriptions: function() {
 		this.subscribe('userData').wait()
-		this.subscribe('Courses').wait()
-		var course = Courses.findOne({'code':Router.current().params.code.toUpperCase()})
-		if (course) this.subscribe('Lectures', course.code).wait()
+		var courseCode = Router.current().params.code.toUpperCase()
+		if (courseCode) {
+			this.subscribe('Courses', courseCode).wait()
+			this.subscribe('Lectures', courseCode).wait()
+		}
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

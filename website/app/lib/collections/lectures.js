@@ -33,8 +33,8 @@ var LecturesSchema = new SimpleSchema({
 	},
 	mode: {
 		type: String,
-		defaultValue: "lecture",
-		optional:true
+		defaultValue: 'lecture',
+		allowedValues: ['lecture','group']
 	},
 	createdAt: {
 		type: Date,
@@ -48,7 +48,7 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	Meteor.publish('Lectures', function (courseCode) {
+	Meteor.publish('Lectures', function(courseCode) {
 		if (courseCode) {
 			return Lectures.find({courseCode: courseCode})
 		}
