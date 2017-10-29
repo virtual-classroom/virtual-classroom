@@ -10,7 +10,7 @@ CourseController = RouteController.extend({
 		var courseCode = Router.current().params.code.toUpperCase()
 		if (courseCode) {
 			this.subscribe('Courses', courseCode).wait()
-			this.subscribe('Lectures', courseCode).wait()
+			this.subscribe('Lectures', courseCode, false).wait()
 		}
 	},
 

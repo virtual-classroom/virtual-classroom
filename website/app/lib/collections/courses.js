@@ -26,6 +26,7 @@ var CoursesSchema = new SimpleSchema({
 	status: {
 		type: String,
 		defaultValue: 'active',
+		allowedValues: ['active', 'inactive']
 	},
 	description: {
 		type: String,
@@ -62,9 +63,9 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
 	Meteor.publish('Courses', function(courseCode) {
 		if (courseCode) {
-			return Courses.find({code:courseCode})
+			return Courses.find({code:courseCode},{sort: {code:1}})
 		} else {
-			return Courses.find({})
+			return Courses.find({},{sort: {code:1}})
 		}
 	})
 	Courses.deny({

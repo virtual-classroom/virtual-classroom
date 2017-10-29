@@ -50,7 +50,8 @@ Template.Course.events({
 /*****************************************************************************/
 Template.Course.helpers({
 	lectures: function() {
-		var lectures = Lectures.find({courseCode: Session.get('courseCode')})
+		var lectures = Lectures.find({courseCode: Session.get('courseCode')},
+			{sort: {createdAt:1}})
 		if (lectures.count() > 0) return lectures
 	},
 	course: function() {
@@ -60,10 +61,6 @@ Template.Course.helpers({
 			'status': 'active'
 		})
 		if (course) return course
-	},
-	get_lecture: function(lecture_id) {
-		var this_lecture = Lectures.findOne({_id: lecture_id});
-		return this_lecture;
 	}
 });
 

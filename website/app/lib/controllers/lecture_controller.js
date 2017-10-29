@@ -10,13 +10,16 @@ LectureController = RouteController.extend({
 		var courseCode = Router.current().params.code
 		var title = Router.current().params.lecture
 		this.subscribe('Courses', courseCode).wait()
-		this.subscribe('Lectures', courseCode).wait()
+		this.subscribe('Lectures', courseCode, title).wait()
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
-		var user = Meteor.user()
-		if (user && lecture && 
-			((user.profile.accountType === 'instructor') || 
-				(user.roles === 'admin'))) {
-			this.subscribe('Questions', lecture._id).wait()
+		if (lecture) {
+			this.subscribe('LectureGroups', lecture._id).wait()
+			var user = Meteor.user()
+			if (user && 
+				((user.profile.accountType === 'instructor') || 
+					(user.roles === 'admin'))) {
+				this.subscribe('Questions', lecture._id).wait()
+			}
 		}
 	},
 

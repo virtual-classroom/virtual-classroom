@@ -32,10 +32,11 @@ _.map(users, function(user) {
 
 var lectures = Lectures.find().fetch()
 _.map(lectures, function(lecture) {
-	if (!lecture.mode) {
+	if (!lecture.groupSize) {
 		Lectures.update(lecture._id, {$set: {
 			mode: "lecture",
-			displayQuestion: ""
+			displayQuestion: "",
+			groupSize: 2
 		}})		
 	}
 })
