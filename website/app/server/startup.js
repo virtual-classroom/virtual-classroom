@@ -16,7 +16,7 @@ _.map(avatars, function(avatarName) {
 	if (!avatar) {
 		Avatars.insert({
 			name: avatarName,
-			url : 'avatars/' + avatarName
+			url : '/avatars/' + avatarName
 		}, function(error) {
 			if (error) console.log(error)
 		})

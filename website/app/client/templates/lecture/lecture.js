@@ -89,8 +89,8 @@ Template.Lecture.helpers({
 		if (this.groupSize) return this.groupSize
 	},
 	groups: function() {
-		var groups = LectureGroups.find({lectureId:this._id})
-		if (this.mode === 'group' && groups) return groups
+		var groups = LectureGroups.find({lectureId:this._id,active:true},{sort: {number:1}})
+		if (groups) return groups
 	}
 });
 

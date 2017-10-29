@@ -6,9 +6,14 @@ StreamController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
+		this.subscribe('userData').wait()
+		this.subscribe('Avatars').wait()
 		var courseCode = Router.current().params.code
-		this.subscribe('Courses').wait()
-		this.subscribe('Lectures', courseCode).wait()
+		var title = Router.current().params.lecture
+		this.subscribe('Courses', courseCode).wait()
+		this.subscribe('Lectures', courseCode, title).wait()
+		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
+		if (lecture) this.subscribe('LectureGroups', lecture._id).wait()
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also

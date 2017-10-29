@@ -52,21 +52,6 @@
 								<i class="large material-icons">add</i>
 							</button>
 						</div>
-						<div id="create-lecture-modal" class="modal">
-							<form id="create-lecture-form">
-								<div class="modal-content">
-									<h3>Create Lecture</h3>
-										<div class="input-field">
-											<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
-											<label id="lectureName-label" for="lectureName">Lecture Title</label>
-										</div>
-								</div>
-								<div class="modal-footer">
-									<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
-									<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
-								</div>
-							</form>
-						</div>
 					{{/if}}
 				{{/with}}				
 			{{else}}
@@ -74,5 +59,19 @@
 			{{/if}}
 		</div>
 	</div>
-
+	<div id="create-lecture-modal" class="modal">
+		<form id="create-lecture-form">
+			<div class="modal-content">
+				<h3>Create Lecture</h3>
+				<div class="input-field">
+					<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
+					<label id="lectureName-label" for="lectureName">Lecture Title</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+				<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
+			</div>
+		</form>
+	</div>
 </template>
