@@ -71,9 +71,6 @@ Template.Lecture.onCreated(function () {
 });
 
 Template.Lecture.onRendered(function () {
-	// initialize tooltips in this tempplate
-	// $('#lecture-active-tooltip').tooltip({delay: 50});
-	// $('#lecture-settings-tooltip').tooltip({delay: 1000});
 	$('#lecture-file-upload-modal').modal()
 	$('#lecture-settings-modal').modal()
 	var courseCode = Router.current().params.code

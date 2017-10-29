@@ -8,8 +8,8 @@ Template.CourseList.events({
 	},
 	'click #confirm-remove': function() {
 		var user = Meteor.user()
-		var course = Session.get('course')
-		console.log("remove course " + Session.get('course'))
+		var course = Session.get('courseId')
+		console.log("remove course " + Session.get('courseId'))
 		$('#remove-course-modal').modal('close')
 		// if (user && course && (user._id === course.ownerId || (user.roles === 'admin'))) {
 		// 	Courses.update(course._id, {
@@ -33,7 +33,7 @@ Template.CourseList.events({
 		event.preventDefault()
 		target = event.target
 		var key = $('#enrollKey').val()
-		var course = Courses.findOne(Session.get('course'))
+		var course = Courses.findOne(Session.get('courseId'))
 		if (course && key != "") {
 			if (course.key != key) {
 				$("#enrollKey").removeClass("validate")
@@ -110,7 +110,7 @@ Template.CourseList.helpers({
 		}
 	},
 	getSelectedCourseCode: function() {
-		var course = Courses.findOne(Session.get('course'))
+		var course = Courses.findOne(Session.get('courseId'))
 		if (course) return course.code
 	}
 });

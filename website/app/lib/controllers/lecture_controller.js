@@ -9,7 +9,7 @@ LectureController = RouteController.extend({
 		this.subscribe('userData').wait()
 		var courseCode = Router.current().params.code
 		var title = Router.current().params.lecture
-		this.subscribe('Courses').wait()
+		this.subscribe('Courses', courseCode).wait()
 		this.subscribe('Lectures', courseCode).wait()
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 		var user = Meteor.user()

@@ -46,33 +46,33 @@
 						<span>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</span>
 						<p>{{description}}</p>
 					</div>
-				{{/with}}
-				{{#if userIsInstructor}}
-					<div class="fixed-action-btn">
-						<button id="create-lecture-trigger" class="btn-floating btn-large blue">
-							<i class="large material-icons">add</i>
-						</button>
-					</div>
-				{{/if}}
-				
+					{{#if userIsCourseInstructor code}}
+						<div class="fixed-action-btn">
+							<button id="create-lecture-trigger" class="btn-floating btn-large blue">
+								<i class="large material-icons">add</i>
+							</button>
+						</div>
+						<div id="create-lecture-modal" class="modal">
+							<form id="create-lecture-form">
+								<div class="modal-content">
+									<h3>Create Lecture</h3>
+										<div class="input-field">
+											<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
+											<label id="lectureName-label" for="lectureName">Lecture Title</label>
+										</div>
+								</div>
+								<div class="modal-footer">
+									<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+									<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
+								</div>
+							</form>
+						</div>
+					{{/if}}
+				{{/with}}				
 			{{else}}
 				{{> NotFound}}
 			{{/if}}
 		</div>
 	</div>
-	<div id="create-lecture-modal" class="modal">
-		<form id="create-lecture-form">
-			<div class="modal-content">
-				<h3>Create Lecture</h3>
-					<div class="input-field">
-						<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
-						<label id="lectureName-label" for="lectureName">Lecture Title</label>
-					</div>
-			</div>
-			<div class="modal-footer">
-				<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
-				<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
-			</div>
-		</form>
-	</div>
+
 </template>

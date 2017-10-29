@@ -60,8 +60,12 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	Meteor.publish('Courses', function () {
-		return Courses.find({})
+	Meteor.publish('Courses', function(courseCode) {
+		if (courseCode) {
+			return Courses.find({code:courseCode})
+		} else {
+			return Courses.find({})
+		}
 	})
 	Courses.deny({
 		update() { return true },
