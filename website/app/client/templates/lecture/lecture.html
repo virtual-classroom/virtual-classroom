@@ -3,21 +3,16 @@
 		<div class="innerMain lecture">
 			{{#if lecture}}
 				{{#with lecture}}
-					<div class="row flex-container title-container">
-						<div class="flex-container title-sub-container">
-							<div class="title">
-								<p>{{lecture.title}}</p>
-								{{#if userIsCourseInstructor lecture.courseCode}}
-									<p class="subtitle">{{numberOfOnlineStudents}} online students</p>
-								{{/if}}
-							</div>
+					<div class="flex-container">
+						<div class="title">
+							<p>{{lecture.title}}</p>
 						</div>
 						<div class="switch toggle-lecture-active-container">
 							{{#if active}}
 								<span class="live-now active-blink">LIVE NOW</span>
 							{{/if}}
 							{{#if userIsCourseInstructor lecture.courseCode}}
-								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if isActive}}true{{/if}}"><span class="lever"></span>ON</label>
+								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if lectureIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
 							{{/if}}
 						</div>
 					</div>
@@ -31,9 +26,25 @@
 								<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
 							</div>
 						</div>
-						{{#if userIsCourseInstructor lecture.courseCode}}
-						<div class="card">
+					{{/if}}
+					{{#if userIsCourseInstructor lecture.courseCode}}
+						<div class="card group-settings">
 							<div class="card-content">
+								<div class="card-title flex-container">
+									<p class="left-item">Group Mode</p>
+									<div class="right-item switch toggle-group-active-container">
+										<label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
+									</div>
+								</div>
+								<p style="color:grey">Class size: {{numberOfEnrolledStudnets}} | Online students: {{numberOfOnlineStudents}}</p>
+								<div class="group-settings-form">
+									<div class="group-range-field">
+										<div class="range-field">
+											<label>Group size</label>
+											<input type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfOnlineStudents}} />
+										</div>
+									</div>
+								</div>
 								<div class="input-field">
 									<textarea id="displayQuestion" name="displayQuestion" class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
 									<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
@@ -44,9 +55,6 @@
 								<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
 							</div>
 						</div>
-						{{/if}}
-					{{/if}}
-					{{#if userIsInstructorOrAdmin}}
 						{{#if questions}}
 						<ul class="collection card">
 							{{#each question in questions}}

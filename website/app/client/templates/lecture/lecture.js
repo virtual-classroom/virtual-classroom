@@ -20,14 +20,28 @@ Template.Lecture.events({
 	'click #send-display-question': function() {
 		var question = $('#displayQuestion').val()
 		if (question) {
-			Meteor.call('updateLectureDisplayQuestion', this._id, question, function(error, result) {
-				if (error) {
-					console.log(error)
-				} else {
-					Materialize.toast('Question added', 4000)
+			Meteor.call('updateLectureDisplayQuestion', this._id, question, 
+				function(error, result) {
+					if (error) {
+						console.log(error)
+					} else {
+						Materialize.toast('Question added', 4000)
+					}
 				}
-			})
+			)
 		}
+	},
+	'change .toggle-group-active input': function(event) {
+		var groupSettings = {}
+		groupSettings.question = $('#displayQuestion').val()
+		groupSettings.groupSize = $('#group-size-range').val()
+		Meteor.call('updateGroupSettings', this._id, groupSettings, function(error,result) {
+			if (error) {
+				console.log(error)
+			} else {
+				Materialize.toast('Group settings updated', 4000)
+			}
+		})
 	}
 });
 
@@ -38,10 +52,18 @@ Template.Lecture.helpers({
 	lecture: function() {
 		return Lectures.findOne(Session.get('lectureId'))
 	},
-	isActive: function() {
+	lectureIsActive: function() {
 		// return true is this lecture is active
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture) return lecture.active
+	},
+	groupIsActive: function() {
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		if (lecture) return lecture.mode === 'group'
+	},
+	numberOfEnrolledStudnets: function() {
+		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
+		if (enrolledStudents) return enrolledStudents.length
 	},
 	numberOfOnlineStudents: function() {
 		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
@@ -60,7 +82,10 @@ Template.Lecture.helpers({
 		if (questions.count()) return questions
 	},
 	activeDisplayQuestion: function() {
-		if (this.displayQuestion != "") return 'active'
+		if (this.displayQuestion) return 'active'
+	},
+	getGroupSize: function() {
+		if (this.groupSize) return this.groupSize
 	}
 });
 

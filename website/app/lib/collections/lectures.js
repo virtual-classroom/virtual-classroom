@@ -36,6 +36,10 @@ var LecturesSchema = new SimpleSchema({
 		defaultValue: 'lecture',
 		allowedValues: ['lecture','group']
 	},
+	groupSize: {
+		type: Number,
+		defaultValue: 2
+	},
 	createdAt: {
 		type: Date,
 		defaultValue: new Date()
@@ -48,9 +52,11 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	Meteor.publish('Lectures', function(courseCode) {
-		if (courseCode) {
-			return Lectures.find({courseCode: courseCode})
+	Meteor.publish('Lectures', function(courseCode, title) {
+		if (courseCode && title) {
+			return Lectures.find({$and: [{title: title}, {courseCode:courseCode}]},{sort: {createdAt:1}})
+		} else if (courseCode) {
+			return Lectures.find({courseCode: courseCode},{sort: {createdAt:1}})
 		}
 	})
 	Lectures.deny({

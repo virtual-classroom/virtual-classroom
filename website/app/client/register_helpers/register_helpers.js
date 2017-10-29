@@ -38,10 +38,7 @@ Template.registerHelper('getCourseOwner', function(code) {
 Template.registerHelper('userIsCourseInstructor', function(code) {
 	// return true if this course is own by this instructor
 	var course = Courses.findOne({'code': code})
-	if (course) {
-		console.log(course.instructors)
-		return course.instructors.indexOf(Meteor.userId()) >= 0
-	}
+	if (course) return course.instructors.indexOf(Meteor.userId()) >= 0
 })
 
 Template.registerHelper('studentIsInCourse', function(courseCode) {
@@ -71,8 +68,7 @@ Template.registerHelper('userIsInCourse', function(courseCode) {
 }) 
 
 Template.registerHelper('prettyDate', function(date) {
-	var prettyDate = date.toDateString().slice(0, 15)
-	return prettyDate
+	return date.toDateString().slice(0, 15)
 })
 
 Template.registerHelper('lectureIsActive', function(id) {

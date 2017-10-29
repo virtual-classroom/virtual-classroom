@@ -120,11 +120,9 @@ strong {
 
 .range-field {
 	white-space: inherit !important;
-	input[type=range] {
-		&:-moz-range-thumb, &:-ms-thumb {
-			color:#fff !important;
-			background-color:#fff !important;
-		}
+	input[type=range]::-webkit-slider-thumb {
+		background: #2196F3;
+		border-radius: 50%;
 	}
 	.thumb {
 		background-color: #2196F3!important;
@@ -334,6 +332,7 @@ select {
 }
 .switch {
 	label {
+		vertical-align: middle;
 		.lever {
 			margin: 0 10px;
 			vertical-align: sub;

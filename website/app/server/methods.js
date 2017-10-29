@@ -74,6 +74,51 @@ Meteor.methods({
 			})
 		}
 	},
+	'updateGroupSettings': function(lectureId, groupSettings) {
+		// Update lecture group settings
+		// if the lecture has no group, randomly initialize groups base on 
+		// enrolled students, otherwise, use the existing group settings.
+		var user = Meteor.user()
+		var lecture = Lectures.findOne(lectureId)
+		var course = Courses.findOne({code:lecture.courseCode})
+		if (user && lecture && course && course.instructors.indexOf(user._id) >= 0) {
+			if (lecture.mode == 'group') {
+				Lectures.update(lectureId, {
+					$set: {
+						mode: 'lecture',
+						displayQuestion: ""
+					}
+				})
+			} else {
+				var students = course.students
+				var groupSize = groupSettings.groupSize
+				var groups = LectureGroups.find({lectureId:lectureId}).fetch()
+				if (groups.length <= 0 || lecture.groupSize != groupSize) {
+					var groups = []
+					for (i = 0; i < students.length; i += groupSize) {
+						groups.push(students.slice(i, i + groupSize))
+					}
+					for (i = 0; i < groups.length; i += 1) {
+						LectureGroups.insert({
+							lectureId: lecture._id,
+							courseId: course._id,
+							number: i,
+							members: groups[i],
+							active: true,
+							createdAt: new Date()
+						})
+					}
+				}
+				Lectures.update(lectureId, {
+					$set: {
+						mode: 'group',
+						displayQuestion: groupSettings.question,
+						groupSize: groupSettings.groupSize
+					}
+				})
+			}
+		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
+	},
 	'displayQuestion': function(lectureId, audioId) {
 		var user = Meteor.user()
 		var lecture = Lectures.findOne(lectureId)
