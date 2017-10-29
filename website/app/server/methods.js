@@ -102,7 +102,7 @@ Meteor.methods({
 						LectureGroups.insert({
 							lectureId: lecture._id,
 							courseId: course._id,
-							number: i,
+							number: i + 1,
 							members: groups[i],
 							active: true,
 							createdAt: new Date()

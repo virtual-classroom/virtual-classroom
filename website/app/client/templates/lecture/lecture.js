@@ -42,6 +42,7 @@ Template.Lecture.events({
 				Materialize.toast('Group settings updated', 4000)
 			}
 		})
+		Meteor.setTimeout(function() {$('#groups-collapsible').collapsible()}, 100)
 	}
 });
 
@@ -86,6 +87,10 @@ Template.Lecture.helpers({
 	},
 	getGroupSize: function() {
 		if (this.groupSize) return this.groupSize
+	},
+	groups: function() {
+		var groups = LectureGroups.find({lectureId:this._id})
+		if (this.mode === 'group' && groups) return groups
 	}
 });
 
@@ -98,6 +103,8 @@ Template.Lecture.onCreated(function () {
 Template.Lecture.onRendered(function () {
 	$('#lecture-file-upload-modal').modal()
 	$('#lecture-settings-modal').modal()
+	Meteor.setTimeout(function() {$('#groups-collapsible').collapsible()}, 100)
+	
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
 	var course = Courses.findOne({code: courseCode})

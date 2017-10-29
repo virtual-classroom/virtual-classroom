@@ -16,7 +16,7 @@
 							{{/if}}
 						</div>
 					</div>
-					{{#if active}}
+					{{#if lecture.active}}
 						<div class="card">
 							<div class="card-content">
 								<div class="card-title">Live Stream</div>
@@ -28,6 +28,15 @@
 						</div>
 					{{/if}}
 					{{#if userIsCourseInstructor lecture.courseCode}}
+						{{#if questions}}
+							<ul class="collection card">
+								{{#each question in questions}}
+								<li class="collection-item avatar">
+									{{> DisplayRecordings question=question._id}}
+								</li>
+								{{/each}}
+							</ul>
+						{{/if}}
 						<div class="card group-settings">
 							<div class="card-content">
 								<div class="card-title flex-container">
@@ -55,14 +64,18 @@
 								<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
 							</div>
 						</div>
-						{{#if questions}}
-						<ul class="collection card">
-							{{#each question in questions}}
-							<li class="collection-item avatar">
-								{{> DisplayRecordings question=question._id}}
-							</li>
-							{{/each}}
-						</ul>
+						{{#if groups}}
+							<ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">
+								{{#each group in groups}}
+								<li>
+									<div class="collapsible-header"><i class="material-icons">group</i>Group {{group.number}}</div>
+									<div class="collapsible-body">
+										<p style="margin-bottom:0;color:grey;">Members</p>
+										<p>| {{#each member in group.members}}{{getUserNameById member}} | {{/each}}</p>
+									</div>
+								</li>
+								{{/each}}
+							</ul>
 						{{/if}}
 					{{/if}}
 				{{/with}}
