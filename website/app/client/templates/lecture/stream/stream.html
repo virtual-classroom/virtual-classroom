@@ -1,21 +1,4 @@
 <template name="Stream">
-	<!-- <div class="main stream">
-		<div class="innerMain">
-			<p>Loading Lecture Stream...</p>
-			{{#aScene}}
-				{{#aAssets}}
-					<video id="video" src="/videos/demo.mp4" autoplay loop {{recorderIsActive}}></video>
-				{{/aAssets}}
-				{{#aVideosphere src="#video" rotation="0 180 0"}}{{/aVideosphere}}
-			{{/aScene}}
-			<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger" style="z-index:9999"><img src="/icons/mic.svg"></a>
-			<div id="recorder-modal" class="modal">
-				<div class="modal-content">
-					{{> Recorder}}
-				</div>
-			</div>
-		</div>
-	</div> -->
 	<div class="stream">
 <!-- 		<a-scene>
       		<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
@@ -25,25 +8,37 @@
 			<a-sky color="#ECECEC"></a-sky>
 		</a-scene> -->
 		<a-scene>
-			<a-assets>
-				<a-mixin id="text" text={{getDisplayQuestion}}></a-mixin>
-			</a-assets>
-			<a-text mixin="text" position="0 0 0" wrap-count="60"></a-text>
-			<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-			<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+			{{#if groupMode}}
+				<a-text mixin="text" position="0 0 0" wrap-count="60"></a-text>
+				<a-assets>
+					<a-mixin id="text" text={{getDisplayQuestion}}></a-mixin>
+				</a-assets>
+				<a-cylinder position="0 0 -0.5" rotation="-10 0 0" radius="1" height="1.5" color="#DEB887"></a-cylinder>
+				{{#with group}}
+					{{#each member in group.members}}
+						<a-image position={{avatarPosition @index}} src={{getUserAvatar member}}></a-image>
+						<a-text position={{namePosition @index}} value={{getUserNameById member}}></a-text>
+					{{/each}}
+				{{/with}}	
+			{{else}}
+				<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+				<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+				<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+				<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>	
+			{{/if}}
 			<a-sky color="#ECECEC"></a-sky>
-			<a-entity position="0 2 3.7">
-				<a-entity camera look-controls wasd-controls></a-entity>
+			<a-entity position="0 1.5 1">
+				<a-entity camera look-controls></a-entity>
 			</a-entity>
 		</a-scene>
 
-		<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger" style="z-index:9999"><img src="/icons/mic.svg"></a>
+		{{#unless groupMode}}
+		<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger"><img src="/icons/mic.svg"></a>
 		<div id="recorder-modal" class="modal">
 			<div class="modal-content">
 				{{> Recorder}}
 			</div>
 		</div>
+		{{/unless}}
 	</div>
 </template>

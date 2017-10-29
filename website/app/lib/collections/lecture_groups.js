@@ -10,8 +10,7 @@ var LectureGroupsSchema = new SimpleSchema({
 	},
 	number: {
 		type: Number,
-		label: 'Group number',
-		unique: true
+		label: 'Group number'
 	},
 	active: {
 		type: Boolean,
@@ -36,7 +35,18 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
 	Meteor.publish('LectureGroups', function(lectureId) {
 		if (lectureId) {
-			return LectureGroups.find({lectureId: lectureId})
+			var user = Meteor.user()
+			var lecture = Lectures.findOne(lectureId)
+			var course = Courses.findOne({code:lecture.courseCode})
+			if (user && course) {
+				if (course.instructors.indexOf(user._id) >= 0) {
+					return LectureGroups.find({lectureId:lectureId}, 
+						{sort: {number:1}})
+				} else if (course.students.indexOf(user._id) >= 0) {
+					return LectureGroups.find({lectureId:lectureId,members:user._id}, 
+						{sort: {number:1}})
+				}
+			}
 		}
 	})
 	Courses.deny({
