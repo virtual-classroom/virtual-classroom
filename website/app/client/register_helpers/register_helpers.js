@@ -65,7 +65,20 @@ Template.registerHelper('userIsInCourse', function(courseCode) {
 		var studnet = course.students.indexOf(user._id)
 		return (user._id === course.ownerId || studnet >= 0)
 	}
-}) 
+})
+
+Template.registerHelper('getUserAvatar', function(userId) {
+	var user = Meteor.users.findOne(userId)
+	if (user) {
+		var avatar = Avatars.findOne(user.profile.picture)
+		if (avatar) return avatar.url
+	}
+})
+
+Template.registerHelper('getUserNameById', function(userId) {
+	var user = Meteor.users.findOne(userId)
+	if (user) return user.profile.first_name + " " + user.profile.last_name
+})
 
 Template.registerHelper('prettyDate', function(date) {
 	return date.toDateString().slice(0, 15)
@@ -83,13 +96,7 @@ Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
 	if (course) return course.students.length
 })
 
-Template.registerHelper('getUserAvatar', function(userId) {
-	var user = Meteor.users.findOne(userId)
-	if (user) {
-		var avatar = Avatars.findOne(user.profile.picture)
-		if (avatar) return avatar.url
-	}
-})
+
 
 //****************************************************************************************************
 //											Route based
