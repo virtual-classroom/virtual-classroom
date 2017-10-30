@@ -60,10 +60,12 @@
 									<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
 								</div>
 							</div>
+							{{#if groupIsActive}}
 							<div class="card-action">
-								<button id="send-display-question" class="waves-effect waves-teal btn-flat" type="button">Send</button>
+								<button id="update-display-question" class="waves-effect waves-teal btn-flat" type="button">Update</button>
 								<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
 							</div>
+							{{/if}}
 						</div>
 					{{/if}}
 					<ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">

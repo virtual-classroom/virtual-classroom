@@ -117,9 +117,12 @@ Meteor.methods({
 						groups.push(students.slice(i, i + groupSize))
 					}
 					for (i = 0; i < groups.length; i += 1) {
+						var members = groups[i]
+						var leader = members[Math.floor(Math.random()*members.length)]
 						LectureGroups.insert({
 							lectureId: lecture._id,
 							courseId: course._id,
+							leader: leader,
 							number: i + 1,
 							members: groups[i],
 							active: true,

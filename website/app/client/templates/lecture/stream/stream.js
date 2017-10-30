@@ -42,14 +42,14 @@ Template.Stream.helpers({
 		if (index % 2 == 0) var x = 1.5*index
 		else var x = -1.5*index
 		var y = 1.2
-		var z = -2
+		var z = -2.2
 		return x + " " + y + " " + z 
 	},
 	namePosition: function(index) {
 		if (index % 2 == 0) var x = 1.5*index
 		else var x = -1.5*index
-		var y = 0.6
-		var z = -2
+		var y = 0.7
+		var z = -2.2
 		return x + " " + y + " " + z 
 	}
 });
