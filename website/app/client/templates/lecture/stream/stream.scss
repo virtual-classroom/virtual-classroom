@@ -27,6 +27,9 @@
 		position: inherit;
 	}
 	.group-discussion-form {
+		#group-discussion-textarea {
+			min-height:200px;
+		}
 		
 	}
 }

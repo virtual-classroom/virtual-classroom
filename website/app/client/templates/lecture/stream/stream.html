@@ -37,19 +37,18 @@
 		</a-scene>
 
 		{{#if groupMode}}
-			{{#if userIsGroupLeader}}
-				<a class="modal-trigger waves-light btn-flat overlay-btn" href="#group-disucssion-modal" id="group-discussion-modal-trigger"><img src="/icons/memo.svg"></a>
-			{{/if}}
+			<button data-target="group-discussion-modal" id="group-discussion-modal-trigger" class="modal-trigger waves-light btn-flat overlay-btn"><img src="/icons/memo.svg"></button>
 		{{else}}
-			<a class="modal-trigger waves-light btn-flat overlay-btn" href="#recorder-modal" id="recorder-modal-trigger"><img src="/icons/mic.svg"></a>
+			<button data-target="recorder-modal" id="recorder-modal-trigger" class="modal-trigger waves-light btn-flat overlay-btn"><img src="/icons/mic.svg"></button>
 		{{/if}}
+		{{#with group}}
 		<div id="group-discussion-modal" class="modal">
 			<form class="group-discussion-form">
 				<div class="modal-content">
-					<h3>Group {{getGroupNumber}}</h3>
+					<h3>Group {{number}}</h3>
 					<div class="input-field">
-						<textarea id="group-discussion-textarea" class="materialize-textarea"></textarea>
-						<label for="group-discussion-textarea">Discussion</label>
+						<textarea id="group-discussion-textarea" class="materialize-textarea" value={{discussion}} {{userCanEditDiscussion}}></textarea>
+						<label for="group-discussion-textarea" class={{activeTextarea discussion}}>Discussion</label>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -58,6 +57,7 @@
 				</div>
 			</form>
 		</div>
+		{{/with}}
 		<div id="recorder-modal" class="modal">
 			<div class="modal-content">
 				{{> Recorder}}

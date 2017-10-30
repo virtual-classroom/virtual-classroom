@@ -47,11 +47,15 @@ if (Meteor.isServer) {
 			var course = Courses.findOne({code:lecture.courseCode})
 			if (user && course) {
 				if (course.instructors.indexOf(user._id) >= 0) {
-					return LectureGroups.find({lectureId:lectureId}, 
-						{sort: {number:1}})
+					return LectureGroups.find({
+						lectureId:lectureId
+					}, {sort: {active:-1,number:1}})
 				} else if (course.students.indexOf(user._id) >= 0) {
-					return LectureGroups.find({lectureId:lectureId,members:user._id}, 
-						{sort: {number:1}})
+					return LectureGroups.find({
+						lectureId:lectureId,
+						members:user._id,
+						active:true
+					}, {sort: {number:1}})
 				}
 			}
 		}
