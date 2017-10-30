@@ -36,13 +36,32 @@
 			</a-entity>
 		</a-scene>
 
-		{{#unless groupMode}}
-		<a class="modal-trigger waves-light btn-flat" href="#recorder-modal" id="recorder-modal-trigger"><img src="/icons/mic.svg"></a>
+		{{#if groupMode}}
+			{{#if userIsGroupLeader}}
+				<a class="modal-trigger waves-light btn-flat overlay-btn" href="#group-disucssion-modal" id="group-discussion-modal-trigger"><img src="/icons/memo.svg"></a>
+			{{/if}}
+		{{else}}
+			<a class="modal-trigger waves-light btn-flat overlay-btn" href="#recorder-modal" id="recorder-modal-trigger"><img src="/icons/mic.svg"></a>
+		{{/if}}
+		<div id="group-discussion-modal" class="modal">
+			<form class="group-discussion-form">
+				<div class="modal-content">
+					<h3>Group {{getGroupNumber}}</h3>
+					<div class="input-field">
+						<textarea id="group-discussion-textarea" class="materialize-textarea"></textarea>
+						<label for="group-discussion-textarea">Discussion</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="waves-effect waves-teal modal-action btn-flat" type="button" id="group-discussion-modal-close">Close</button>
+					<!--<button class="waves-effect waves-teal modal-action btn-flat" type="submit">Login</button>-->
+				</div>
+			</form>
+		</div>
 		<div id="recorder-modal" class="modal">
 			<div class="modal-content">
 				{{> Recorder}}
 			</div>
 		</div>
-		{{/unless}}
 	</div>
 </template>

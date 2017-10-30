@@ -188,5 +188,19 @@ Meteor.methods({
 				$set: {displayQuestion: question}
 			})
 		}
+	},
+	'updateGroupDiscussion': function(groupId, discussion) {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne(groupId)
+		if (user && group && user._id === group.leader) {
+			LectureGroups.update(groupId, {
+				$set:{
+					discussion:discussion
+				}
+			}, function(error) {
+				if (error) throw new Meteor.Error("Update error", 
+					error.message, error.message)
+			})
+		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	}
 });

@@ -5,6 +5,19 @@ Template.Stream.events({
 	'click #recorder-modal-trigger': function() {
 		$('#recorder-modal').modal('open')
 		Session.set('recorder', true)
+	},
+	'click #group-discussion-modal-trigger': function() {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne(Session.get('groupId'))
+		if (user && group && user._id === group.leader) 
+			$('#group-discussion-modal').modal('open')
+	},
+	'click #group-discussion-modal-close': function() {
+		$('#group-discussion-modal').modal('close')
+	},
+	'keyup #group-discussion-textarea': function() {
+		var discussion = $('#group-discussion-textarea').val()
+		Meteor.call('updateGroupDiscussion', Session.get('groupId'), discussion)
 	}
 });
 
@@ -27,7 +40,10 @@ Template.Stream.helpers({
 	group: function() {
 		var user = Meteor.user()
 		var group = LectureGroups.findOne({members:user._id,active:true})
-		if (group) return group
+		if (group) {
+			Session.set('groupId', group._id)
+			return group
+		}
 	},
 	getGroupMembers: function() {
 		var user = Meteor.user()
@@ -51,6 +67,15 @@ Template.Stream.helpers({
 		var y = 0.7
 		var z = -2.2
 		return x + " " + y + " " + z 
+	},
+	userIsGroupLeader: function() {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne(Session.get('groupId'))
+		if (user && group) return user._id === group.leader 
+	},
+	getGroupNumber: function() {
+		var group = LectureGroups.findOne(Session.get('groupId'))
+		if (group) return group.number
 	}
 });
 
@@ -66,6 +91,8 @@ Template.Stream.onRendered(function () {
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	Session.set('lectureId', lecture._id)
 	Session.set('recorder', false)
+	Session.set('groupId', false)
+	$('#group-discussion-modal').modal()
 	$('#recorder-modal').modal()
 	document.documentElement.style.overflow = "hidden"
 	document.getElementById('footer').style.display = "none"

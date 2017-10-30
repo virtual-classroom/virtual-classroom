@@ -23,6 +23,10 @@ var LectureGroupsSchema = new SimpleSchema({
 		type: [String],
 		label: 'List of Students'
 	},
+	discussion: {
+		type: String,
+		optional: true
+	},
 	createdAt: {
 		type: Date,
 		label: 'Created At',
