@@ -26,6 +26,12 @@
 								<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
 							</div>
 						</div>
+					{{else}}
+						<div class="card">
+							<div class="card-content">
+								<div class="card-title">Lecture is currently offline</div>
+							</div>
+						</div>
 					{{/if}}
 					{{#if userIsCourseInstructor lecture.courseCode}}
 						{{#if questions}}
@@ -37,39 +43,41 @@
 								{{/each}}
 							</ul>
 						{{/if}}
-						<div class="card group-settings">
-							<div class="card-content">
-								<div class="card-title flex-container">
-									<p class="left-item">Group Mode</p>
-									<div class="right-item switch toggle-group-active-container">
-										<label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
-									</div>
-								</div>
-								<p style="color:grey">Class size: {{numberOfEnrolledStudents}} | Online students: {{numberOfOnlineStudents}}</p>
-								<div class="group-settings-form">
-									<div class="group-range-field">
-										<div class="range-field">
-											<label class="range-field-label">Group size</label>
-											<input {{disableGroupSizeRange}} type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfEnrolledStudents}} />
-											<label>Note: group size cannot be changed while group mode is enabled.</label>
+						{{#if lecture.active}}
+							<div class="card group-settings">
+								<div class="card-content">
+									<div class="card-title flex-container">
+										<p class="left-item">Group Mode</p>
+										<div class="right-item switch toggle-group-active-container">
+											<label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
 										</div>
 									</div>
+									<p style="color:grey">Class size: {{numberOfEnrolledStudents}} | Online students: {{numberOfOnlineStudents}}</p>
+									<div class="group-settings-form">
+										<div class="group-range-field">
+											<div class="range-field">
+												<label class="range-field-label">Group size</label>
+												<input {{disableGroupSizeRange}} type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfEnrolledStudents}} />
+												<label>Note: group size cannot be changed while group mode is enabled.</label>
+											</div>
+										</div>
+									</div>
+									<div class="input-field">
+										<textarea id="displayQuestion" name="displayQuestion" class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
+										<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
+									</div>
 								</div>
-								<div class="input-field">
-									<textarea id="displayQuestion" name="displayQuestion" class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
-									<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
+								{{#if groupIsActive}}
+								<div class="card-action">
+									<button id="update-display-question" class="waves-effect waves-teal btn-flat" type="button">Update</button>
+									<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
 								</div>
+								{{/if}}
 							</div>
-							{{#if groupIsActive}}
-							<div class="card-action">
-								<button id="update-display-question" class="waves-effect waves-teal btn-flat" type="button">Update</button>
-								<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
-							</div>
-							{{/if}}
-						</div>
+						{{/if}}
 					{{/if}}
-					<ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">
-						{{#if groups}}
+					{{#if groups}}
+						<ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">
 							{{#each group in groups}}
 							<li>
 								<div class="collapsible-header"><i class="material-icons">group</i>Group {{group.number}}</div>
@@ -81,12 +89,8 @@
 								</div>
 							</li>
 							{{/each}}
-						{{else}}
-							<li>
-								<div class="collapsible-header"><i class="material-icons">group</i>No groups available</div>
-							</li>
-						{{/if}}
-					</ul>
+						</ul>
+					{{/if}}
 				{{/with}}
 			{{else}}
 				{{> NotFound}}

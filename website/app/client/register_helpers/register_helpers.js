@@ -16,9 +16,7 @@ Template.registerHelper('userIsStudent', function() {
 Template.registerHelper('userIsAdmin', function() {
 	// return true is current user is admin
 	var user = Meteor.user()
-	if (user) {
-		return user.roles == 'admin'
-	}
+	if (user) return user.roles === 'admin'
 })
 
 Template.registerHelper('userIsInstructorOrAdmin', function() {
@@ -81,7 +79,8 @@ Template.registerHelper('getUserNameById', function(userId) {
 })
 
 Template.registerHelper('prettyDate', function(date) {
-	return date.toDateString().slice(0, 15)
+	// convert "Mon Oct 30 2017 13:21:08 GMT-0400 (EDT)"" to "Oct 30"
+	return date.toDateString().slice(4,10)
 })
 
 Template.registerHelper('lectureIsActive', function(id) {
@@ -105,4 +104,9 @@ Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
 Template.registerHelper('route_is', function(type) {
 	// return true is user currently on the given page
 	return Router.current().location.get().path === type
+})
+
+Template.registerHelper('hideInStream', function() {
+	var route = Router.current().location.get().path
+	if (route.slice(-6) === 'stream') return "display:none;"
 })

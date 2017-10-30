@@ -95,12 +95,8 @@ Template.Stream.onRendered(function () {
 	$('#group-discussion-modal').modal()
 	$('#recorder-modal').modal()
 	document.documentElement.style.overflow = "hidden"
-	document.getElementById('footer').style.display = "none"
-	document.getElementById('nav').style.display = "none"
 });
 
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
-	document.getElementById('footer').style.display = "inherit"
-	document.getElementById('nav').style.display = "inherit"
 });

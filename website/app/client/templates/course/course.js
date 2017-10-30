@@ -14,7 +14,7 @@ Template.Course.events({
 	'submit #create-lecture-form': function(event) {
 		event.preventDefault();
 		target = event.target
-		var title = target.lectureName.value
+		var title = $('lectureName').val()
 		var user = Meteor.user()
 		var course = Courses.findOne({code: Session.get('courseCode')})
 		if (title == "") {
@@ -30,6 +30,7 @@ Template.Course.events({
 			$("#lectureName-label").attr("data-error", "This lecture already exists")
 			Session.set("validLectureSection", false)
 		} else if (course && course.instructors.indexOf(user._id) >= 0) {
+			title = title.replace(/\?/g,'')
 			Meteor.call('addLecture', title, course.code, function(error, result) {
 				if (error) {
 					console.log(error)
