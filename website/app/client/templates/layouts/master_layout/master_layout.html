@@ -13,7 +13,7 @@
 			<li><a class="modal-trigger" href="#register-modal" id="register-modal-trigger">Register</a></li>
 		{{/if}}
 	</ul>
-	<nav id="nav">
+	<nav id="nav" style={{hideInStream}}>
 		<div class="nav-wrapper">
 			<a href="/" class="brand-logo"><img class="logo" src="/icons/cardboard.png"></a>
 			<div class="breadcrumb-container">
@@ -32,14 +32,16 @@
 			</ul>
 		</div>
 	</nav>
+	{{#unless currentUser}}
 	<div id="login-modal" class="modal">
 		{{> Login}}
 	</div>
 	<div id="register-modal" class="modal">
 		{{> Register}}
 	</div>
+	{{/unless}}
 	<div class="master-main">
-	{{> yield}}
+		{{> yield}}
 	</div>
 	{{> Footer}}
 </template>

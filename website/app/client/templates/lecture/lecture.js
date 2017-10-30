@@ -90,7 +90,7 @@ Template.Lecture.helpers({
 	},
 	groups: function() {
 		var groups = LectureGroups.find({lectureId:this._id,active:true},{sort: {number:1}})
-		if (groups) return groups
+		if (groups.fetch().length) return groups
 	},
 	disableGroupSizeRange: function() {
 		var lecture = Lectures.findOne(Session.get('lectureId'))

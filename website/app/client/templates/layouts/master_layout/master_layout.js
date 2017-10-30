@@ -28,7 +28,9 @@ Template.MasterLayout.events({
 });
 
 Template.MasterLayout.onRendered(function() {
-	$('#login-modal').modal()
-	$('#register-modal').modal()
+	if (!Meteor.user()) {
+		$('#login-modal').modal()
+		$('#register-modal').modal()
+	}
 	$(".dropdown-button").dropdown()
 });
