@@ -18,9 +18,7 @@ Template.Stream.helpers({
 	},
 	getDisplayQuestion: function() {
 		var lecture = Lectures.findOne(Session.get('lectureId'))
-		if (lecture && lecture.displayQuestion) {
-			return "align: center; width: 6; color: #000; value: " + lecture.displayQuestion
-		}
+		if (lecture && lecture.displayQuestion) return lecture.displayQuestion
 	},
 	groupMode: function() {
 		var lecture = Lectures.findOne(Session.get('lectureId'))
@@ -31,17 +29,28 @@ Template.Stream.helpers({
 		var group = LectureGroups.findOne({members:user._id,active:true})
 		if (group) return group
 	},
+	getGroupMembers: function() {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne({members:user._id,active:true})
+		if (group) {
+			var members = group.members
+			members.splice(members.indexOf(user._id),1)
+			return members
+		}
+	},
 	avatarPosition: function(index) {
-		var x = -1
+		if (index % 2 == 0) var x = 1.5*index
+		else var x = -1.5*index
 		var y = 1.2
 		var z = -2
-		return (x + 1.5*index) + " " + y + " " + z 
+		return x + " " + y + " " + z 
 	},
 	namePosition: function(index) {
-		var x = -1
-		var y = 1
+		if (index % 2 == 0) var x = 1.5*index
+		else var x = -1.5*index
+		var y = 0.6
 		var z = -2
-		return (x + 1.5*index) + " " + y + " " + z 
+		return x + " " + y + " " + z 
 	}
 });
 

@@ -88,8 +88,7 @@ Meteor.methods({
 			if (lecture.mode == 'group') {
 				Lectures.update(lectureId, {
 					$set: {
-						mode: 'lecture',
-						displayQuestion: ""
+						mode: 'lecture'
 					}
 				}, function(error) {
 					if (error) throw new Meteor.Error("Update error", 

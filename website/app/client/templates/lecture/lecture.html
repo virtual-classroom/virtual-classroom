@@ -45,12 +45,13 @@
 										<label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
 									</div>
 								</div>
-								<p style="color:grey">Class size: {{numberOfEnrolledStudnets}} | Online students: {{numberOfOnlineStudents}}</p>
+								<p style="color:grey">Class size: {{numberOfEnrolledStudents}} | Online students: {{numberOfOnlineStudents}}</p>
 								<div class="group-settings-form">
 									<div class="group-range-field">
 										<div class="range-field">
-											<label>Group size</label>
-											<input type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfOnlineStudents}} />
+											<label class="range-field-label">Group size</label>
+											<input {{disableGroupSizeRange}} type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfEnrolledStudents}} />
+											<label>Note: group size cannot be changed while group mode is enabled.</label>
 										</div>
 									</div>
 								</div>
