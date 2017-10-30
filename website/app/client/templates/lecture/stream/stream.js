@@ -16,10 +16,18 @@ Template.Stream.events({
 		$('#group-discussion-modal').modal('close')
 	},
 	'keyup #group-discussion-textarea': function() {
-		var discussion = $('#group-discussion-textarea').val()
-		Meteor.call('updateGroupDiscussion', Session.get('groupId'), discussion)
+		// update discussion every 5 seconds after keyup
+		clearTimeout(Session.get('typingTimer'))
+		if ($('#group-discussion-textarea').val()) {
+			typingTimer = setTimeout(function() {
+				Meteor.call('updateGroupDiscussion', Session.get('groupId'),  
+					$('#group-discussion-textarea').val())
+			}, Session.get('typingInterval'))
+			Session.set('typingTimer', typingTimer)
+		}
 	}
 });
+
 
 /*****************************************************************************/
 /* Stream: Helpers */
@@ -68,14 +76,17 @@ Template.Stream.helpers({
 		var z = -2.2
 		return x + " " + y + " " + z 
 	},
-	userIsGroupLeader: function() {
+	userCanEditDiscussion: function() {
 		var user = Meteor.user()
 		var group = LectureGroups.findOne(Session.get('groupId'))
-		if (user && group) return user._id === group.leader 
+		if (user && group && user._id !== group.leader) return 'disabled'
 	},
 	getGroupNumber: function() {
 		var group = LectureGroups.findOne(Session.get('groupId'))
 		if (group) return group.number
+	},
+	activeTextarea: function(discussion) {
+		if (discussion) return 'active'
 	}
 });
 
@@ -92,9 +103,17 @@ Template.Stream.onRendered(function () {
 	Session.set('lectureId', lecture._id)
 	Session.set('recorder', false)
 	Session.set('groupId', false)
-	$('#group-discussion-modal').modal()
-	$('#recorder-modal').modal()
+
+	Meteor.setTimeout(function() {
+		$('#group-discussion-modal').modal()
+		$('#recorder-modal').modal()
+	}, 100)
 	document.documentElement.style.overflow = "hidden"
+
+	// variables to textarea update timer
+	var typingTimer
+	Session.set('typingTimer', typingTimer)
+	Session.set('typingInterval', 5000)
 });
 
 Template.Stream.onDestroyed(function () {

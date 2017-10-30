@@ -29,7 +29,8 @@
 					{{else}}
 						<div class="card">
 							<div class="card-content">
-								<div class="card-title">Lecture is currently offline</div>
+								<div class="card-title">Offline</div>
+								<p>Lecture is not active, please check later.</p>
 							</div>
 						</div>
 					{{/if}}
@@ -85,7 +86,7 @@
 									<p class="group-label">Members</p>
 									<p>{{#each member in group.members}}<span style="padding-right:2em;">{{getUserNameById member}}</span>{{/each}}</p>
 									<p class="group-label">Discussion</p>
-									<p>{{group.discussion}}</p>
+									<p>{{#if group.discussion}}{{group.discussion}}{{else}}No discussion yet.{{/if}}</p>
 								</div>
 							</li>
 							{{/each}}
