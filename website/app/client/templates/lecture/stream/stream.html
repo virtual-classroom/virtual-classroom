@@ -11,10 +11,11 @@
 			{{#if groupMode}}
 				<!-- blackboard -->
 				<a-text position="0 5 -8" value={{getDisplayQuestion}} width="18" align="center" color="white" opacity="0.8" wrap-count="25"></a-text>
-				<a-plane position="0 5 -8" height="10" width="20" rotation="0 0 0" color="#723e13"></a-plane>
+				<a-plane position="0 5 -8" height="10" width="20" rotation="0 0 0" color="#604020"></a-plane>
 				<a-plane position="0 5 -8" height="9.5" width="19.5" rotation="0 0 0" color="black"></a-plane>
 				<!-- desk -->
-				<a-cylinder position="0 -0.2 -0.6" rotation="0 0 0" radius="1" height="1.5" color="#DEB887"></a-cylinder>
+				<a-plane position="0 0.6 -0.4" rotation="-90 0 0" width="1.5" height="2" color="white"></a-plane>
+				<a-cylinder position="0 -0.2 -0.6" rotation="0 0 0" radius="1.5" height="1.5" color="#5c5c5c"></a-cylinder>
 				<a-plane position="0 -1.5 0" rotation="-90 0 0" width="50" height="50" color="#7BC8A4"></a-plane>	
 				<!-- user avatars -->
 				{{#with group}}
@@ -30,7 +31,7 @@
 				<a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>	
 			{{/if}}
 			<a-sky color="#ECECEC"></a-sky>
-			<a-entity position="0 1.5 1.2">
+			<a-entity position="0 1.5 2">
 				<a-entity camera look-controls wasd-controls></a-entity>
 			</a-entity>
 		</a-scene>

@@ -8,6 +8,9 @@ var LectureGroupsSchema = new SimpleSchema({
 	courseId: {
 		type:String
 	},
+	leader: {
+		type:String
+	},
 	number: {
 		type: Number,
 		label: 'Group number'

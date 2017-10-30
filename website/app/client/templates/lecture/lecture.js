@@ -17,7 +17,7 @@ Template.Lecture.events({
 		$('#displayQuestion-label').removeClass("active")
 		Meteor.call('updateLectureDisplayQuestion', this._id, '')
 	},
-	'click #send-display-question': function() {
+	'click #update-display-question': function() {
 		var question = $('#displayQuestion').val()
 		if (question) {
 			Meteor.call('updateLectureDisplayQuestion', this._id, question, 
@@ -25,7 +25,7 @@ Template.Lecture.events({
 					if (error) {
 						console.log(error)
 					} else {
-						Materialize.toast('Question added', 4000)
+						Materialize.toast('Question updated', 4000)
 					}
 				}
 			)
