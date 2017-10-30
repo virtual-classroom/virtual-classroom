@@ -124,6 +124,9 @@ strong {
 		background: #2196F3;
 		border-radius: 50%;
 	}
+	input[disabled]::-webkit-slider-thumb {
+		background: grey;
+	}
 	.thumb {
 		background-color: #2196F3!important;
 	}

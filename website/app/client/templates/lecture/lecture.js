@@ -62,7 +62,7 @@ Template.Lecture.helpers({
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture) return lecture.mode === 'group'
 	},
-	numberOfEnrolledStudnets: function() {
+	numberOfEnrolledStudents: function() {
 		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
 		if (enrolledStudents) return enrolledStudents.length
 	},
@@ -91,6 +91,10 @@ Template.Lecture.helpers({
 	groups: function() {
 		var groups = LectureGroups.find({lectureId:this._id,active:true},{sort: {number:1}})
 		if (groups) return groups
+	},
+	disableGroupSizeRange: function() {
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		if (lecture && lecture.mode === 'group') return 'disabled'
 	}
 });
 
