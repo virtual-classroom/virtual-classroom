@@ -4,7 +4,12 @@
 Template.Lecture.events({
 	'change .toggle-lecture-active input': function(event) {
 		// toggle active and inactive of lecture
-		Meteor.call('toggleLecture', Session.get('lectureId'))
+		var youtube = $('#youtubeURL').val()
+		if (youtube) {
+			Meteor.call('toggleLecture', Session.get('lectureId'), youtube)
+		} else {
+			Materialize.toast('Please provide YouTube URL', 4000)
+		}
 	},
 	'click #lecture-file-upload-trigger': function() {
 		$('#lecture-file-upload-modal').modal('open')
@@ -97,12 +102,15 @@ Template.Lecture.helpers({
 		if (lecture && lecture.mode === 'group') return 'disabled'
 	},
 	getGroupDiscussion: function() {
-		console.log(this)
 		var group = LectureGroups.findOne(groupId)
 		if (group) {
 			console.log(group.discussion)
 			return group.discussion
 		}
+	},
+	activeYouTubeInputField: function(yotube) {
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		if (lecture && lecture.youtube) return 'active'
 	}
 });
 

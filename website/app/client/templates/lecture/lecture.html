@@ -12,28 +12,34 @@
 								<span class="live-now active-blink">LIVE NOW</span>
 							{{/if}}
 							{{#if userIsCourseInstructor lecture.courseCode}}
-								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if lectureIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
+								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if lectureIsActive}}true{{/if}}" {{disableActiveToggle}}><span class="lever"></span>ON</label>
 							{{/if}}
 						</div>
 					</div>
-					{{#if lecture.active}}
-						<div class="card">
-							<div class="card-content">
+					<div class="card">
+						<div class="card-content">
+							{{#if userIsCourseInstructor lecture.courseCode}}
+								<div class="input-field">
+									<input id="youtubeURL" name="youtubeURL" type="text" class="validate" autocomplete="off" value={{lecture.youtube}}>
+									<label id="youtubeURL-label" for="youtubeURL" class={{activeYouTubeInputField lecture.youtube}}>YouTube URL</label>
+								</div>
+							{{/if}}
+							{{#if lecture.active}}	
 								<div class="card-title">Live Stream</div>
-								<video src="/videos/demo.mp4" autoplay loop muted></video>
-							</div>
-							<div class="card-action">
-								<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
-							</div>
-						</div>
-					{{else}}
-						<div class="card">
-							<div class="card-content">
+								<div class="video-container">
+									<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
+								</div>
+							{{else}}
 								<div class="card-title">Offline</div>
 								<p>Lecture is not active, please check later.</p>
-							</div>
+							{{/if}}
 						</div>
-					{{/if}}
+						{{#if lecture.active}}
+						<div class="card-action">
+							<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
+						</div>
+						{{/if}}
+					</div>
 					{{#if userIsCourseInstructor lecture.courseCode}}
 						{{#if questions}}
 							<ul class="collection card">

@@ -40,6 +40,10 @@ var LecturesSchema = new SimpleSchema({
 		type: Number,
 		defaultValue: 2
 	},
+	youtube: {
+		type: String,
+		optional: true
+	},
 	createdAt: {
 		type: Date,
 		defaultValue: new Date()
