@@ -92,10 +92,13 @@ Template.registerHelper('lectureIsActive', function(id) {
 Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
 	// return a list of students who enrolled into courseId
 	var course = Courses.findOne({code:courseId})
-	if (course) return course.students.length
+	if (course && course.students) return course.students.length
 })
 
-
+Template.registerHelper('getLectureYouTubeURL', function(lectureId) {
+	var lecture = Lectures.findOne(lectureId)
+	if (lecture && lecture.youtube) return lecture.youtube + "?rel=0&amp;controls=0&amp;showinfo=0"
+})
 
 //****************************************************************************************************
 //											Route based

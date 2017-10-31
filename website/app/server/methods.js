@@ -68,12 +68,19 @@ Meteor.methods({
 		} else throw new Meteor.Error("Update error", "Access denied", 
 			"Access denied");
 	},
-	'toggleLecture': function(lectureId) {
+	'toggleLecture': function(lectureId, youtube) {
 		var user = Meteor.user()
 		var lecture = Lectures.findOne(lectureId)
-		if (user && lecture && lecture.ownerId == user._id) {
+		var course = Courses.findOne({code: lecture.courseCode})
+		if (user && course  && youtube && course.instructors.indexOf(user._id) >= 0) {
 			Lectures.update(lectureId, {
-				$set: {active: !lecture.active}
+				$set: {
+					active: !lecture.active,
+					youtube: youtube
+				}
+			}, function(error) {
+				if (error) throw new Meteor.Error("Update error", 
+					error.message, error.message)
 			})
 		}
 	},

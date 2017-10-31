@@ -33,6 +33,10 @@ Template.Stream.events({
 /* Stream: Helpers */
 /*****************************************************************************/
 Template.Stream.helpers({
+	lecture: function() {
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		if (lecture) return lecture
+	},
 	recorderIsActive: function() {
 		var modal = document.getElementById('recorder-modal')
 		if (Session.get('recorder') === true) return "muted"
