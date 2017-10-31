@@ -64,6 +64,7 @@ livedata@1.0.18
 localstorage@1.1.1
 logging@1.1.19
 manuelschoebel:ms-seo@0.4.1
+markdown@1.0.12
 matb33:collection-hooks@0.8.4
 materialize:materialize@0.100.2
 mdg:validation-error@0.5.1

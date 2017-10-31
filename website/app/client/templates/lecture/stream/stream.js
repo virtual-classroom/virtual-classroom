@@ -63,15 +63,15 @@ Template.Stream.helpers({
 		}
 	},
 	avatarPosition: function(index) {
-		if (index % 2 == 0) var x = 1.5*index
-		else var x = -1.5*index
+		if (index % 2 == 0) var x = 1.5*Math.floor((index + 1)/2)
+		else var x = -1.5*Math.floor((index + 1)/2)
 		var y = 1.2
 		var z = -2.2
 		return x + " " + y + " " + z 
 	},
 	namePosition: function(index) {
-		if (index % 2 == 0) var x = 1.5*index
-		else var x = -1.5*index
+		if (index % 2 == 0) var x = 1.5*Math.floor((index + 1)/2)
+		else var x = -1.5*Math.floor((index + 1)/2)
 		var y = 0.7
 		var z = -2.2
 		return x + " " + y + " " + z 

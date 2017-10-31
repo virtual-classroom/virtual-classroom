@@ -41,6 +41,34 @@ _.map(lectures, function(lecture) {
 	}
 })
 
+// create tester users
+var number = 50
+for (i = 1; i <= number; i++) {
+	if (i < 10) var last = "0" + i
+	else var last = i.toString()
+	var user = Meteor.users.find({'profile.first_name':"Tester",'profile.last_name':last}).fetch()
+	if (user.length <= 0) {
+		Accounts.createUser({
+			first_name: "Tester",
+			last_name: last,
+			email: "tester" + last + "@mail.utoronto.ca",
+			password: "tester" + last,
+			accountType: 'student'
+		})
+		var user = Meteor.users.findOne({'profile.first_name':"Tester",'profile.last_name':last})
+		var course = Courses.findOne({code:"CSC108H"})
+		if (course.students.indexOf(user._id) <= 0) {
+			var temp = course.students
+			temp.push(user._id)
+			Courses.update(course._id, {
+				$set: {students: temp}
+			},function(error) {
+				if (error) throw new Meteor.Error("Update error", error.message, error.message)
+			})
+		}
+	}
+}
+
 // initialize SEO for each page
 SeoCollection.update(
 	{

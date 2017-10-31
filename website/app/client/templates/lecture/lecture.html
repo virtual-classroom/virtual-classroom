@@ -83,10 +83,7 @@
 							<li>
 								<div class="collapsible-header"><i class="material-icons">group</i>Group {{group.number}}</div>
 								<div class="collapsible-body">
-									<p class="group-label">Members</p>
-									<p>{{#each member in group.members}}<span style="padding-right:2em;">{{getUserNameById member}}</span>{{/each}}</p>
-									<p class="group-label">Discussion</p>
-									<p>{{#if group.discussion}}{{group.discussion}}{{else}}No discussion yet.{{/if}}</p>
+									{{> GroupContent groupId=group._id}}
 								</div>
 							</li>
 							{{/each}}

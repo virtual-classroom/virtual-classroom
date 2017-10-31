@@ -96,12 +96,12 @@ Meteor.methods({
 				})
 			} else {
 				var students = course.students
-				var groupSize = groupSettings.groupSize
+				var groupSize = parseInt(groupSettings.groupSize)
 				var existingGroups = LectureGroups.find({
 					lectureId:lectureId,
 					active:true
 				}).fetch()
-				if (existingGroups.length <= 0 || lecture.groupSize != groupSize) {
+				if (existingGroups.length <= 0 || parseInt(lecture.groupSize) != groupSize) {
 					// deactivate old existing groups
 					for (i = 0; i < existingGroups.length; i += 1) {
 						LectureGroups.update(existingGroups[i]._id, {$set:{
