@@ -1,33 +1,37 @@
 <template name="Stream">
 	<div class="stream">
 		{{#if groupMode}}
-		<a-scene>
-			{{#with group}}
-				<!-- blackboard -->
-				<a-text position="0 5 -8" value={{getDisplayQuestion}} width="18" align="center" color="white" opacity="0.8" wrap-count="25"></a-text>
-				<a-plane position="0 5 -8" height="10" width="20" rotation="0 0 0" color="#604020"></a-plane>
-				<a-plane position="0 5 -8" height="9.5" width="19.5" rotation="0 0 0" color="black"></a-plane>
-				<!-- desk -->
-				<a-text position="0 0.6 -0.4" value={{discussion}} rotation="-90 0 0" width="1.5" align="center" color="black" wrap-count="30"></a-text>
-				<a-plane position="0 0.6 -0.4" rotation="-90 0 0" width="1.5" height="2" color="white"></a-plane>
-				<a-cylinder position="0 -0.2 -0.6" rotation="0 0 0" radius="1.5" height="1.5" color="#5c5c5c"></a-cylinder>
-				<a-plane position="0 -1.5 0" rotation="-90 0 0" width="50" height="50" color="#7BC8A4"></a-plane>	
-				<!-- user avatars -->
-				{{#each member in getGroupMembers}}
-					<a-image position={{avatarPosition @index}} src={{getUserAvatar member}} width="0.8" height="0.8"></a-image>
-					<a-text position={{namePosition @index}} value={{getUserNameById member}} align="center" color="#000" opacity="0.8" wrap-count="55"></a-text>
-				{{/each}}
-			{{/with}}
-			<a-sky color="#ECECEC"></a-sky>
-			<a-entity position="0 1.5 1">
-				<a-entity camera look-controls wasd-controls></a-entity>
-			</a-entity>
-		</a-scene>
+			<a-scene>
+				{{#with group}}
+					<!-- blackboard -->
+					<a-text position="0 5 -8" value={{getDisplayQuestion}} width="18" align="center" color="white" opacity="0.8" wrap-count="25"></a-text>
+					<a-plane position="0 5 -8" height="10" width="20" rotation="0 0 0" color="#604020"></a-plane>
+					<a-plane position="0 5 -8" height="9.5" width="19.5" rotation="0 0 0" color="black"></a-plane>
+					<!-- desk -->
+					<a-text position="0 0.6 -0.4" value={{discussion}} rotation="-90 0 0" width="1.5" align="center" color="black" wrap-count="30"></a-text>
+					<a-plane position="0 0.6 -0.4" rotation="-90 0 0" width="1.5" height="2" color="white"></a-plane>
+					<a-cylinder position="0 -0.2 -0.6" rotation="0 0 0" radius="1.5" height="1.5" color="#5c5c5c"></a-cylinder>
+					<a-plane position="0 -1.5 0" rotation="-90 0 0" width="50" height="50" color="#7BC8A4"></a-plane>	
+					<!-- user avatars -->
+					{{#each member in getGroupMembers}}
+						<a-image position={{avatarPosition @index}} src={{getUserAvatar member}} width="0.8" height="0.8"></a-image>
+						<a-text position={{namePosition @index}} value={{getUserNameById member}} align="center" color="#000" opacity="0.8" wrap-count="55"></a-text>
+					{{/each}}
+				{{/with}}
+				<a-sky color="#ECECEC"></a-sky>
+				<a-entity position="0 1.5 1">
+					<a-entity camera look-controls wasd-controls></a-entity>
+				</a-entity>
+			</a-scene>
 		{{else}}
 			{{#with lecture}}
-			<div class="video-container" style="width:100%;height:100vh">
-				<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
-			</div>
+				{{#if lecture.youtube}}
+					<div class="video-container" style="width:100%;height:100vh">
+						<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
+					</div>
+				{{else}}
+					<div class="valign-wrapper" style="height:100vh"><h3 style="margin:0 auto;">YouTube stream not available.</h3></div>
+				{{/if}}
 			{{/with}}
 		{{/if}}
 
@@ -48,7 +52,6 @@
 				</div>
 				<div class="modal-footer">
 					<button class="waves-effect waves-teal modal-action btn-flat" type="button" id="group-discussion-modal-close">Close</button>
-					<!--<button class="waves-effect waves-teal modal-action btn-flat" type="submit">Login</button>-->
 				</div>
 			</form>
 		</div>

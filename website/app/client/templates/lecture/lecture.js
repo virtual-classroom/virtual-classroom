@@ -5,11 +5,8 @@ Template.Lecture.events({
 	'change .toggle-lecture-active input': function(event) {
 		// toggle active and inactive of lecture
 		var youtube = $('#youtubeURL').val()
-		if (youtube) {
-			Meteor.call('toggleLecture', Session.get('lectureId'), youtube)
-		} else {
-			Materialize.toast('Please provide YouTube URL', 4000)
-		}
+		if (!youtube) Materialize.toast('Please provide YouTube URL', 4000)
+		Meteor.call('toggleLecture', Session.get('lectureId'), youtube)
 	},
 	'click #lecture-file-upload-trigger': function() {
 		$('#lecture-file-upload-modal').modal('open')
