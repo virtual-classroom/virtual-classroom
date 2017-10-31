@@ -72,7 +72,7 @@ Meteor.methods({
 		var user = Meteor.user()
 		var lecture = Lectures.findOne(lectureId)
 		var course = Courses.findOne({code: lecture.courseCode})
-		if (user && course  && youtube && course.instructors.indexOf(user._id) >= 0) {
+		if (user && course && course.instructors.indexOf(user._id) >= 0) {
 			Lectures.update(lectureId, {
 				$set: {
 					active: !lecture.active,

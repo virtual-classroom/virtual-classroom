@@ -26,9 +26,13 @@
 							{{/if}}
 							{{#if lecture.active}}	
 								<div class="card-title">Live Stream</div>
+								{{#if lecture.youtube}}
 								<div class="video-container">
 									<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
 								</div>
+								{{else}}
+									<p>YouTube stream not available.</p>
+								{{/if}}
 							{{else}}
 								<div class="card-title">Offline</div>
 								<p>Lecture is not active, please check later.</p>
@@ -36,7 +40,7 @@
 						</div>
 						{{#if lecture.active}}
 						<div class="card-action">
-							<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Watch Stream</a>
+							<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Enter Stream</a>
 						</div>
 						{{/if}}
 					</div>
