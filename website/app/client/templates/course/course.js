@@ -14,7 +14,7 @@ Template.Course.events({
 	'submit #create-lecture-form': function(event) {
 		event.preventDefault();
 		target = event.target
-		var title = $('lectureName').val()
+		var title = $('#lectureName').val()
 		var user = Meteor.user()
 		var course = Courses.findOne({code: Session.get('courseCode')})
 		if (title == "") {

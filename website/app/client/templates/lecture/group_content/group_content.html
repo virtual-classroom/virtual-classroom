@@ -1,0 +1,16 @@
+<template name="GroupContent">
+	<div class="group-content">
+		{{#if group}}
+			<p class="group-label">Leader</p>
+			<p>{{getUserNameById group.leader}}</p>
+			<p class="group-label">Members</p>
+			<p>{{#each member in group.members}}<span style="padding-right:2em;">{{getUserNameById member}}</span>{{/each}}</p>
+			<p class="group-label">Discussion</p>
+			{{#if group.discussion}}
+				{{#markdown}}{{getGroupDiscussion}}{{/markdown}}
+			{{else}}
+				<p>No discussion yet.</p>
+			{{/if}}
+		{{/if}}
+	</div>
+</template>

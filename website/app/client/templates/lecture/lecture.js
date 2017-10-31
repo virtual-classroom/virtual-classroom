@@ -95,6 +95,14 @@ Template.Lecture.helpers({
 	disableGroupSizeRange: function() {
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture && lecture.mode === 'group') return 'disabled'
+	},
+	getGroupDiscussion: function() {
+		console.log(this)
+		var group = LectureGroups.findOne(groupId)
+		if (group) {
+			console.log(group.discussion)
+			return group.discussion
+		}
 	}
 });
 
