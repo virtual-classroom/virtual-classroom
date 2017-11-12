@@ -98,10 +98,16 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
 	Meteor.publish('Questions', function(lectureId) {
-		if (lectureId) {
-			return Questions.collection.find({"meta.lectureId": lectureId})
-		} else {
-			return Audios.collection.find()
+		var user = Meteor.user()
+		if (lectureId && user) {
+			if ((user.profile.accountType == 'instructor') || (user.roles == 'admin')){
+				return Questions.collection.find({"meta.lectureId": lectureId})
+			} else {
+				return Questions.collection.find({
+					'userId': user._id,
+					'meta.lectureId': lectureId
+				})
+			}
 		}
 	})
 	Questions.deny({

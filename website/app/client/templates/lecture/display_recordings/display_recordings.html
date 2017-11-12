@@ -7,7 +7,11 @@
 			<span class="left-item">Speech recognition confidence: {{getPercentage question.meta.confidence}}</span>
 			<span class="right-item">{{livestamp question.createdAt}}</span>
 		</div>
-		<p>{{question.meta.transcript}}</p>
+		{{#if question.meta.transcript}}
+			<p>{{question.meta.transcript}}</p>
+		{{else}}
+			<p>Unable to transcribe audio</p>
+		{{/if}}
 	</div>
 	{{/if}}
 </template>

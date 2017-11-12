@@ -3,8 +3,9 @@
 /*****************************************************************************/
 Template.Stream.events({
 	'click #recorder-modal-trigger': function() {
-		$('#recorder-modal').modal('open')
 		Session.set('recorder', true)
+		Session.set('audioURL', false)
+		$('#recorder-modal').modal('open')
 	},
 	'click #group-discussion-modal-trigger': function() {
 		var user = Meteor.user()

@@ -13,7 +13,10 @@ StreamController = RouteController.extend({
 		this.subscribe('Courses', courseCode).wait()
 		this.subscribe('Lectures', courseCode, title).wait()
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
-		if (lecture) this.subscribe('LectureGroups', lecture._id).wait()
+		if (lecture) {
+			this.subscribe('LectureGroups', lecture._id).wait()
+			this.subscribe('Questions', lecture._id).wait()
+		}
 	},
 
 	// Subscriptions or other things we want to "wait" on. This also
