@@ -7,7 +7,9 @@ Accounts.onCreateUser(function(options, user) {
 	user.profile.first_name = options.first_name
 	user.profile.last_name = options.last_name
 	user.profile.accountType = options.accountType
-	var avatar = Avatars.findOne({name:"1F642.svg"})
+	// randomly assign avatar to user
+	var avatars = Avatars.find().fetch()
+	var avatar = avatars[Math.floor(Math.random() * avatars.length)]
 	user.profile.picture = avatar._id
 	// Basic Role Setup
 	user.roles = 'user'
