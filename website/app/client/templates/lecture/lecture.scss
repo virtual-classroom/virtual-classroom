@@ -61,6 +61,11 @@
 		}
 	}
 	#groups-collapsible {
+		.collapsible-header {
+			.material-icons {
+				vertical-align: middle;
+			}
+		}
 		.group-label {
 			margin-bottom:0;
 			color:grey;
