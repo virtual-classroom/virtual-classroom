@@ -26,6 +26,12 @@ Template.Stream.events({
 			}, Session.get('typingInterval'))
 			Session.set('typingTimer', typingTimer)
 		}
+	},
+	'click .enter-group-discussion': function(event) {
+		Session.set('groupId', event.target.dataset.value)
+	},
+	'click #exit-group-discussion': function() {
+		Session.set('groupId', false)
 	}
 });
 
@@ -38,6 +44,14 @@ Template.Stream.helpers({
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture) return lecture
 	},
+	group: function() {
+		var group = LectureGroups.findOne(Session.get('groupId'))
+		if (group) return group
+	},
+	groups: function() {
+		var groups = LectureGroups.find({active:true},{sort: {number:1}})
+		if (groups.fetch().length) return groups.fetch()
+	},
 	recorderIsActive: function() {
 		var modal = document.getElementById('recorder-modal')
 		if (Session.get('recorder') === true) return "muted"
@@ -46,24 +60,14 @@ Template.Stream.helpers({
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture && lecture.displayQuestion) return lecture.displayQuestion
 	},
-	groupMode: function() {
-		var lecture = Lectures.findOne(Session.get('lectureId'))
-		if (lecture) return lecture.mode === 'group'
-	},
-	group: function() {
-		var user = Meteor.user()
-		var group = LectureGroups.findOne({members:user._id,active:true})
-		if (group) {
-			Session.set('groupId', group._id)
-			return group
-		}
+	groupMode: function(mode) {
+		if (mode) return mode === 'group'
 	},
 	getGroupMembers: function() {
-		var user = Meteor.user()
-		var group = LectureGroups.findOne({members:user._id,active:true})
+		var group = LectureGroups.findOne(Session.get('groupId'))
 		if (group) {
 			var members = group.members
-			members.splice(members.indexOf(user._id),1)
+			members.splice(members.indexOf(Meteor.userId()), 1)
 			return members
 		}
 	},
@@ -109,6 +113,9 @@ Template.Stream.onRendered(function () {
 	Session.set('recorder', false)
 	Session.set('groupId', false)
 
+	var group = LectureGroups.findOne({members:Meteor.userId(),active:true})
+	if (group) Session.set('groupId', group._id)
+	
 	Meteor.setTimeout(function() {
 		$('#group-discussion-modal').modal()
 		$('#recorder-modal').modal()

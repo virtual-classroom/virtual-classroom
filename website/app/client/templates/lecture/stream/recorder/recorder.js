@@ -12,7 +12,6 @@ Template.Recorder.events({
 				const chunks = []
 
 				if (!Session.get('initialized')) {
-					console.log("recorder has not been enabled")
 					recorder = new MediaRecorder(stream)
 					Session.set('initialized', true)
 
@@ -43,23 +42,21 @@ Template.Recorder.events({
 									read: false,
 									display: false
 								}
-							}, false);
-
+							}, false)
 							upload.on('end', function(error, fileObj) {
 								if (error) {
 									alert('Error during upload: ' + error.reason);
 								} else {
 									Session.set("audioId", upload.config.fileId)
 								}
-							});
-
+							})
 							upload.start()
 						}
 					}
 				}
 
 				var recognition = new webkitSpeechRecognition()
-				var transcript = ''
+				var transcript = 'Unable to transcribe audio.'
 				var confidence = 0
 				recognition.continuous = false;
 				recognition.interimResults = false;
@@ -69,7 +66,7 @@ Template.Recorder.events({
 					recorder.stop()
 					recognition.stop()
 					Session.set("state", recorder.state)
-					var result = event.results[0][0]					
+					var result = event.results[0][0]				
 					transcript = result.transcript
 					confidence = result.confidence
 				}
@@ -77,12 +74,10 @@ Template.Recorder.events({
 				recorder.start()
 				recognition.start()
 				Session.set('state', recorder.state)
-				console.log(recorder.state)
 			}).catch(console.error)
 		} else {
 			recorder.stop()
 			Session.set('state',recorder.state)
-			console.log(recorder.state)
 		}
 	},
 	'click #submit': function() {
@@ -98,10 +93,7 @@ Template.Recorder.events({
 		}
 	},
 	'click #cancel':function() {
-		if (recorder.state != 'inactive') {
-			recorder.stop()
-			console.log(recorder.state)
-		}
+		if (recorder.state != 'inactive') recorder.stop()
 		Session.set('state', recorder.state)
 		Session.set('recorder', false)
 		Session.set('audioId', false)

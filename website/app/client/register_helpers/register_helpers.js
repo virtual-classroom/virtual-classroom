@@ -113,3 +113,7 @@ Template.registerHelper('hideInStream', function() {
 	var route = Router.current().location.get().path
 	if (route.slice(-6) === 'stream') return "display:none;"
 })
+
+Template.registerHelper('getURL', function() {
+	return Router.current().location.get().path
+})

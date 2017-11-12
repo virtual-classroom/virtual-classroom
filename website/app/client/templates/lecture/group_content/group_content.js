@@ -2,6 +2,9 @@
 /* GroupContent: Event Handlers */
 /*****************************************************************************/
 Template.GroupContent.events({
+	'click .enter-group-discussion': function() {
+		Session.set('groupId', this.groupId)
+	}
 });
 
 /*****************************************************************************/

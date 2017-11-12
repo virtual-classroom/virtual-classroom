@@ -65,17 +65,19 @@ Template.Lecture.helpers({
 		if (lecture) return lecture.mode === 'group'
 	},
 	numberOfEnrolledStudents: function() {
-		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
-		if (enrolledStudents) return enrolledStudents.length
+		var course = Courses.findOne(Session.get('courseId'))
+		if (course && course.students) return course.students.length
 	},
 	numberOfOnlineStudents: function() {
-		var enrolledStudents = Courses.findOne(Session.get('courseId')).students
-		var onlineStudents = []
-		enrolledStudents.forEach(function(studentId) {
-			var user = Meteor.users.findOne(studentId)
-			if (user.profile.online) onlineStudents.push(studentId)
-		})
-		return onlineStudents.length
+		var course = Courses.findOne(Session.get('courseId'))
+		if (course) {
+			var onlineStudents = []
+			course.students.forEach(function(studentId) {
+				var user = Meteor.users.findOne(studentId)
+				if (user.profile.online) onlineStudents.push(studentId)
+			})
+			return onlineStudents.length
+		}
 	},
 	questions: function() {
 		var questions = Questions.collection.find({

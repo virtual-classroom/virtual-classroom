@@ -322,6 +322,12 @@ select {
 }
 
 .collection {
+	.collection-header {
+		p {
+			margin: 0;
+			font-weight: 300;
+		}
+	}
 	a {
 		color: #2196F3 !important;
 	}	
