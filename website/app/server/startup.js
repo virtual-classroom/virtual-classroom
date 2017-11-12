@@ -1,5 +1,5 @@
 // add these users with these emails address as admin
-var admin = ['mybryan.li@mail.utoronto.ca', 'cecilia.lo@mail.utoronto.ca', 'hristina.iordanova@mail.utoronto.ca', 'adamo.carolli@mail.utoronto.ca'];
+var admin = ['mybryan.li@mail.utoronto.ca'];
 _.map(admin, function(email) {
 	var user = Accounts.findUserByEmail(email)
 	if(user) {
@@ -9,7 +9,7 @@ _.map(admin, function(email) {
 	}
 })
 
-// Initialize Avatars collections
+// initialize Avatars collections
 var avatars = ['1F602.svg', '1F606.svg', '1F610.svg', '1F611.svg', '1F626.svg', '1F634.svg', '1F642.svg', '1F913.svg']
 _.map(avatars, function(avatarName) {
 	var avatar = Avatars.findOne({name: avatarName})
@@ -23,13 +23,7 @@ _.map(avatars, function(avatarName) {
 	}
 })
 
-// Add user default avatar if they don't have one
-var users = Meteor.users.find().fetch()
-_.map(users, function(user) {
-	var avatar = Avatars.findOne({name: '1F642.svg'})
-	if (avatar) Meteor.users.update(user._id, {$set: {'profile.picture': avatar._id}})
-})
-
+// update lectures with mode, displayQuestions and groupSize
 var lectures = Lectures.find().fetch()
 _.map(lectures, function(lecture) {
 	if (!lecture.groupSize) {
@@ -41,12 +35,15 @@ _.map(lectures, function(lecture) {
 	}
 })
 
-// create tester users
+// create test users
 var number = 50
 for (i = 1; i <= number; i++) {
 	if (i < 10) var last = "0" + i
 	else var last = i.toString()
-	var user = Meteor.users.find({'profile.first_name':"Tester",'profile.last_name':last}).fetch()
+	var user = Meteor.users.find({
+		'profile.first_name':"Tester",
+		'profile.last_name':last
+	}).fetch()
 	if (user.length <= 0) {
 		Accounts.createUser({
 			first_name: "Tester",
@@ -55,9 +52,15 @@ for (i = 1; i <= number; i++) {
 			password: "tester" + last,
 			accountType: 'student'
 		})
-		var user = Meteor.users.findOne({'profile.first_name':"Tester",'profile.last_name':last})
-		var course = Courses.findOne({code:"CSC108H"})
-		if (course.students.indexOf(user._id) <= 0) {
+	}
+}
+
+// add test users to CSC108H
+var course = Courses.findOne({code:'CSC108H'})
+if (course) {
+	var users = Meteor.users.find({'profile.accountType':'student'}).fetch()
+	_.map(users, function(user) {
+		if (course.students.indexOf(user._id) < 0) {
 			var temp = course.students
 			temp.push(user._id)
 			Courses.update(course._id, {
@@ -66,8 +69,10 @@ for (i = 1; i <= number; i++) {
 				if (error) throw new Meteor.Error("Update error", error.message, error.message)
 			})
 		}
-	}
+	})
 }
+
+
 
 // initialize SEO for each page
 SeoCollection.update(
