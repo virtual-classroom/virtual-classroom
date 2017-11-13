@@ -1,3 +1,13 @@
+/** 
+ * Audios collections meta data consist of 
+ * 	lectureId: the lecture ID of the audio being recorded,
+ * 	transcript: the text to speech transcript if there is one
+ * 	confidence: the confidence of the text to speech transcript
+ * 	mode: the mode of this recording, either 'lecture' or 'group'
+ * 	read: has this recording been read
+ * 	display: display the recording to instructor, by default false
+*/
+
 Audios = new FilesCollection({
 	debug: false,
 	storagePath: '/vr/audios',
@@ -11,7 +21,7 @@ Audios = new FilesCollection({
 				// limit attachment files size to 100MB
 				return true
 			} else {
-				return "Please upload attachment files that is no larger than 100MB"
+				return "Audio file larger than 100MB"
 			}
 		}
 	}
