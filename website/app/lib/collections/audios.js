@@ -1,9 +1,9 @@
-Questions = new FilesCollection({
+Audios = new FilesCollection({
 	debug: false,
 	storagePath: '/vr/audios',
 	permissions: 0774,
 	parentDirPermissions: 0774,
-	collectionName: 'Questions',
+	collectionName: 'Audios',
 	allowClientCode: false,
 	OnBeforeUpload: function(file) {
 		if (Meteor.user()) {
@@ -17,7 +17,7 @@ Questions = new FilesCollection({
 	}
 });
 
-var QuestionsSchema = new SimpleSchema({
+var AudiosSchema = new SimpleSchema({
 	createdAt: {
 		type: Date,
 		label: 'Uploaded time',
@@ -91,26 +91,26 @@ var QuestionsSchema = new SimpleSchema({
 	}
 });
 
-Questions.collection.attachSchema(QuestionsSchema)
+Audios.collection.attachSchema(AudiosSchema)
 
 if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
-	Meteor.publish('Questions', function(lectureId) {
+	Meteor.publish('Audios', function(lectureId) {
 		var user = Meteor.user()
 		if (lectureId && user) {
 			if ((user.profile.accountType == 'instructor') || (user.roles == 'admin')){
-				return Questions.collection.find({"meta.lectureId": lectureId})
+				return Audios.collection.find({"meta.lectureId": lectureId})
 			} else {
-				return Questions.collection.find({
+				return Audios.collection.find({
 					'userId': user._id,
 					'meta.lectureId': lectureId
 				})
 			}
 		}
 	})
-	Questions.deny({
+	Audios.deny({
 		update() { return true },
 		remove() { return true }
 	})

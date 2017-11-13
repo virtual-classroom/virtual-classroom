@@ -30,15 +30,16 @@ Template.Recorder.events({
 							var url = URL.createObjectURL(blob)
 							Session.set('audioURL', url)
 
-							var lectureId = Session.get('lectureId')
-							var upload = Questions.insert({
+							var lecture = Lectures.findOne(Session.get('lectureId'))
+							var upload = Audios.insert({
 								file: blob,
 								streams: 'dynamic',
 								chunkSize: 'dynamic',
 								meta: {
-									lectureId: lectureId,
+									lectureId: lecture._id,
 									transcript: transcript,
 									confidence: confidence,
+									mode: lecture.mode,
 									read: false,
 									display: false
 								}
@@ -82,7 +83,7 @@ Template.Recorder.events({
 	},
 	'click #submit': function() {
 		if (Session.get('audioId')) {
-			Meteor.call('displayQuestion', Session.get('lectureId'), Session.get('audioId'))
+			Meteor.call('submitLectureQuestion', Session.get('lectureId'), Session.get('audioId'))
 			Session.set('recorder', false)
 			Session.set('audioId', false)
 			Session.set('audioURL', false)

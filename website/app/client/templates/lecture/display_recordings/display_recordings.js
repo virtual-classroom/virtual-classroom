@@ -20,7 +20,7 @@ Template.DisplayRecordings.events({
 /*****************************************************************************/
 Template.DisplayRecordings.helpers({
 	question: function() {
-		return Questions.findOne(this.question)
+		return Audios.findOne(this.question)
 	},
 	getPercentage: function(value) {
 		return value.toFixed(2) * 100 + "%"
