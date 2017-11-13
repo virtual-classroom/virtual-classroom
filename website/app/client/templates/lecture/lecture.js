@@ -80,11 +80,11 @@ Template.Lecture.helpers({
 		}
 	},
 	questions: function() {
-		var questions = Questions.collection.find({
+		var audios = Audios.collection.find({
 			"meta.lectureId": Session.get("lectureId"),
 			"meta.display": true
 		}, {sort: {createdAt: -1}})
-		if (questions.count()) return questions
+		if (audios.count()) return audios
 	},
 	activeDisplayQuestion: function() {
 		if (this.displayQuestion) return 'active'
