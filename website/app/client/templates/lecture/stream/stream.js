@@ -61,7 +61,15 @@ Template.Stream.helpers({
 		if (lecture && lecture.displayQuestion) return lecture.displayQuestion
 	},
 	groupMode: function(mode) {
-		if (mode) return mode === 'group'
+		if (mode == 'group') {
+			navigator.mediaDevices.getUserMedia({
+				audio:true,
+				video:false
+			}).then(recorder).catch(console.error)
+			return true
+		} else {
+			return false
+		}
 	},
 	getGroupMembers: function() {
 		var group = LectureGroups.findOne(Session.get('groupId'))
@@ -131,3 +139,75 @@ Template.Stream.onRendered(function () {
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
 });
+
+function recorder(stream) {
+	const chunks = []
+	var recorder = new MediaRecorder(stream)
+
+	recorder.onstart = function(e) {
+		console.log("starting recorder...")
+		recognition.start()
+	}
+
+	recorder.onpause = function(event) {
+		chunks.push(event.data)
+		const blob = new Blob(chunks, {type: 'audio/webm'})
+
+		var time = new Date().getTime()
+		blob.name = Session.get('lectureId') + '-' + Meteor.userId() + '-' + time + '.webm'
+		
+		// convert stream data chunks to a 'webm' audio format as a blob
+		var url = URL.createObjectURL(blob)
+
+		var lecture = Lectures.findOne(Session.get('lectureId'))
+		var upload = Audios.insert({
+			file: blob,
+			streams: 'dynamic',
+			chunkSize: 'dynamic',
+			meta: {
+				lectureId: lecture._id,
+				groudId: Session.get('groupId'),
+				transcript: transcript,
+				confidence: confidence,
+				mode: lecture.mode,
+				read: false,
+				display: false
+			}
+		}, false)
+		upload.on('end', function(error, fileObj) {
+			if (error) {
+				alert('Error during upload: ' + error.reason);
+			} else {
+				Session.set("audioId", upload.config.fileId)
+			}
+		})
+		upload.start()
+		chuncks = []
+		recorder.resume()
+	}
+
+	recorder.onresume = function(event) {
+	}
+
+	recorder.onstop = function(event) {
+		console.log("stopping recorder...")
+		recognition.stop()
+	}
+
+	var recognition = new webkitSpeechRecognition()
+	var transcript = 'Unable to transcribe audio.'
+	var confidence = 0
+	recognition.continuous = true;
+	recognition.interimResults = false;
+	recognition.lang = "en-US";
+
+	recognition.onresult = function(event) {
+		var result = event.results[event.results.length - 1][0]				
+		transcript = result.transcript
+		confidence = result.confidence
+		console.log(transcript)
+		recorder.pause()
+	}
+	
+	recorder.start()
+}

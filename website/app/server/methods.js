@@ -163,9 +163,11 @@ Meteor.methods({
 			var confidence = audio.meta.confidence
 			var read = audio.meta.read
 			var mode = audio.meta.mode
+			var groupId = audo.meta.groupId
 			Audios.update(audioId, {
 				$set: {meta: {
 					lectureId: lectureId,
+					groupId: groupId,
 					transcript: transcript,
 					confidence: confidence,
 					mode: mode,

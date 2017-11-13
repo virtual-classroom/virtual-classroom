@@ -37,6 +37,7 @@ Template.Recorder.events({
 								chunkSize: 'dynamic',
 								meta: {
 									lectureId: lecture._id,
+									groupId: Session.get('groundId'),
 									transcript: transcript,
 									confidence: confidence,
 									mode: lecture.mode,
@@ -94,8 +95,10 @@ Template.Recorder.events({
 		}
 	},
 	'click #cancel':function() {
-		if (recorder.state != 'inactive') recorder.stop()
-		Session.set('state', recorder.state)
+		if (recorder && recorder.state != 'inactive') {
+			recorder.stop()
+			Session.set('state', recorder.state)
+		}
 		Session.set('recorder', false)
 		Session.set('audioId', false)
 		Session.set('audioURL', false)

@@ -54,12 +54,14 @@
 
 			{{#if groupMode lecture.mode}}
 				{{#if userIsCourseInstructor lecture.courseCode}}
-					<button id="exit-group-discussion" class="waves-light btn-flat overlay-btn">EXIT</button>
+					{{#if group}}
+						<button id="exit-group-discussion" class="waves-light btn-flat overlay-btn">EXIT</button>
+					{{/if}}
 				{{else}}
 					<button data-target="group-discussion-modal" id="group-discussion-modal-trigger" class="modal-trigger waves-light btn-flat overlay-btn"><img src="/icons/memo.svg"></button>
 				{{/if}}
 			{{else}}
-				<button data-target="recorder-modal" id="recorder-modal-trigger" class="modal-trigger waves-light btn-flat overlay-btn"><img src="/icons/mic.svg"></button>
+				<button data-target="recorder-modal" id="recorder-modal-trigger" class="modal-trigger waves-light btn-flat overlay-btn"><img src="/icons/stop.svg"></button>
 			{{/if}}
 			{{#with group}}
 			<div id="group-discussion-modal" class="modal">
