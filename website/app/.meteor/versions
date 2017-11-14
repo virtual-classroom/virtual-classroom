@@ -20,7 +20,8 @@ caching-compiler@1.1.9
 caching-html-compiler@1.1.2
 callback-hook@1.0.10
 check@1.2.5
-coffeescript@1.12.6_1
+coffeescript@1.12.7_3
+coffeescript-compiler@1.12.7_3
 copleykj:livestamp@1.1.7
 d3@1.0.0
 ddp@1.4.0

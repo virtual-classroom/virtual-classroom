@@ -16,6 +16,7 @@ StreamController = RouteController.extend({
 		if (lecture) {
 			this.subscribe('LectureGroups', lecture._id).wait()
 			this.subscribe('Audios', lecture._id).wait()
+			this.subscribe('GroupDiscussion', lecture._id).wait()
 		}
 	},
 
