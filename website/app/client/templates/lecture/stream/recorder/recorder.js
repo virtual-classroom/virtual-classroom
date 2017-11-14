@@ -117,9 +117,8 @@ Template.Recorder.helpers({
 		return Session.get('audioURL')
 	},
 	getAudioLevel: function() {
-		if (Session.get('recording') === true && Session.get('level')) {
+		if (Session.get('recording') === true && Session.get('level'))
 			return Session.get('level')
-		}
 	},
 	isRecording: function() {
 		return Session.get('state') == 'recording'

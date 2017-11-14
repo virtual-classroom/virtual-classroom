@@ -1,3 +1,57 @@
+const recognition = initializeRecognition()
+const recognizing = false
+function initializeRecognition() {
+	var speech = new webkitSpeechRecognition()
+	speech.continuous = true;
+	speech.interimResults = false;
+	speech.lang = "en-US";
+
+	speech.onstart = function() {
+		console.log('Speech recognition service has started');
+	}
+	speech.onend = function() {
+		console.log('Speech recognition service disconnected');
+	}
+	speech.onsoundstart = function() {
+		console.log('Some sound is being received');
+	}
+	speech.onsoundend = function() {
+		console.log('Sound has stopped being received');
+	}
+	speech.onspeechstart = function() {
+		console.log('Speech has been detected');
+	}
+	speech.onspeechend = function() {
+		console.log('Speech has stopped being detected');
+	}
+	speech.onresult = function(event) {
+		var result = event.results[event.results.length - 1][0]
+		console.log(result)
+		discussion = {}
+		discussion.transcript = result.transcript
+		discussion.confidence = result.confidence
+		Meteor.call('addSpeechGroupDiscussion', Session.get('lectureId'), 
+			Session.get('groupId'), discussion)
+	}
+	return speech
+}
+
+function startRecognition() {
+	if (!recognizing) {
+		recognition.start()
+		recognizing = true
+	}
+}
+
+function stopRecognition() {
+	if (recognizing) {
+		recognition.stop()
+		recognizing = false
+	}
+}
+
+
+
 /*****************************************************************************/
 /* Stream: Event Handlers */
 /*****************************************************************************/
@@ -62,12 +116,10 @@ Template.Stream.helpers({
 	},
 	groupMode: function(mode) {
 		if (mode == 'group') {
-			navigator.mediaDevices.getUserMedia({
-				audio:true,
-				video:false
-			}).then(recorder).catch(console.error)
+			startRecognition()
 			return true
 		} else {
+			stopRecognition()
 			return false
 		}
 	},
@@ -93,17 +145,17 @@ Template.Stream.helpers({
 		var z = -2.2
 		return x + " " + y + " " + z 
 	},
-	userCanEditDiscussion: function() {
-		var user = Meteor.user()
-		var group = LectureGroups.findOne(Session.get('groupId'))
-		if (user && group && user._id !== group.leader) return 'disabled'
-	},
 	getGroupNumber: function() {
 		var group = LectureGroups.findOne(Session.get('groupId'))
 		if (group) return group.number
 	},
 	activeTextarea: function(discussion) {
 		if (discussion) return 'active'
+	},
+	userCanEditDiscussion: function() {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne(Session.get('groupId'))
+		if (user && group && user._id !== group.leader) return 'disabled'
 	}
 });
 
@@ -127,17 +179,23 @@ Template.Stream.onRendered(function () {
 	Meteor.setTimeout(function() {
 		$('#group-discussion-modal').modal()
 		$('#recorder-modal').modal()
-	}, 100)
+	}, 50)
 	document.documentElement.style.overflow = "hidden"
 
 	// variables to textarea update timer
 	var typingTimer
 	Session.set('typingTimer', typingTimer)
 	Session.set('typingInterval', 5000)
+
+	// navigator.mediaDevices.getUserMedia({
+	// 	audio:true,
+	// 	video:false
+	// }).then(recorder).catch(console.error)
 });
 
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
+	stopRecognition()
 });
 
 function recorder(stream) {

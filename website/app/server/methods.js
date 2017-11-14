@@ -213,5 +213,23 @@ Meteor.methods({
 					error.message, error.message)
 			})
 		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
+	},
+	'addSpeechGroupDiscussion': function(lectureId, groupId, dicussion) {
+		var user = Meteor.user()
+		var group = LectureGroups.findOne(groupId)
+		var lecture = Lectures.findOne(lectureId)
+		if (user && group && lecture && dicussion && 
+			(group.leader.indexOf(user._id) >= 0 || lecture.ownerId == user._id)) {
+			GroupDisucssion.insert({
+				lectureId: lectureId,
+				groupId: groupId,
+				userId: user._id,
+				transcript: discussion.transcript,
+				confidence: discussion.confidence
+			}, function(error) {
+				if (error) throw new Meteor.Error("Insertion error", 
+					error.message, error.message)
+			})
+		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	}
 });
