@@ -26,7 +26,7 @@ function initializeRecognition() {
 	}
 	speech.onresult = function(event) {
 		var result = event.results[event.results.length - 1][0]
-		console.log(result)
+		console.log(result.transcript)
 		discussion = {}
 		discussion.transcript = result.transcript
 		discussion.confidence = result.confidence
@@ -156,6 +156,13 @@ Template.Stream.helpers({
 		var user = Meteor.user()
 		var group = LectureGroups.findOne(Session.get('groupId'))
 		if (user && group && user._id !== group.leader) return 'disabled'
+	},
+	groupDiscussion: function() {
+		var discussion = GroupDiscussion.find({
+			groupId: Session.get('groupId')
+		}, {sort: {createdAt: -1}})
+
+		return discussion
 	}
 });
 
