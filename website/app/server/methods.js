@@ -220,7 +220,7 @@ Meteor.methods({
 		var lecture = Lectures.findOne(lectureId)
 		if (user && group && lecture && dicussion && 
 			(group.leader.indexOf(user._id) >= 0 || lecture.ownerId == user._id)) {
-			GroupDisucssion.insert({
+			GroupDiscussion.insert({
 				lectureId: lectureId,
 				groupId: groupId,
 				userId: user._id,
