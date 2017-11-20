@@ -1,3 +1,4 @@
+import Papa from 'papaparse';
 /*****************************************************************************/
 /* Course: Event Handlers */
 /*****************************************************************************/
@@ -59,6 +60,34 @@ Template.Course.events({
 				}
 			)
 		}
+	},
+	'change #group-csv': function(event) {
+		var course = Courses.findOne({code: Session.get('courseCode')})
+		if (course && userIsCourseOwnerSelect()) {
+			Papa.parse(event.target.files[0], {
+				header: true,
+				complete: function(results, file) {
+					console.log(results)
+					if (results.error) {
+						Materialize.toast('CSV Parse Error: ' + results.error)
+					} else if (results.meta.fields.indexOf('ID') < 0 || 
+						results.meta.fields.indexOf('Group') < 0) {
+						Materialize.toast('Incorrect CSV format')
+					} else if (results.data.length != course.students.length) {
+						Materialize.toast('The CSV file does not include all students in class')
+					} else {
+						Meteor.call('addDefaultGroups', Session.get('courseCode'), results.data, function(error) {
+							if (error) {
+								console.log(error)
+							} else {
+								Materialize.toast('Groups added')
+							}
+						})
+					}
+				}
+			})
+		}
+
 	}
 });
 
@@ -83,6 +112,9 @@ Template.Course.helpers({
 	},
 	userIsCourseOwnerSelect: function(userId) {
 		if (userIsCourseOwner(userId)) return 'disabled'
+	},
+	groups: function() {
+		return Groups.find()
 	}
 });
 
@@ -116,9 +148,7 @@ Template.Course.onCreated(function () {
 });
 
 Template.Course.onRendered(function () {
-	if (userIsCourseInstructor()) {
-		$('#create-lecture-modal').modal()
-	}
+	$('#create-lecture-modal').modal()
 	Meteor.setTimeout(function() {
 		$('#selectCourseInstructors').material_select()
 	}, 50)

@@ -13,7 +13,7 @@ LectureController = RouteController.extend({
 		this.subscribe('Lectures', courseCode, title).wait()
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 		if (lecture) {
-			this.subscribe('LectureGroups', lecture._id).wait()
+			this.subscribe('Groups', courseCode, lecture._id).wait()
 			this.subscribe('Audios', lecture._id).wait()
 		}
 	},

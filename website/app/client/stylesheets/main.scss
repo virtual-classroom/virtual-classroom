@@ -123,13 +123,17 @@ strong {
 	}
 }
 
-.select-input-field {
+.select-field {
 	display :block;
 	.label {
 		font-size: 0.8em;
 		color: grey;
 		font-weight: 400;
 	}
+}
+
+.file-field {
+	display: block;
 }
 
 .select-dropdown li {
@@ -465,5 +469,15 @@ video {
 		cursor: pointer;
 		border: none;
 		background: inherit;
+	}
+}
+
+table {
+	tbody {
+		tr {
+			td {
+				padding: 10px 5px;
+			}
+		}
 	}
 }

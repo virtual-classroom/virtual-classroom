@@ -53,20 +53,50 @@
 								<div class="card-content">
 									<span class="card-title-small">Course Settings</span>
 									
-										<div class="input-field select-input-field">
-											<span class="label">Course instructors & Teaching Assistants</span>
-											<select id="selectCourseInstructors" name="selectCourseInstructors" multiple>
-												<option value="" disabled selected>Choose additional course instructors</option>
-												{{#each instructor in getAvailableInstructors}}
-													<option value={{instructor._id}} {{userIsCourseInstructorSelect instructor._id}} {{userIsCourseOwnerSelect instructor._id}}>{{instructor.profile.first_name}} {{instructor.profile.last_name}}</option>
-												{{/each}}
-											</select>
-										</div>
-									
-									<div class="input-field">
-										<textarea id="courseDescription" name="courseDescription" class="materialize-textarea" value={{description}}></textarea>
-										<label for="courseDescription-label" class="active">Course Description</label>
+									<div class="input-field select-field">
+										<span class="label">Course instructors & Teaching Assistants</span>
+										<select id="selectCourseInstructors" name="selectCourseInstructors" multiple>
+											<option value="" disabled selected>Choose additional course instructors</option>
+											{{#each instructor in getAvailableInstructors}}
+												<option value={{instructor._id}} {{userIsCourseInstructorSelect instructor._id}} {{userIsCourseOwnerSelect instructor._id}}>{{instructor.profile.first_name}} {{instructor.profile.last_name}}</option>
+											{{/each}}
+										</select>
+
 									</div>
+									<span class="card-title-small">Group Settings</span>
+									<p>Class size: {{numberOfEnrolledStudent code}}</p>
+									<div class="input-field file-field">
+										<div class="btn">
+											<span>File</span>
+											<input id="group-csv" type="file" accept=".csv">
+										</div>
+										<div class="file-path-wrapper">
+											<input class="file-path validate" type="text">
+										</div>
+									</div>
+									{{#if groups}}
+									<table>
+										<thead>
+										<tr>
+											<th>Group Name</th>
+											<th>Students</th>
+										</tr>
+										</thead>
+
+										<tbody>
+											{{#each group in groups}}
+											<tr>
+												<td>{{group.name}}</td>
+												<td>
+													{{#each member in group.members}}
+														<span>{{getUserNameById member}}</span>
+													{{/each}}
+												</td>
+											</tr>
+											{{/each}}
+										</tbody>
+									</table>
+									{{/if}}
 								</div>
 								<div class="card-action">
 									<button class="waves-effect waves-teal btn-flat" type="button" id="cancelCourseSettings">Cancel</button>

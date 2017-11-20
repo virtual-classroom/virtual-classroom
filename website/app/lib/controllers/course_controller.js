@@ -11,6 +11,7 @@ CourseController = RouteController.extend({
 		if (courseCode) {
 			this.subscribe('Courses', courseCode).wait()
 			this.subscribe('Lectures', courseCode, false).wait()
+			this.subscribe('Groups', courseCode, false).wait()
 		}
 	},
 

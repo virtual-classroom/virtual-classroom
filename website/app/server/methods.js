@@ -107,6 +107,65 @@ Meteor.methods({
 			})
 		}
 	},
+	'addDefaultGroups': function(courseCode, data) {
+		// add default group base on instructor's CSV
+		var user = Meteor.user()
+		var course = Courses.findOne({code: courseCode})
+		if (user && course && course.ownerId == user._id) {
+			// first create groups object where group name is the key and the 
+			// list of students are values
+			var groups = {}
+			for (var i = 0; i < data.length; i ++) {
+				var entry = data[i]
+				if (entry.hasOwnProperty('ID') && entry.hasOwnProperty('Group')) {
+					var student = Meteor.users.findOne(entry['ID'])
+					var groupNumber = entry['Group']
+					if (student && groupNumber) {
+						temp = []
+						if (groups.hasOwnProperty(groupNumber))
+							temp = groups[groupNumber]
+						if (temp.indexOf(student._id) < 0)
+							temp.push(student._id)
+						groups[groupNumber] = temp
+					}
+				}
+			}
+			// make previously created groups non-default and not active
+			var oldGroups = Groups.find({courseId: course._id}).fetch()
+			for (var i = 0; i < oldGroups.length; i ++) {
+				Groups.update(oldGroups[i]._id, {$set: {
+					active: false,
+					default: false
+				}}, function(error) {
+					if (error) throw new Meteor.Error("Update Group Error", 
+						error.message, error.message)
+				})
+			}
+			// add all group in groups to Groups collection
+			for (var name in groups) {
+				if (groups.hasOwnProperty(name)) {
+					var members = groups[name]
+					var leader = members[Math.floor(Math.random()*members.length)]
+					Groups.insert({
+						courseId: course._id,
+						creator: user._id,
+						leader: leader,
+						name: name,
+						members: members,
+						active: true,
+						default: true,
+						createdAt: new Date()
+					}, function(error) {
+						if (error) throw new Meteor.Error("Update error", 
+							error.message, error.message)
+					})
+				}
+			}
+		} else {
+			throw new Meteor.Error("Update error", "Access denied", 
+				"Access denied");
+		}
+	},
 	'updateGroupSettings': function(lectureId, groupSettings) {
 		// Update lecture group settings
 		// if the lecture has no group, randomly initialize groups base on 
@@ -127,14 +186,14 @@ Meteor.methods({
 			} else {
 				var students = course.students
 				var groupSize = parseInt(groupSettings.groupSize)
-				var existingGroups = LectureGroups.find({
+				var existingGroups = Groups.find({
 					lectureId:lectureId,
 					active:true
 				}).fetch()
 				if (existingGroups.length <= 0 || parseInt(lecture.groupSize) != groupSize) {
 					// deactivate old existing groups
 					for (i = 0; i < existingGroups.length; i += 1) {
-						LectureGroups.update(existingGroups[i]._id, {$set:{
+						Groups.update(existingGroups[i]._id, {$set:{
 							active:false
 						}},function(error) {
 							if (error) throw new Meteor.Error("Update error", 
@@ -149,11 +208,12 @@ Meteor.methods({
 					for (i = 0; i < groups.length; i += 1) {
 						var members = groups[i]
 						var leader = members[Math.floor(Math.random()*members.length)]
-						LectureGroups.insert({
+						Groups.insert({
 							lectureId: lecture._id,
 							courseId: course._id,
+							creator: user._id,
 							leader: leader,
-							number: i + 1,
+							name: (i + 1).toString(),
 							members: groups[i],
 							active: true,
 							createdAt: new Date()
@@ -225,9 +285,9 @@ Meteor.methods({
 	},
 	'updateGroupDiscussion': function(groupId, discussion) {
 		var user = Meteor.user()
-		var group = LectureGroups.findOne(groupId)
+		var group = Groups.findOne(groupId)
 		if (user && group && user._id === group.leader) {
-			LectureGroups.update(groupId, {
+			Groups.update(groupId, {
 				$set:{
 					discussion:discussion
 				}
@@ -239,7 +299,7 @@ Meteor.methods({
 	},
 	'addSpeechGroupDiscussion': function(lectureId, groupId, dicussion) {
 		var user = Meteor.user()
-		var group = LectureGroups.findOne(groupId)
+		var group = Groups.findOne(groupId)
 		var lecture = Lectures.findOne(lectureId)
 		if (user && group && lecture && dicussion && 
 			(group.leader.indexOf(user._id) >= 0 || lecture.ownerId == user._id)) {
