@@ -15,7 +15,7 @@ var GroupDiscussionSchema = new SimpleSchema({
 		type: String
 	},
 	confidence: {
-		type: Number
+		type: String
 	},
 	createdAt: {
 		type: Date,

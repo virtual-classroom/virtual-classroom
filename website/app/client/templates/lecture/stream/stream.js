@@ -7,22 +7,22 @@ function initializeRecognition() {
 	speech.lang = "en-US";
 
 	speech.onstart = function() {
-		console.log('Speech recognition service has started');
+		//console.log('Speech recognition service has started');
 	}
 	speech.onend = function() {
-		console.log('Speech recognition service disconnected');
+		//console.log('Speech recognition service disconnected');
 	}
 	speech.onsoundstart = function() {
-		console.log('Some sound is being received');
+		//console.log('Some sound is being received');
 	}
 	speech.onsoundend = function() {
-		console.log('Sound has stopped being received');
+		//console.log('Sound has stopped being received');
 	}
 	speech.onspeechstart = function() {
-		console.log('Speech has been detected');
+		//console.log('Speech has been detected');
 	}
 	speech.onspeechend = function() {
-		console.log('Speech has stopped being detected');
+		//console.log('Speech has stopped being detected');
 	}
 	speech.onresult = function(event) {
 		var result = event.results[event.results.length - 1][0]
