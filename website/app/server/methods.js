@@ -163,7 +163,7 @@ Meteor.methods({
 			var confidence = audio.meta.confidence
 			var read = audio.meta.read
 			var mode = audio.meta.mode
-			var groupId = audo.meta.groupId
+			var groupId = audio.meta.groupId
 			Audios.update(audioId, {
 				$set: {meta: {
 					lectureId: lectureId,
@@ -214,11 +214,11 @@ Meteor.methods({
 			})
 		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	},
-	'addSpeechGroupDiscussion': function(lectureId, groupId, dicussion) {
+	'addSpeechGroupDiscussion': function(lectureId, groupId, discussion) {
 		var user = Meteor.user()
 		var group = LectureGroups.findOne(groupId)
 		var lecture = Lectures.findOne(lectureId)
-		if (user && group && lecture && dicussion && 
+		if (user && group && lecture && discussion && 
 			(group.leader.indexOf(user._id) >= 0 || lecture.ownerId == user._id)) {
 			GroupDiscussion.insert({
 				lectureId: lectureId,
