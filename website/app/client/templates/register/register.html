@@ -13,12 +13,18 @@
 				</div>
 			</div>
 			<div class="input-field">
-				<select name="registerAccountType">
+				<select id="registerAccountType" name="registerAccountType">
 					<option value="" disabled selected>Choose your account type</option>
 					<option value="student">Student</option>
 					<option value="instructor">Instructor</option>
 				</select>
 			</div>
+			{{#if showUTORIDField}}
+			<div class="input-field">
+				<input id="registerUTORID" name="registerUTORID" type="number" min="1">
+				<label id="registerUTORID-label" for="registerUTORID">UTORID</label>
+			</div>
+			{{/if}}
 			<div class="input-field">
 				<input id="registerEmail" name="registerEmail" type="email">
 				<label id="registerEmail-label" for="registerEmail">Email</label>

@@ -3,10 +3,9 @@
 /*****************************************************************************/
 Template.Login.events({
 	'submit .login-form': function(event) {
-		event.preventDefault();
-		target = event.target
-		var email = target.loginEmail.value
-		var password = target.loginPassword.value
+		event.preventDefault()
+		var email = $('#loginEmail').val()
+		var password = $('#loginPassword').val()
 		if (email != "" && password != "") {
 			Meteor.loginWithPassword(email, password, function(error) {
 				// log error, otherwise dismiss modal
@@ -25,14 +24,14 @@ Template.Login.events({
 						$("#loginEmail-label").attr("data-error", error.reason)
 					}
 				} else {
-					target.loginEmail.value = ""
-					target.loginPassword.value = ""
-					$('#login-modal').modal('close');
+					resetInput()
+					$('#login-modal').modal('close')
 				}
 			});
 		}
 	},
 	'click #cancel':function(event) {
+		resetInput()
 		$('#login-modal').modal('close')
 	}
 });
@@ -42,6 +41,17 @@ Template.Login.events({
 /*****************************************************************************/
 Template.Login.helpers({
 });
+
+function resetInput() {
+	$('#loginEmail').val('')
+	$("#loginEmail").addClass("valid")
+	$("#loginEmail").removeClass("invalid")
+	$("#loginEmail-label").removeClass('active')
+	$('#loginPassword').val('')
+	$('#loginPassword').addClass('valid')
+	$('#loginPassword').removeClass('invalid')
+	$('#loginPassword-label').removeClass("active")
+}
 
 /*****************************************************************************/
 /* Login: Lifecycle Hooks */

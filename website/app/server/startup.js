@@ -37,20 +37,24 @@ _.map(lectures, function(lecture) {
 
 // create test users
 var number = 50
+var utorid = 1000000000
 for (i = 1; i <= number; i++) {
 	if (i < 10) var last = "0" + i
 	else var last = i.toString()
+
 	var user = Meteor.users.find({
 		'profile.first_name':"Tester",
 		'profile.last_name':last
 	}).fetch()
+
 	if (user.length <= 0) {
 		Accounts.createUser({
 			first_name: "Tester",
 			last_name: last,
 			email: "tester" + last + "@mail.utoronto.ca",
 			password: "tester" + last,
-			accountType: 'student'
+			accountType: 'student',
+			utorid: (utorid + i).toString()
 		})
 	}
 }
