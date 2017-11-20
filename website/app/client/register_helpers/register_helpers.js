@@ -27,10 +27,24 @@ Template.registerHelper('userIsInstructorOrAdmin', function() {
 	}
 })
 
+Template.registerHelper('userIsCourseOwner', function(code) {
+	// return true if user is course owner
+	var course = Courses.findOne({'code': code})
+	if (course) return course.ownerId == Meteor.userId()
+})
+
 Template.registerHelper('getCourseOwner', function(code) {
 	// return course owner with the given course code otherwise false
 	var course = Courses.findOne({'code':code})
 	if (course) return Meteor.users.findOne({'_id':course.ownerId})
+})
+
+Template.registerHelper('getAvailableInstructors', function() {
+	// get a list of instructors
+	var users = Meteor.users.find({
+		'profile.accountType': 'instructor'
+	}, {sort: {'profile.last_name':1, 'profile.first_name': 1}}).fetch()
+	return users
 })
 
 Template.registerHelper('userIsCourseInstructor', function(code) {
@@ -43,8 +57,8 @@ Template.registerHelper('studentIsInCourse', function(courseCode) {
 	// return true if this student is enrolled in this course
 	var course = Courses.findOne({code: courseCode})
 	var user = Meteor.user()
-	if (course && user) 
-		return (course.students.indexOf(user._id) >= 0)
+	if (course && user && user.accountType == 'student') 
+		return course.students.indexOf(user._id) >= 0
 })
 
 Template.registerHelper('studentNotInCourse', function(courseCode) {

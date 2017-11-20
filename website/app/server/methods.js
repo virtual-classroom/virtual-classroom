@@ -26,6 +26,27 @@ Meteor.methods({
 			});
 		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	},
+	'updateCourseSettings': function(courseCode, settings) {
+		var user = Meteor.user()
+		var course = Courses.findOne({code: courseCode})
+		if (user && course && course.ownerId == user._id) {
+			instructors = settings.instructors
+			// add owner back to instructor list
+			instructors.splice(0, 0, course.ownerId)
+
+			Courses.update(course._id, {
+				$set: {
+					instructors: instructors
+				}
+			}, function(error) {
+				if (error) throw new Meteor.Error("Update Error", error.message, 
+					error.message)
+			})
+		} else {
+			throw new Meteor.Error("Insert Error", "Access denied", 
+				"Access denied")
+		}
+	},
 	'addLecture': function(lectureTitle, courseCode) {
 		var user = Meteor.user()
 		var course = Courses.findOne({code: courseCode})
@@ -40,8 +61,10 @@ Meteor.methods({
 				active: false,
 				createdAt: new Date()
 			}, function(error) {
-				if (error) throw new Meteor.Error("Insert Error", 
-					error.message, error.message)
+				if (error) {
+					throw new Meteor.Error("Insert Error", error.message, 
+						error.message)
+				}
 			}) 
 			// Update Course
 			//Add Lecture to Course
