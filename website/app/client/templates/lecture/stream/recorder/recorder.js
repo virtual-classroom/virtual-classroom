@@ -15,8 +15,19 @@ Template.Recorder.events({
 					recorder = new MediaRecorder(stream)
 					Session.set('initialized', true)
 
+					recorder.onstart = function() {
+						console.log("Recorder service has started")
+					}
+
+					recorder.onstop = function() {
+						// TODO: Stop media properly
+						console.log("Recorder service has ended")
+						//stream.getTracks().forEach(track => track.stop())
+					}
+
 					// function to be called when data is received
 					recorder.ondataavailable = function(e) {
+						console.log("Recorder server has available data")
 						// add stream data to chunks
 						chunks.push(e.data)
 						// if recorder is 'inactive' then recording has finished
