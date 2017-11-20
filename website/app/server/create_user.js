@@ -1,4 +1,9 @@
 Accounts.onCreateUser(function(options, user) {
+	if (options.accountType == 'student') {
+		user._id = options.utorid
+	} else if (options.accountType == 'instructor') {
+		user._id = Random.id()
+	}
 	user.first_name = options.first_name
 	user.last_name = options.last_name
 	// Use provided profile in options, or create an empty object
