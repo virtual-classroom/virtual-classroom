@@ -93,7 +93,7 @@ Template.Lecture.helpers({
 		if (this.groupSize) return this.groupSize
 	},
 	groups: function() {
-		var groups = LectureGroups.find({lectureId:this._id,active:true},{sort: {number:1}})
+		var groups = Groups.find({lectureId:this._id,active:true},{sort: {number:1}})
 		if (groups.fetch().length) return groups
 	},
 	disableGroupSizeRange: function() {
@@ -101,7 +101,7 @@ Template.Lecture.helpers({
 		if (lecture && lecture.mode === 'group') return 'disabled'
 	},
 	getGroupDiscussion: function() {
-		var group = LectureGroups.findOne(groupId)
+		var group = Groups.findOne(groupId)
 		if (group) {
 			console.log(group.discussion)
 			return group.discussion
