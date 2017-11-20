@@ -4,7 +4,9 @@
 			<p class="group-label">Leader</p>
 			<p>{{getUserNameById group.leader}}</p>
 			<p class="group-label">Members</p>
-			<p>{{#each member in group.members}}<span style="padding-right:2em;">{{getUserNameById member}}</span>{{/each}}</p>
+			{{#each member in group.members}}
+				<span style="padding-right:5px;">{{getUserNameById member}}</span>
+			{{/each}}
 			<p class="group-label">Discussion</p>
 			{{#if group.discussion}}
 				{{#markdown}}{{getGroupDiscussion}}{{/markdown}}

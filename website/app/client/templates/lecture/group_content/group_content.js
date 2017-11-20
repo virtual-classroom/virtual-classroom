@@ -12,11 +12,11 @@ Template.GroupContent.events({
 /*****************************************************************************/
 Template.GroupContent.helpers({
 	group: function() {
-		var group = LectureGroups.findOne(this.groupId)
+		var group = Groups.findOne(this.groupId)
 		if (group) return group
 	},
 	getGroupDiscussion: function() {
-		var group = LectureGroups.findOne(this.groupId)
+		var group = Groups.findOne(this.groupId)
 		if (group) return group.discussion
 	}
 });

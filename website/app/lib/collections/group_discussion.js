@@ -35,7 +35,7 @@ if (Meteor.isServer) {
 		// TODO: Implement publish such that student only subscribe their own group's discussion
 		if (lectureId && user) {
 			var lecture = Lectures.findOne(lectureId)
-			var group = LectureGroups.findOne({
+			var group = Groups.findOne({
 				members: user._id,
 				active: true
 			})

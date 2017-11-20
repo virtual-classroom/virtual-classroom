@@ -73,9 +73,11 @@ Template.registerHelper('userIsInCourse', function(courseCode) {
 	// return true if current user is either the instructor or student of a course
 	var course = Courses.findOne({code: courseCode})
 	var user = Meteor.user()
-	if (user) {
-		var studnet = course.students.indexOf(user._id)
-		return (user._id === course.ownerId || studnet >= 0)
+	if (user && course) {
+		var students = course.students
+		var instructors = course.instructors
+		return (students.indexOf(user._id) >= 0 || 
+			instructors.indexOf(user._id) >= 0)
 	}
 })
 

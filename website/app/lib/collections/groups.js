@@ -25,7 +25,7 @@ var GroupsSchema = new SimpleSchema({
 	},
 	active: {
 		type: Boolean,
-		defaultValue: true
+		defaultValue: false
 	},
 	members: {
 		type: [String],
@@ -73,12 +73,10 @@ if (Meteor.isServer) {
 					}
 				} else {
 					// user is course page
-					if (isInstructor) {
-						return Groups.find({
-							courseId: course._id,
-							default: true
-						}, {sort: {name:1}})
-					}
+					return Groups.find({
+						courseId: course._id,
+						default: true
+					}, {sort: {name:1}})
 				}
 				
 			}
