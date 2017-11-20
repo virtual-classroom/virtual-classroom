@@ -1,4 +1,4 @@
-const recognition = initializeRecognition()
+//const recognition = initializeRecognition()
 const recognizing = false
 function initializeRecognition() {
 	var speech = new webkitSpeechRecognition()
@@ -63,7 +63,7 @@ Template.Stream.events({
 	},
 	'click #group-discussion-modal-trigger': function() {
 		var user = Meteor.user()
-		var group = LectureGroups.findOne(Session.get('groupId'))
+		var group = Groups.findOne(Session.get('groupId'))
 		if (user && group && user._id === group.leader) 
 			$('#group-discussion-modal').modal('open')
 	},
@@ -99,11 +99,11 @@ Template.Stream.helpers({
 		if (lecture) return lecture
 	},
 	group: function() {
-		var group = LectureGroups.findOne(Session.get('groupId'))
+		var group = Groups.findOne(Session.get('groupId'))
 		if (group) return group
 	},
 	groups: function() {
-		var groups = LectureGroups.find({active:true},{sort: {number:1}})
+		var groups = Groups.find({active:true},{sort: {number:1}})
 		if (groups.fetch().length) return groups.fetch()
 	},
 	recorderIsActive: function() {
@@ -116,15 +116,15 @@ Template.Stream.helpers({
 	},
 	groupMode: function(mode) {
 		if (mode == 'group') {
-			startRecognition()
+			//startRecognition()
 			return true
 		} else {
-			stopRecognition()
+			//stopRecognition()
 			return false
 		}
 	},
 	getGroupMembers: function() {
-		var group = LectureGroups.findOne(Session.get('groupId'))
+		var group = Groups.findOne(Session.get('groupId'))
 		if (group) {
 			var members = group.members
 			members.splice(members.indexOf(Meteor.userId()), 1)
@@ -146,7 +146,7 @@ Template.Stream.helpers({
 		return x + " " + y + " " + z 
 	},
 	getGroupNumber: function() {
-		var group = LectureGroups.findOne(Session.get('groupId'))
+		var group = Groups.findOne(Session.get('groupId'))
 		if (group) return group.number
 	},
 	activeTextarea: function(discussion) {
@@ -154,7 +154,7 @@ Template.Stream.helpers({
 	},
 	userCanEditDiscussion: function() {
 		var user = Meteor.user()
-		var group = LectureGroups.findOne(Session.get('groupId'))
+		var group = Groups.findOne(Session.get('groupId'))
 		if (user && group && user._id !== group.leader) return 'disabled'
 	},
 	groupDiscussion: function() {
@@ -180,7 +180,7 @@ Template.Stream.onRendered(function () {
 	Session.set('recorder', false)
 	Session.set('groupId', false)
 
-	var group = LectureGroups.findOne({members:Meteor.userId(),active:true})
+	var group = Groups.findOne({members:Meteor.userId(),active:true})
 	if (group) Session.set('groupId', group._id)
 	
 	Meteor.setTimeout(function() {

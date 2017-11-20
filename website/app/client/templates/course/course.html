@@ -75,27 +75,29 @@
 										</div>
 									</div>
 									{{#if groups}}
-									<table>
-										<thead>
-										<tr>
-											<th>Group Name</th>
-											<th>Students</th>
-										</tr>
-										</thead>
-
-										<tbody>
-											{{#each group in groups}}
+										<table class="group-table">
+											<thead>
 											<tr>
-												<td>{{group.name}}</td>
-												<td>
-													{{#each member in group.members}}
-														<span>{{getUserNameById member}}</span>
-													{{/each}}
-												</td>
+												<th>Group</th>
+												<th>Members</th>
 											</tr>
-											{{/each}}
-										</tbody>
-									</table>
+											</thead>
+
+											<tbody>
+												{{#each group in groups}}
+												<tr>
+													<td>{{group.name}}</td>
+													<td>
+														{{#each member in group.members}}
+															<span>{{getUserNameById member}}</span>
+														{{/each}}
+													</td>
+												</tr>
+												{{/each}}
+											</tbody>
+										</table>
+									{{else}}
+										<p>No default group settings were given</p>
 									{{/if}}
 								</div>
 								<div class="card-action">

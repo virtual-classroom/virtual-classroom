@@ -51,7 +51,15 @@ Meteor.methods({
 		var user = Meteor.user()
 		var course = Courses.findOne({code: courseCode})
 		if (user && course && course.instructors.indexOf(user._id) >= 0) {
-			var errror = false
+			// get group size if default group exist
+			var defaultGroups = Groups.find({
+				courseId: course._id,
+				default: true
+			}).fetch()
+			var groupSize = 2
+			if (defaultGroups.length > 0)
+				groupSize = defaultGroups[0].members.length
+			
 			// Add lecture
 			id = Lectures.insert({
 				ownerId: user._id,
@@ -59,6 +67,7 @@ Meteor.methods({
 				courseCode: course.code,
 				title: lectureTitle,
 				active: false,
+				groupSize: groupSize,
 				createdAt: new Date()
 			}, function(error) {
 				if (error) {
@@ -66,13 +75,32 @@ Meteor.methods({
 						error.message)
 				}
 			}) 
-			// Update Course
-			//Add Lecture to Course
+
+			// add Lecture to Course
 			var updatedLectures = course.lectures
 			updatedLectures.push(id)
 			Courses.update(course._id, {
 				$set: {lectures: updatedLectures}
 			})
+
+			// copy default group to lecture group
+			for (var i = 0; i < defaultGroups.length; i++) {
+				var group = defaultGroups[i]
+				Groups.insert({
+					courseId: course._id,
+					lectureId: id,
+					creator: group.creator,
+					leader: group.leader,
+					name: group.name,
+					members: group.members,
+					active: true,
+					default: false,
+					createdAt: new Date()
+				}, function(error) {
+					if (error) throw new Meteor.Error("Insert Group Error", 
+						error.message, error.message)
+				})
+			}
 		} else throw new Meteor.Error("Insert Error", "Access denied", 
 			"Access denied")
 	},
@@ -152,11 +180,11 @@ Meteor.methods({
 						leader: leader,
 						name: name,
 						members: members,
-						active: true,
+						active: false,
 						default: true,
 						createdAt: new Date()
 					}, function(error) {
-						if (error) throw new Meteor.Error("Update error", 
+						if (error) throw new Meteor.Error("Insert Group Error", 
 							error.message, error.message)
 					})
 				}
