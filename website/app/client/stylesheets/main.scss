@@ -66,7 +66,7 @@ strong {
 }
 
 .input-field {
-	display:flex;
+	display: flex;
 	input, textarea {
 		font-size: 1em !important;
 		&:focus, &.valid {
@@ -123,6 +123,23 @@ strong {
 	}
 }
 
+.select-input-field {
+	display :block;
+	.label {
+		font-size: 0.8em;
+		color: grey;
+		font-weight: 400;
+	}
+}
+
+.select-dropdown li {
+	&.disabled {
+		span {
+	    	color: rgba(0, 0, 0, 0.3) !important;
+		}
+	}
+}
+
 .range-field {
 	white-space: inherit !important;
 	input[type=range]::-webkit-slider-thumb {
@@ -138,8 +155,12 @@ strong {
 }
 
 .dropdown-content {
-	li , span{
+	li , span {
 		color:#2196F3 !important;
+		label {
+			top: -10px !important;
+			width: inherit;
+		}
 	}
 }
 
@@ -226,6 +247,10 @@ select {
 	border:none;
 	.card-content {
 		padding: 24px 24px 16px;
+		.card-title-small {
+			font-weight: 300;
+			margin-bottom: 10px;
+		}
 		.card-title {
 			display:flex;
 			font-size: 1.5em;
@@ -252,6 +277,13 @@ select {
 				color:#90caf9 !important;
 			}
 		}
+	}
+}
+
+.card-panel {
+	.panel-title {
+		font-weight: 300;
+		margin-bottom: 10px;
 	}
 }
 

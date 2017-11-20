@@ -6,8 +6,10 @@
 					<div class="flex-container course-title-container">
 						<div class="title left-item">
 							<p>{{code}} {{title}}</p>
-							{{#if studentIsInCourse code}}
-								<p class="subtitle">You've enrolled in this course</p>
+							{{#if userIsStudent}}
+								{{#unless studentIsInCourse code}}
+									<p class="subtitle">You have not enroll in this course</p>
+								{{/unless}}
 							{{/if}}
 							{{#if userIsCourseInstructor code}}
 								<p class="subtitle">You're the instructor of this course</p>
@@ -39,18 +41,61 @@
 								<li class="collection-item">No lecture available yet.</li>
 							{{/if}}
 						</ul>
-					{{else}}
-						<p style="font-weight: 300;">You haven't enroll in this course yet.</p>
 					{{/if}}
 					<div class="card-panel course-info">
-						<span>Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</span>
+						<span class="panel-title">Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</span>
 						<p>{{description}}</p>
 					</div>
+
+					{{#if userIsCourseOwner code}}
+						<div class="card">
+							<form id="course-settings-form">
+								<div class="card-content">
+									<span class="card-title-small">Course Settings</span>
+									
+										<div class="input-field select-input-field">
+											<span class="label">Course instructors & Teaching Assistants</span>
+											<select id="selectCourseInstructors" name="selectCourseInstructors" multiple>
+												<option value="" disabled selected>Choose additional course instructors</option>
+												{{#each instructor in getAvailableInstructors}}
+													<option value={{instructor._id}} {{userIsCourseInstructorSelect instructor._id}} {{userIsCourseOwnerSelect instructor._id}}>{{instructor.profile.first_name}} {{instructor.profile.last_name}}</option>
+												{{/each}}
+											</select>
+										</div>
+									
+									<div class="input-field">
+										<textarea id="courseDescription" name="courseDescription" class="materialize-textarea" value={{description}}></textarea>
+										<label for="courseDescription-label" class="active">Course Description</label>
+									</div>
+								</div>
+								<div class="card-action">
+									<button class="waves-effect waves-teal btn-flat" type="button" id="cancelCourseSettings">Cancel</button>
+									<button class="waves-effect waves-teal btn-flat" type="submit" id="changeCourseSettings">Change</button>
+								</div>
+							</form>
+						</div>
+					{{/if}}
+
 					{{#if userIsCourseInstructor code}}
 						<div class="fixed-action-btn">
 							<button id="create-lecture-trigger" class="btn-floating btn-large blue">
 								<i class="large material-icons">add</i>
 							</button>
+						</div>
+						<div id="create-lecture-modal" class="modal">
+							<form id="create-lecture-form">
+								<div class="modal-content">
+									<h3>Create Lecture</h3>
+									<div class="input-field">
+										<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
+										<label id="lectureName-label" for="lectureName">Lecture Title</label>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
+									<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
+								</div>
+							</form>
 						</div>
 					{{/if}}
 				{{/with}}				
@@ -59,19 +104,5 @@
 			{{/if}}
 		</div>
 	</div>
-	<div id="create-lecture-modal" class="modal">
-		<form id="create-lecture-form">
-			<div class="modal-content">
-				<h3>Create Lecture</h3>
-				<div class="input-field">
-					<input id="lectureName" name="lectureName" type="text" class="validate" autocomplete="off">
-					<label id="lectureName-label" for="lectureName">Lecture Title</label>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class="waves-effect waves-teal btn-flat" id="cancel-create-lecture" type="button">Cancel</button>
-				<button class="waves-effect waves-teal btn-flat" type="submit">Create</button>
-			</div>
-		</form>
-	</div>
+
 </template>
