@@ -39,7 +39,7 @@ Meteor.methods({
 					instructors: instructors
 				}
 			}, function(error) {
-				throw new Meteor.Error("Update Error", error.message, 
+				if (error) throw new Meteor.Error("Update Error", error.message, 
 					error.message)
 			})
 		} else {
