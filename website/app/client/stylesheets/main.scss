@@ -123,19 +123,22 @@ strong {
 	}
 }
 
-.select-field {
-	display :block;
-	.label {
-		font-size: 0.8em;
-		color: grey;
-		font-weight: 400;
+.file-field {
+	input.file-path {
+		margin-bottom: 5px;
 	}
 }
 
-.file-field {
-	display: block;
-}
+.select-field, .file-field {
+	display:block;
+	.label {
+		display: block;
+		font-size: 0.8em;
+		color: grey;
+		font-weight: 400;	
+	}
 
+}
 .select-dropdown li {
 	&.disabled {
 		span {

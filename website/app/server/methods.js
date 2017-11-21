@@ -158,11 +158,13 @@ Meteor.methods({
 					}
 				}
 			}
-			// make previously created groups non-default and not active
-			var oldGroups = Groups.find({courseId: course._id}).fetch()
+			// make previously created groups non-default
+			var oldGroups = Groups.find({
+				courseId: course._id,
+				default: true
+			}).fetch()
 			for (var i = 0; i < oldGroups.length; i ++) {
 				Groups.update(oldGroups[i]._id, {$set: {
-					active: false,
 					default: false
 				}}, function(error) {
 					if (error) throw new Meteor.Error("Update Group Error", 

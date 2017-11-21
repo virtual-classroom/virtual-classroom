@@ -67,7 +67,6 @@ Template.Course.events({
 			Papa.parse(event.target.files[0], {
 				header: true,
 				complete: function(results, file) {
-					console.log(results)
 					if (results.error) {
 						Materialize.toast('CSV Parse Error: ' + results.error)
 					} else if (results.meta.fields.indexOf('ID') < 0 || 

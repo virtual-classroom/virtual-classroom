@@ -6,7 +6,7 @@ LectureController = RouteController.extend({
 	// this.subscribe('item', this.params._id).wait();
 
 	subscriptions: function() {
-		this.subscribe('userData').wait()
+		this.subscribe('Users').wait()
 		var courseCode = Router.current().params.code
 		var title = Router.current().params.lecture
 		this.subscribe('Courses', courseCode).wait()
