@@ -42,20 +42,40 @@ for (i = 1; i <= number; i++) {
 	if (i < 10) var last = "0" + i
 	else var last = i.toString()
 
-	var user = Meteor.users.find({
+	var existing = Meteor.users.findOne({
 		'profile.first_name':"Tester",
 		'profile.last_name':last
-	}).fetch()
+	})
 
-	if (user.length <= 0) {
-		Accounts.createUser({
+	if (!existing) {
+		options = {
+			_id: (utorid + i).toString(),
 			first_name: "Tester",
 			last_name: last,
 			email: "tester" + last + "@mail.utoronto.ca",
 			password: "tester" + last,
-			accountType: 'student',
-			utorid: (utorid + i).toString()
-		})
+			accountType: 'student'
+		}
+		Accounts.createUser(options)
+	}
+}
+
+// create test instructor
+for (i = 1; i < 4; i ++) {
+	var last = "0" + i
+	var existing = Meteor.users.findOne({
+		'profile.first_name': 'Instructor',
+		'profile.last_name': last
+	})
+	if (!existing) {
+		options = {
+			first_name: 'Instructor',
+			last_name: last,
+			email: 'instructor' + last + "@mail.utoronto.ca",
+			password: 'instructor' + last,
+			accountType: 'instructor'
+		}
+		Accounts.createUser(options)
 	}
 }
 

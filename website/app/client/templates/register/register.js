@@ -16,14 +16,15 @@ Template.Register.events({
 		if (Session.get("validPassword") && Session.get("validEmail") && 
 			Session.get("validUTORID") && firstName != "" && lastName != "" 
 			&& accountType != "") {
-			Accounts.createUser({
+			options = {
+				_id: utorid,
 				first_name: firstName,
 				last_name: lastName,
 				email: email,
 				password: password,
-				accountType: accountType,
-				utorid: utorid
-			}, function(error) {
+				accountType: accountType
+			}
+			Accounts.createUser(options, function(error) {
 				if (error) {
 					console.log(error)
 					if (error.error == 403) {

@@ -1,6 +1,6 @@
 Accounts.onCreateUser(function(options, user) {
 	if (options.accountType == 'student') {
-		user._id = options.utorid
+		user._id = options._id
 	} else if (options.accountType == 'instructor') {
 		user._id = Random.id()
 	}
@@ -23,7 +23,7 @@ Accounts.onCreateUser(function(options, user) {
 })
 
 
-Meteor.publish('userData', function () {
+Meteor.publish('Users', function () {
 	var user = Meteor.user()
 	if (user) {
 		if (user.profile.accountType === 'instructor') {

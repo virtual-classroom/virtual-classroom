@@ -43,7 +43,8 @@
 						</ul>
 					{{/if}}
 					<div class="card-panel course-info">
-						<span class="panel-title">Instructor: {{#with getCourseOwner code}}{{profile.first_name}} {{profile.last_name}}{{/with}}</span>
+						<span class="panel-title">Course coordinator: {{getUserNameById ownerId}}</span>
+						<p>Instructors: {{#each instructor in instructors}}<span style="padding-right:10px">{{getUserNameById instructor}}</span>{{/each}}</p>
 						<p>{{description}}</p>
 					</div>
 
@@ -64,8 +65,8 @@
 
 									</div>
 									<span class="card-title-small">Group Settings</span>
-									<p>Class size: {{numberOfEnrolledStudent code}}</p>
 									<div class="input-field file-field">
+										<span class="label">Note: The CSV file has to contain "ID" and "Group" columns.</span>
 										<div class="btn">
 											<span>File</span>
 											<input id="group-csv" type="file" accept=".csv">
