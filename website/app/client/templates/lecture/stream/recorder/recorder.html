@@ -2,7 +2,7 @@
 	<div class="recorder">
 		<p>Please recorder your question</p>
 		<form class="recorder-form">
-			<button id="recorder-start" class="waves-effect waves-light btn-flat" type="button">
+			<button id="recorder-toggle" class="waves-effect waves-light btn-flat" type="button">
 				<img class="{{#if isRecording}}active-blink{{/if}}" src="/icons/mic.svg">
 			</button>
 			{{#if getAudioLevel}}<p>Audio Level: {{getAudioLevel}}</p>{{/if}}
@@ -10,8 +10,8 @@
 				<audio id="player" controls src={{getAudioURL}}></audio>
 			{{/if}}
 			<div class="row">
-				<button class="waves-effect waves-light btn-flat" type="button" id="cancel">Cancel</button>
-				<button class="waves-effect waves-light btn-flat" type="button" id="submit">Submit</button>
+				<button class="waves-effect waves-light btn-flat" type="button" id="recorder-cancel">Cancel</button>
+				<button class="waves-effect waves-light btn-flat" type="button" id="recorder-submit">Submit</button>
 			</div>
 		</form>
 	</div>
