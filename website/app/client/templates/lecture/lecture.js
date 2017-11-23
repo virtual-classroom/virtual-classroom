@@ -97,7 +97,6 @@ Template.Lecture.helpers({
 			lectureId:this._id,
 			active:true
 		},{sort: {number:1}}).fetch()
-		console.log(groups)
 		if (groups.length) return groups
 	},
 	disableGroupSizeRange: function() {
