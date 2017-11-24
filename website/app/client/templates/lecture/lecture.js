@@ -81,8 +81,7 @@ Template.Lecture.helpers({
 	},
 	questions: function() {
 		var audios = Audios.collection.find({
-			"meta.lectureId": Session.get("lectureId"),
-			"meta.display": true
+			"meta.lectureId": Session.get("lectureId")
 		}, {sort: {createdAt: -1}})
 		if (audios.count()) return audios
 	},

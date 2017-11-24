@@ -1,44 +1,53 @@
 /*****************************************************************************/
-/* DisplayRecordings: Event Handlers */
+/* Question: Event Handlers */
 /*****************************************************************************/
-Template.DisplayRecordings.events({
+Template.Question.events({
 	'click .play-button': function() {
-		var player = document.getElementById(this.question)
-		var button = document.getElementById(this.question + '-button')
+		var questionId = this.question
+		var player = document.getElementById(questionId)
 		if (player.paused) {
 			player.play()
-			// button.classList.add("active-blink")
+			Session.set(questionId, true)
 		} else {
 			player.pause()
-			// button.classList.remove("active-blink")
+			Session.set(questionId, false)
 		}
+		player.addEventListener('ended', function() {
+			Session.set(questionId, false)
+		})
 	}
 });
 
 /*****************************************************************************/
-/* DisplayRecordings: Helpers */
+/* Question: Helpers */
 /*****************************************************************************/
-Template.DisplayRecordings.helpers({
+Template.Question.helpers({
 	question: function() {
 		return Audios.findOne(this.question)
 	},
 	getPercentage: function(value) {
 		return value.toFixed(2) * 100 + "%"
+	},
+	changePlayerIcon: function() {
+		// change play icon when recording is playing
+		if (Session.get(this.question)) return 'pause'
+		else return 'play_arrow'
 	}
 });
 
 /*****************************************************************************/
-/* DisplayRecordings: Lifecycle Hooks */
+/* Question: Lifecycle Hooks */
 /*****************************************************************************/
-Template.DisplayRecordings.onCreated(function () {
+Template.Question.onCreated(function () {
 });
 
-Template.DisplayRecordings.onRendered(function () {
+Template.Question.onRendered(function () {
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	Session.set('lectureId', lecture._id)
+	Session.set(this.question, false)
 });
 
-Template.DisplayRecordings.onDestroyed(function () {
+Template.Question.onDestroyed(function () {
 });

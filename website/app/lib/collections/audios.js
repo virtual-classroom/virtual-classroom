@@ -111,7 +111,9 @@ if (Meteor.isServer) {
 		var user = Meteor.user()
 		if (lectureId && user) {
 			if ((user.profile.accountType == 'instructor') || (user.roles == 'admin')){
-				return Audios.collection.find({"meta.lectureId": lectureId})
+				return Audios.collection.find({
+					"meta.lectureId": lectureId
+				})
 			} else {
 				return Audios.collection.find({
 					'userId': user._id,
