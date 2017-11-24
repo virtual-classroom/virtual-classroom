@@ -15,24 +15,18 @@ Template.Recorder.events({
 	},
 	'click #recorder-submit': function() {
 		if (Session.get('state') == 'inactive') {
-			console.log("blob: " + blob)
-			console.log("transcript: " + transcript)
-			console.log("confidence: " + confidence)
 			Session.set('recorder', false)
 			Session.set('audioId', false)
 			Session.set('audioURL', false)
-
 			uploadAudio()
 			$('#recorder-modal').modal('close')
+		} else if (Session.get('state') == 'recording') {
+			Materialize.toast('Please press the recorder button to stop recording.', 4000)
 		} else {
 			Materialize.toast('Unable to record, please try again.', 4000)
 		}
 	},
 	'click #recorder-cancel':function() {
-		// if (recorder && recorder.state != 'inactive') {
-		// 	recorder.stop()
-		// 	Session.set('state', recorder.state)
-		// }
 		Session.set('recorder', false)
 		Session.set('audioId', false)
 		Session.set('audioURL', false)
@@ -56,9 +50,6 @@ Template.Recorder.helpers({
 	},
 	isRecording: function() {
 		return Session.get('state') == 'recording'
-	},
-	getTranscript: function() {
-		return transcript
 	}
 });
 
@@ -104,9 +95,9 @@ function recorder() {
 			}
 		}
 
-		recognition.onresult = function(event) { 
-			recorder.stop()
+		recognition.onresult = function(event) {
 			recognition.stop()
+			if (recorder.state != 'inactive') recorder.stop()
 			var result = event.results[0][0]				
 			transcript = result.transcript
 			confidence = result.confidence
