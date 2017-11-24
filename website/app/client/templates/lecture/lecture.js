@@ -45,6 +45,21 @@ Template.Lecture.events({
 			}
 		})
 		Meteor.setTimeout(function() {$('#groups-collapsible').collapsible()}, 100)
+	},
+	'change #instructorNotification': function() {
+		var notification = document.getElementById('instructorNotification').checked
+		Session.set('notification', notification)
+		if (notification) {
+			Notification.requestPermission().then(function(result) {
+				if (result === 'denied') {
+					console.log('Permission wasn\'t granted. Allow a retry.')
+				}
+				if (result === 'default') {
+					console.log('The permission request was dismissed.')
+				}
+			})
+			instructorNotification()
+		}
 	}
 });
 
@@ -115,6 +130,45 @@ Template.Lecture.helpers({
 	}
 });
 
+function userIsCourseInstructor(userId) {
+	var course = Courses.findOne(Session.get('courseId'))
+	if (course) {
+		if (userId) return course.instructors.indexOf(userId) >= 0
+		else return course.instructors.indexOf(Meteor.userId()) >= 0
+	}
+}
+
+function userIsCourseOwner(userId) {
+	var course = Courses.findOne(Session.get('courseId'))
+	if (course) {
+		if (userId) return course.ownerId == userId
+		else return course.ownerId == Meteor.userId()
+	}
+}
+
+function instructorNotification() {
+	// check if there are new unread questions every 5 minutes
+	if (userIsCourseInstructor()) {
+		Meteor.setInterval((function() {
+			if (Session.get('notification')) {
+				var questions = Audios.collection.find({
+					'meta.lectureId': Session.get("lectureId"),
+					'meta.read': false
+				})
+				if (questions.count()) {
+					var title = Router.current().params.lecture
+					var options = {
+						body: 'You have ' + questions.count() + ' unread questions!',
+						icon: "/icons/cardboard.png"
+					}
+					new Notification(title, options)
+				}
+			}
+		}), 300000);
+	}
+}
+
+
 /*****************************************************************************/
 /* Lecture: Lifecycle Hooks */
 /*****************************************************************************/
@@ -132,6 +186,8 @@ Template.Lecture.onRendered(function () {
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	if (course) Session.set('courseId', course._id)
 	if (lecture) Session.set('lectureId', lecture._id)
+
+	Session.set('notification', false)
 });
 
 Template.Lecture.onDestroyed(function () {

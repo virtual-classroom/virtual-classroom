@@ -1,11 +1,15 @@
 <template name="Question">
 	{{#if question}}
 	<div class="question">
+
 		<audio id={{question._id}} src={{question.link}}></audio>
 		<i id="{{question._id}}-button" class="play-button material-icons circle">{{changePlayerIcon}}</i>
 		<div class="title flex-container">
-			<span class="left-item">Speech recognition confidence: {{getPercentage question.meta.confidence}}</span>
-			<span class="right-item">{{livestamp question.createdAt}}</span>
+			<span class="left-item">Confidence: {{getPercentage question.meta.confidence}}</span>
+			<div class="right-item">
+				<span>{{livestamp question.createdAt}}</span>
+				<span id="{{question._id}}-status" class="read-status" style="{{#unless read}}color:red;{{/unless}}">({{getReadStatus}})</span>
+			</div>
 		</div>
 		<p>{{question.meta.transcript}}</p>
 	</div>

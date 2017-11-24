@@ -46,7 +46,14 @@
 					</div>
 					{{#if userIsCourseInstructor lecture.courseCode}}
 						{{#if questions}}
-							<ul class="collection card">
+							<ul class="collection with-header card">
+								<li class="collection-header flex-container">
+									<p>Questions</p>
+									<div class="switch">
+										<label style="cursor:unset; padding-right:5px;">Notification</label>
+										<label>Off<input id="instructorNotification" type="checkbox"><span class="lever"></span>On</label>
+									</div>
+								</li>
 								{{#each question in questions}}
 								<li class="collection-item avatar">
 									{{> Question question=question._id}}

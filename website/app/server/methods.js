@@ -321,5 +321,31 @@ Meteor.methods({
 					error.message, error.message)
 			})
 		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
+	},
+	'updateAudioStatus': function(audioId, status) {
+		var user = Meteor.user()
+		var audio = Audios.collection.findOne(audioId)
+		if (user && audio) {
+			var lecture = Lectures.findOne(audio.meta.lectureId)
+			var course = Courses.findOne({code: lecture.courseCode})
+			if (course && course.instructors.indexOf(user._id) >= 0) {
+				Audios.update(audioId, {
+					$set: {
+						meta: {
+							lectureId: audio.meta.lectureId,
+							groupId: audio.meta.groupId,
+							transcript: audio.meta.transcript,
+							confidence: audio.meta.confidence,
+							mode: audio.meta.mode,
+							read: status,
+						},
+						createdAt: audio.createdAt
+					}
+				}, function(error) {
+					if (error) throw new Meteor.Error("Insertion error", 
+					error.message, error.message)
+				})
+			}
+		} else throw new Meteor.Error("Update error", "Access denied", "Access denied");
 	}
 });
