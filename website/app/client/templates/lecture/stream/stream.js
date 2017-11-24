@@ -49,8 +49,8 @@ Template.Stream.helpers({
 		if (group) return group
 	},
 	groups: function() {
-		var groups = Groups.find({active:true},{sort: {number:1}})
-		if (groups.fetch().length) return groups.fetch()
+		var groups = Groups.find({active:true},{sort: {name: 1}}).fetch()
+		if (groups.length) return groups
 	},
 	recorderIsActive: function() {
 		var modal = document.getElementById('recorder-modal')
@@ -61,8 +61,12 @@ Template.Stream.helpers({
 		if (lecture && lecture.displayQuestion) return lecture.displayQuestion
 	},
 	groupMode: function(mode) {
-		if (mode == 'group') return true
-		else return false
+		if (mode == 'group') {
+			
+			return true
+		} else {
+			return false
+		}
 	},
 	getGroupMembers: function() {
 		var group = Groups.findOne(Session.get('groupId'))
@@ -106,6 +110,47 @@ Template.Stream.helpers({
 	}
 });
 
+function RTCPeerConnection() {
+	// set up the phone
+	var phone = window.phone = PHONE({
+		number: Meteor.userId(),
+		publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
+		subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
+		media: {audio: true, video: false},
+		ssl: true
+	})
+
+	// denote it's ready
+	phone.ready(function(){
+		console.log('phone ready')
+		var group = Groups.findOne(Session.get('groupId'))
+		if (group) {
+			for (var i = 0; i < group.members.length; i ++) {
+				if (!Session.get(group.members[i] + '-call')) {
+					phone.dial(group.members[i])
+					Session.set(group.members[i] + '-call', true)
+				}
+			}	
+		}
+
+	})
+
+	// set up callbacks that execute upon start or finish of session
+	phone.receive(function(session) {
+		session.connected(function(session) {
+			console.log('session connected')
+			console.log(session)
+			var audio = new Audio(session.video.src)
+			audio.play()
+		})
+		session.ended(function(session) {
+			console.log('session ended')
+		})
+	})
+	return false;
+} 
+
+
 /*****************************************************************************/
 /* Stream: Lifecycle Hooks */
 /*****************************************************************************/
@@ -121,7 +166,12 @@ Template.Stream.onRendered(function () {
 	Session.set('groupId', false)
 
 	var group = Groups.findOne({members:Meteor.userId(),active:true})
-	if (group) Session.set('groupId', group._id)
+	if (group) {
+		Session.set('groupId', group._id)
+		for (var i = 0; i < group.members.length; i ++) {
+			Session.set(group.members[i] + '-call', false)
+		}
+	}
 	
 	Meteor.setTimeout(function() {
 		$('#group-discussion-modal').modal()
@@ -133,6 +183,8 @@ Template.Stream.onRendered(function () {
 	var typingTimer
 	Session.set('typingTimer', typingTimer)
 	Session.set('typingInterval', 5000)
+
+	RTCPeerConnection()
 });
 
 Template.Stream.onDestroyed(function () {
