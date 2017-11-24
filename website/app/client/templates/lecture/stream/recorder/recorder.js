@@ -11,7 +11,6 @@ Template.Recorder.events({
 	'click #recorder-toggle': function() {
 		if (Session.get('state') == 'inactive') {
 			recorder()
-		} else {
 		}
 	},
 	'click #recorder-submit': function() {
@@ -19,11 +18,11 @@ Template.Recorder.events({
 			console.log("blob: " + blob)
 			console.log("transcript: " + transcript)
 			console.log("confidence: " + confidence)
-			//Meteor.call('submitLectureQuestion', Session.get('lectureId'), Session.get('audioId'))
 			Session.set('recorder', false)
 			Session.set('audioId', false)
 			Session.set('audioURL', false)
-			Materialize.toast('Question sent', 4000)
+
+			uploadAudio()
 			$('#recorder-modal').modal('close')
 		} else {
 			Materialize.toast('Unable to record, please try again.', 4000)
@@ -57,6 +56,9 @@ Template.Recorder.helpers({
 	},
 	isRecording: function() {
 		return Session.get('state') == 'recording'
+	},
+	getTranscript: function() {
+		return transcript
 	}
 });
 
@@ -71,7 +73,6 @@ function recorder() {
 		recognition.interimResults = false
 		recognition.lang = "en-US"
 
-		Session.set('initialized', true)
 		recorder.onstart = function() {
 			Session.set('state', recorder.state)
 			recognition.start()
@@ -100,15 +101,12 @@ function recorder() {
 				// convert stream data chunks to a 'webm' audio format as a blob
 				var url = URL.createObjectURL(blob)
 				Session.set('audioURL', url)
-
-				//uploadAudio(blob, transcript, confidence)
 			}
 		}
 
 		recognition.onresult = function(event) { 
 			recorder.stop()
 			recognition.stop()
-			Session.set("state", recorder.state)
 			var result = event.results[0][0]				
 			transcript = result.transcript
 			confidence = result.confidence
@@ -128,7 +126,7 @@ function recorder() {
 	}).catch(console.error)
 }
 
-function uploadAudio(blob, transcript, confidence) {
+function uploadAudio() {
 	var lecture = Lectures.findOne(Session.get('lectureId'))
 	var upload = Audios.insert({
 		file: blob,
@@ -140,15 +138,17 @@ function uploadAudio(blob, transcript, confidence) {
 			transcript: transcript,
 			confidence: confidence,
 			mode: lecture.mode,
-			read: false,
-			display: false
+			read: false
 		}
 	}, false)
 	upload.on('end', function(error, fileObj) {
 		if (error) {
-			alert('Error during upload: ' + error.reason);
+			alert('Error during upload: ' + error.reason)
 		} else {
-			Session.set("audioId", upload.config.fileId)
+			blob = []
+			transcript = 'Unable to transcript audio'
+			confidence = 0
+			Materialize.toast('Question sent!', 4000)
 		}
 	})
 	upload.start()
@@ -164,16 +164,12 @@ Template.Recorder.onCreated(function () {
 Template.Recorder.onRendered(function () {
 	Session.set("audioURL", false)
 	Session.set('audioId', false)
-	Session.set('level',false)
-	Session.set('initialized', false)
 	Session.set('state', 'inactive')
 
 	var courseCode = Router.current().params.code
 	var title = Router.current().params.lecture
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	Session.set('lectureId', lecture._id)
-
-	//recorder()
 });
 
 Template.Recorder.onDestroyed(function () {

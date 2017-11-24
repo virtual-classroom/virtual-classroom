@@ -267,29 +267,6 @@ Meteor.methods({
 		} else throw new Meteor.Error("Update error", "Access denied", 
 			"Access denied");
 	},
-	'submitLectureQuestion': function(lectureId, audioId) {
-		var user = Meteor.user()
-		var lecture = Lectures.findOne(lectureId)
-		var audio = Audios.collection.findOne(audioId)
-		if (lecture && audio && user._id == audio.userId) {
-			var transcript = audio.meta.transcript
-			var confidence = audio.meta.confidence
-			var read = audio.meta.read
-			var mode = audio.meta.mode
-			var groupId = audio.meta.groupId
-			Audios.update(audioId, {
-				$set: {meta: {
-					lectureId: lectureId,
-					groupId: groupId,
-					transcript: transcript,
-					confidence: confidence,
-					mode: mode,
-					read: false,
-					display: true
-				}}
-			})
-		}
-	},
 	'updateUserInfo': function(userId, userInfo) {
 		var user = Meteor.user()
 		if (user._id == userId) {
