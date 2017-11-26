@@ -2,8 +2,9 @@
 	<div class="stream">
 		{{#with lecture}}
 			{{#if groupMode lecture.mode}}
+				<div id="video-out"></div>
+				<audio id='voiceChat' autoplay="autoplay"></audio>
 				{{#if group}}
-					<audio id="call"></audio>
 					<a-scene>
 						{{#with group}}
 							<!-- blackboard -->
