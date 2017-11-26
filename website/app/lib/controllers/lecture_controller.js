@@ -80,9 +80,6 @@ LectureController = RouteController.extend({
 			var description = course.description
 			SEO.set({
 				title: lecture_code + " " + course_code + " | PlzStopMe",
-				meta: {
-					"description": description
-				}
 			});
 		}
 	},

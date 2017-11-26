@@ -32,7 +32,7 @@ Template.Stream.events({
 	},
 	'click .enter-group-discussion': function(event) {
 		Session.set('groupId', event.target.dataset.value)
-		voiceChat()
+		callMembers()
 	},
 	'click #exit-group-discussion': function() {
 		Session.set('groupId', false)
@@ -71,6 +71,7 @@ Template.Stream.helpers({
 			return true
 		} else {
 			voiceCallEnd()
+			voiceCallTerminate()
 			return false
 		}
 	},
@@ -117,23 +118,51 @@ Template.Stream.helpers({
 });
 
 function voiceChat() {
-	if (phone) voiceCallEnd()
+	if (!phone) {
+		phone = window.phone = PHONE({
+			number: Meteor.userId(),
+			publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
+			subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
+			media: {audio: true, video: false},
+			ssl: true
+		})
 
-	phone = window.phone = PHONE({
-		number: Meteor.userId(),
-		publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
-		subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
-		media: {audio: true, video: false},
-		ssl: true
-	})
+		phone.unable(function() {
+			console.log("Your device does not support RTCPeerConnection!");
+			Materialize.toast('Your device does not support RTCPeerConnection', 4000)
+		})
 
-	phone.unable(function() {
-		console.log("Your device does not support RTCPeerConnection!");
-	})
+		phone.ready(function() {
+			// call all group members when phone is ready
+			console.log('phone ready')
+			callMembers()
+		})
 
-	phone.ready(function() {
-		// call all group members when phone is ready
-		console.log('phone ready')
+		phone.receive(function(session) {
+			var audio = document.getElementById('voiceChat')
+			session.connected(function(session) {
+				// created new audio when session is connected
+				console.log('session ' + session.number + ' connected')
+				peers[session.number] = session.video.src
+				var source  = document.createElement("source")
+				source.id = session.number + '-voiceChat'
+				source.src = peers[session.number]
+				audio.appendChild(source)
+			})
+			session.ended(function(session) {
+				// remove audio when session has ended
+				console.log('session ' + session.number +  ' ended')
+				session.hangup()
+				peers[session.number] = false
+				var source = document.getElementById(session.number + '-voiceChat')
+				if (source) audio.removeChild(source)
+			})
+		})
+	}
+} 
+
+function callMembers() {
+	if (phone) {
 		var group = Groups.findOne(Session.get('groupId'))
 		if (group) {
 			for (var i = 0; i < group.members.length; i++) {
@@ -141,35 +170,24 @@ function voiceChat() {
 					phone.dial(group.members[i])
 			}
 		}
-	})
-
-	phone.receive(function(session) {
-		var audio  = document.getElementById('voiceChat')
-		session.connected(function(session) {
-			// created new audio when session is connected
-			console.log('session ' + session.number + ' connected')
-			peers[session.number] = session.video.src
-			var source  = document.createElement("source")
-			source.id = session.number + '-voiceChat'
-			source.src = peers[session.number]
-			audio.appendChild(source)
-		})
-		session.ended(function(session) {
-			// remove audio when session has ended
-			console.log('session ' + session.number +  ' ended')
-			peers[session.number] = false
-			var source = document.getElementById(session.number + '-voiceChat')
-			if (source) audio.removeChild(source)
-		})
-	})
-} 
+	}
+}
 
 function voiceCallEnd() {
+	if (phone) phone.hangup()
+	peers = {}
+	var audio = document.getElementById('voiceChat')
+	if (audio) audio.innerHTML = ''
+}
+
+function voiceCallTerminate() {
 	if (phone) {
-		phone.hangup()
+		navigator.mediaDevices.getUserMedia({audio:true, video:false})
+		.then(function(stream) {
+			stream.getTracks().forEach(track => track.stop())
+		}).catch(console.error)
 		phone = false
 	}
-	peers = {}
 }
 
 /*****************************************************************************/
@@ -204,4 +222,5 @@ Template.Stream.onRendered(function () {
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
 	voiceCallEnd()
+	voiceCallTerminate()
 });
