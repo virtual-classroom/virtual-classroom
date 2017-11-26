@@ -32,9 +32,11 @@ Template.Stream.events({
 	},
 	'click .enter-group-discussion': function(event) {
 		Session.set('groupId', event.target.dataset.value)
+		voiceChat()
 	},
 	'click #exit-group-discussion': function() {
 		Session.set('groupId', false)
+		voiceCallEnd()
 	}
 });
 
@@ -68,6 +70,7 @@ Template.Stream.helpers({
 			voiceChat()
 			return true
 		} else {
+			voiceCallEnd()
 			return false
 		}
 	},
@@ -114,52 +117,60 @@ Template.Stream.helpers({
 });
 
 function voiceChat() {
-	if (!phone) {
-		// set up the phone
-		phone = window.phone = PHONE({
-			number: Meteor.userId(),
-			publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
-			subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
-			media: {audio: true, video: false},
-			ssl: false
-		})
+	if (phone) voiceCallEnd()
 
-		phone.unable(function() {
-			console.log("Your device does not support RTCPeerConnection!");
-		})
+	phone = window.phone = PHONE({
+		number: Meteor.userId(),
+		publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
+		subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
+		media: {audio: true, video: false},
+		ssl: true
+	})
 
-		phone.ready(function() {
-			console.log('phone ready')
-			var group = Groups.findOne(Session.get('groupId'))
-			for (var user in peers) {
-				if (peers.hasOwnProperty(user) && !peers[user]) {
-					phone.dial(user)
-				}
+	phone.unable(function() {
+		console.log("Your device does not support RTCPeerConnection!");
+	})
+
+	phone.ready(function() {
+		// call all group members when phone is ready
+		console.log('phone ready')
+		var group = Groups.findOne(Session.get('groupId'))
+		if (group) {
+			for (var i = 0; i < group.members.length; i++) {
+				if (group.members[i] != Meteor.userId()) 
+					phone.dial(group.members[i])
 			}
-		})
+		}
+	})
 
-		phone.receive(function(session) {
-			var audio  = document.getElementById('voiceChat')
-			session.connected(function(session) {
-				console.log('session ' + session.number + ' connected')
-				if (session.status == 'connected') {
-					peers[session.number] = session.video.src
-					var source  = document.createElement("source")
-					source.id = session.number + '-voiceChat'
-					source.src = peers[session.number]
-					audio.appendChild(source)
-				}
-			})
-			session.ended(function(session) {
-				console.log('session ' + session.number +  ' ended')
-				peers[session.number] = false
-				var source = document.getElementById(session.number + '-voiceChat')
-				if (source) audio.removeChild(source)
-			})
+	phone.receive(function(session) {
+		var audio  = document.getElementById('voiceChat')
+		session.connected(function(session) {
+			// created new audio when session is connected
+			console.log('session ' + session.number + ' connected')
+			peers[session.number] = session.video.src
+			var source  = document.createElement("source")
+			source.id = session.number + '-voiceChat'
+			source.src = peers[session.number]
+			audio.appendChild(source)
 		})
-	}
+		session.ended(function(session) {
+			// remove audio when session has ended
+			console.log('session ' + session.number +  ' ended')
+			peers[session.number] = false
+			var source = document.getElementById(session.number + '-voiceChat')
+			if (source) audio.removeChild(source)
+		})
+	})
 } 
 
+function voiceCallEnd() {
+	if (phone) {
+		phone.hangup()
+		phone = false
+	}
+	peers = {}
+}
 
 /*****************************************************************************/
 /* Stream: Lifecycle Hooks */
@@ -176,14 +187,7 @@ Template.Stream.onRendered(function () {
 	Session.set('groupId', false)
 
 	var group = Groups.findOne({members:Meteor.userId(),active:true})
-	if (group) {
-		Session.set('groupId', group._id)
-		for (var i = 0; i < group.members.length; i ++) {
-			if (group.members[i] != Meteor.userId()) {
-				peers[group.members[i]] = false
-			}
-		}
-	}
+	if (group) Session.set('groupId', group._id)
 	
 	Meteor.setTimeout(function() {
 		$('#group-discussion-modal').modal()
@@ -195,15 +199,9 @@ Template.Stream.onRendered(function () {
 	var typingTimer
 	Session.set('typingTimer', typingTimer)
 	Session.set('typingInterval', 5000)
-
-	Session.set('phoneInit', false)
 });
 
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
-	if (phone) {
-		phone.hangup()
-		phone = false
-	}
-	peers = {}
+	voiceCallEnd()
 });
