@@ -84,10 +84,7 @@ StreamController = RouteController.extend({
 			var title = course.title
 			var description = course.description
 			SEO.set({
-				title: "Live Stream " + lecture_code + " " + course_code + " | PlzStopMe",
-				meta: {
-					"description": description
-				}
+				title: "Live Stream " + lecture_code + " " + course_code + " | PlzStopMe"
 			});
 		}
 	},
