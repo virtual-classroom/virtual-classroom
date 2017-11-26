@@ -1,3 +1,6 @@
+const peers = {}
+const phone = false
+
 /*****************************************************************************/
 /* Stream: Event Handlers */
 /*****************************************************************************/
@@ -62,7 +65,7 @@ Template.Stream.helpers({
 	},
 	groupMode: function(mode) {
 		if (mode == 'group') {
-			
+			voiceChat()
 			return true
 		} else {
 			return false
@@ -110,44 +113,51 @@ Template.Stream.helpers({
 	}
 });
 
-function RTCPeerConnection() {
-	// set up the phone
-	var phone = window.phone = PHONE({
-		number: Meteor.userId(),
-		publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
-		subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
-		media: {audio: true, video: false},
-		ssl: true
-	})
+function voiceChat() {
+	if (!phone) {
+		// set up the phone
+		phone = window.phone = PHONE({
+			number: Meteor.userId(),
+			publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
+			subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
+			media: {audio: true, video: false},
+			ssl: false
+		})
 
-	// denote it's ready
-	phone.ready(function(){
-		console.log('phone ready')
-		var group = Groups.findOne(Session.get('groupId'))
-		if (group) {
-			for (var i = 0; i < group.members.length; i ++) {
-				if (!Session.get(group.members[i] + '-call')) {
-					phone.dial(group.members[i])
-					Session.set(group.members[i] + '-call', true)
+		phone.unable(function() {
+			console.log("Your device does not support RTCPeerConnection!");
+		})
+
+		phone.ready(function() {
+			console.log('phone ready')
+			var group = Groups.findOne(Session.get('groupId'))
+			for (var user in peers) {
+				if (peers.hasOwnProperty(user) && !peers[user]) {
+					phone.dial(user)
 				}
-			}	
-		}
-
-	})
-
-	// set up callbacks that execute upon start or finish of session
-	phone.receive(function(session) {
-		session.connected(function(session) {
-			console.log('session connected')
-			console.log(session)
-			var audio = new Audio(session.video.src)
-			audio.play()
+			}
 		})
-		session.ended(function(session) {
-			console.log('session ended')
+
+		phone.receive(function(session) {
+			var audio  = document.getElementById('voiceChat')
+			session.connected(function(session) {
+				console.log('session ' + session.number + ' connected')
+				if (session.status == 'connected') {
+					peers[session.number] = session.video.src
+					var source  = document.createElement("source")
+					source.id = session.number + '-voiceChat'
+					source.src = peers[session.number]
+					audio.appendChild(source)
+				}
+			})
+			session.ended(function(session) {
+				console.log('session ' + session.number +  ' ended')
+				peers[session.number] = false
+				var source = document.getElementById(session.number + '-voiceChat')
+				if (source) audio.removeChild(source)
+			})
 		})
-	})
-	return false;
+	}
 } 
 
 
@@ -169,7 +179,9 @@ Template.Stream.onRendered(function () {
 	if (group) {
 		Session.set('groupId', group._id)
 		for (var i = 0; i < group.members.length; i ++) {
-			Session.set(group.members[i] + '-call', false)
+			if (group.members[i] != Meteor.userId()) {
+				peers[group.members[i]] = false
+			}
 		}
 	}
 	
@@ -184,9 +196,14 @@ Template.Stream.onRendered(function () {
 	Session.set('typingTimer', typingTimer)
 	Session.set('typingInterval', 5000)
 
-	RTCPeerConnection()
+	Session.set('phoneInit', false)
 });
 
 Template.Stream.onDestroyed(function () {
 	document.documentElement.style.overflow = "auto"
+	if (phone) {
+		phone.hangup()
+		phone = false
+	}
+	peers = {}
 });
