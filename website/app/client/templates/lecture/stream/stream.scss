@@ -6,17 +6,17 @@
 		width: 35px;
 		height:35px;
 		position:absolute;
-		top:50px;
-		left: 80px;
+		top: 50px;
+		right: 80px;
 		padding: 0;
 		@media only screen and (max-width: 600px) {
 			top: 20px;
-			left: 40px;
+			right: 40px;
 		}
 		img {
 			width: 35px;
 			height:35px;
-			opacity: 0.6;
+			opacity: 0.8;
 			-webkit-transition: opacity .3s ease;
 			-moz-transition: opacity .3s ease;
 			-o-transition: opacity .3s ease;
