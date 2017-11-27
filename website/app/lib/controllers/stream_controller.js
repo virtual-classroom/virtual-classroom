@@ -17,6 +17,7 @@ StreamController = RouteController.extend({
 			this.subscribe('Groups', courseCode, lecture._id).wait()
 			this.subscribe('Audios', lecture._id).wait()
 			this.subscribe('GroupDiscussion', lecture._id).wait()
+			this.subscribe('PubNub').wait()
 		}
 	},
 
@@ -52,7 +53,8 @@ StreamController = RouteController.extend({
 		var title = Router.current().params.lecture
 		var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 		// redirect if user is not logged in
-		if (user && course && (course.instructors.indexOf(user._id) >= 0 || course.students.indexOf(user._id) >= 0) && lecture.active) {
+		if (user && course && (course.instructors.indexOf(user._id) >= 0 || 
+			course.students.indexOf(user._id) >= 0) && lecture.active) {
 			this.next();
 		} else {
 			Router.go('/');
@@ -84,7 +86,10 @@ StreamController = RouteController.extend({
 			var title = course.title
 			var description = course.description
 			SEO.set({
-				title: "Live Stream " + lecture_code + " " + course_code + " | Virtual Classroom"
+				title: "Live Stream " + lecture_code + " " + course_code + " | Virtual Classroom",
+				meta: {
+					'theme-color': '#2196F3'
+				}
 			});
 		}
 	},

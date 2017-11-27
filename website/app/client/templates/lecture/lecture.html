@@ -18,24 +18,23 @@
 					</div>
 					<div class="card">
 						<div class="card-content">
+							<div class="card-title">{{#if lecture.active}}Live{{else}}Offline{{/if}}</div>
 							{{#if userIsCourseInstructor lecture.courseCode}}
 								<div class="input-field">
 									<input id="youtubeURL" name="youtubeURL" type="text" class="validate" autocomplete="off" value={{lecture.youtube}}>
 									<label id="youtubeURL-label" for="youtubeURL" class={{activeYouTubeInputField lecture.youtube}}>YouTube URL</label>
 								</div>
 							{{/if}}
-							{{#if lecture.active}}	
-								<div class="card-title">Live Stream</div>
+							{{#if lecture.active}}
 								{{#if lecture.youtube}}
-								<div class="video-container">
-									<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
-								</div>
+									<div class="video-container">
+										<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
+									</div>
 								{{else}}
 									<p>YouTube stream not available.</p>
 								{{/if}}
 							{{else}}
-								<div class="card-title">Offline</div>
-								<p>Lecture is not active, please check later.</p>
+								<p>Lecture is not active, please check again later.</p>
 							{{/if}}
 						</div>
 						{{#if lecture.active}}

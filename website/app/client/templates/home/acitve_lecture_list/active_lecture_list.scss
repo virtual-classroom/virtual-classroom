@@ -1,0 +1,20 @@
+/*****************************************************************************/
+/* ActiveLectureList: Style */
+/*****************************************************************************/
+.active-lecture-list {
+	.lecture-list {
+		margin: 20px 0;
+		.collection-header {
+			p {
+				margin: 0;
+				font-weight: 300;
+			}
+		}
+		.collection-item {
+			@media only screen and (min-width:400px) {
+				display:flex;
+			}
+			padding: 10px 20px;
+		}
+	}
+}

@@ -96,42 +96,25 @@ if (course) {
 	})
 }
 
-// initialize SEO for each page
-SeoCollection.update(
-	{
-		route_name:"home"
-	}, {
-		$set: {
-			route_name : "home",
-			title : "Virtual Class",
-			meta: {
-				"description": "Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment"
-			},
-			og: {
-				"title":"Virtual Class",
-				"description": "Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment",
-				"type":"website",
-				"url":"https://vr.bryanli.xyz",
-				"site_name":"Virtual Class",
-				"image":"/icons/cardboard.png",
-				"image:type":"image/png",
-				"image:width":"512",
-				"image:height":"512",
-				"locale":"en_US"
-			}
-		}
-	}, {
-		upsert:true
-	}
-);
+var pubnub = PubNub.findOne()
+if (!pubnub) {
+	PubNub.insert({
+		publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
+		subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547'
+	})
+}
 
+// initialize SEO for each page
 SeoCollection.update(
 	{
 		route_name:"createNewCourse"
 	}, {
 		$set: {
 			route_name : "createNewCourse",
-			title : "Create Course | Virtual Class"
+			title : "Create Course | Virtual Classroom",
+			meta: {
+				'theme-color': '#2196F3'
+			}
 		}
 	}, {
 		upsert:true
@@ -144,7 +127,10 @@ SeoCollection.update(
 	}, {
 		$set: {
 			route_name : "settings",
-			title : "Settings | Virtual Class"
+			title : "Settings | Virtual Classroom",
+			meta: {
+				'theme-color': '#2196F3'
+			}
 		}
 	}, {
 		upsert:true

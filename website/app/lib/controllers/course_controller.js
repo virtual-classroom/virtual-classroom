@@ -66,7 +66,8 @@ CourseController = RouteController.extend({
 			SEO.set({
 				title: course.code + " " + course.title + " | Virtual Classroom",
 				meta: {
-					"description": course.description.substring(0, 100) + '...'
+					'description': course.description.substring(0, 100) + '...',
+					'theme-color': '#2196F3'
 				}
 			});
 		}

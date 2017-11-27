@@ -47,7 +47,8 @@ LectureController = RouteController.extend({
 		var user = Meteor.user()
 		var course = Courses.findOne({code: Router.current().params.code.toUpperCase()})
 		// redirect if user is not logged in
-		if (user && course && (course.instructors.indexOf(user._id >= 0 || course.students.indexOf(user._id) >= 0))) {
+		if (user && course && (course.instructors.indexOf(user._id >= 0 || 
+			course.students.indexOf(user._id) >= 0))) {
 			this.next();
 		} else {
 			Router.go('/');
@@ -77,7 +78,10 @@ LectureController = RouteController.extend({
 		if (course) {
 			var title = course.title
 			SEO.set({
-				title: lecture_code + " " + course_code + " | Virtual Classroom"
+				title: lecture_code + " " + course_code + " | Virtual Classroom",
+				meta: {
+					'theme-color': '#2196F3'
+				}
 			})
 		}
 	},

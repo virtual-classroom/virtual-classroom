@@ -119,10 +119,11 @@ Template.Stream.helpers({
 
 function voiceChat() {
 	if (!phone) {
+		var pubnub = PubNub.findOne()
 		phone = window.phone = PHONE({
 			number: Meteor.userId(),
-			publish_key: 'pub-c-91dafed6-af99-459b-abd9-7b3e9ea1a413',
-			subscribe_key: 'sub-c-edf059c0-d160-11e7-ad64-4ade014f1547',
+			publish_key: pubnub.publish_key,
+			subscribe_key: pubnub.subscribe_key,
 			media: {audio: true, video: false},
 			ssl: true
 		})
@@ -182,10 +183,7 @@ function voiceCallEnd() {
 
 function voiceCallTerminate() {
 	if (phone) {
-		navigator.mediaDevices.getUserMedia({audio:true, video:false})
-		.then(function(stream) {
-			stream.getTracks().forEach(track => track.stop())
-		}).catch(console.error)
+		phone.camera.stop()
 		phone = false
 	}
 }

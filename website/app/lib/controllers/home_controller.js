@@ -7,8 +7,9 @@ HomeController = RouteController.extend({
 
 	subscriptions: function() {
 		if (Meteor.user()) {
-			this.subscribe('Courses',false).wait()
+			this.subscribe('Courses', false).wait()
 			this.subscribe('Users').wait()
+			this.subscribe('Lectures', false, false).wait()
 		}
 	},
 

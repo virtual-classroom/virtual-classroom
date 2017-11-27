@@ -1,10 +1,9 @@
 <template name="Question">
 	{{#if question}}
 	<div class="question">
-
 		<audio id={{question._id}} src={{question.link}}></audio>
 		<i id="{{question._id}}-button" class="play-button material-icons circle">{{changePlayerIcon}}</i>
-		<div class="title flex-container">
+		<div class="title flex-container flex-container-mobile">
 			<span class="left-item">Confidence: {{getPercentage question.meta.confidence}}</span>
 			<div class="right-item">
 				<span>{{livestamp question.createdAt}}</span>

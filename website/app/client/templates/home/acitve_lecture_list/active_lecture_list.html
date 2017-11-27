@@ -1,0 +1,20 @@
+<template name="ActiveLectureList">
+	{{#if lectures}}
+	<div class="active-lecture-list">
+		<ul class="lecture-list collection with-header card">
+			<li class="collection-header">
+				<p>On-going Lectures</p>
+			</li>
+			{{#each lectures}}
+				<a href='/course/{{courseCode}}/{{title}}' class="collection-item flex-container">
+					<div class="left-item">
+						<span>{{courseCode}} {{title}}</span>
+						<span class="live-now active-blink">LIVE</span>
+					</div>
+					<div class="right-item">{{prettyDate createdAt}}</div>
+				</a>
+			{{/each}}
+		</ul>
+	</div>
+	{{/if}}
+</template>

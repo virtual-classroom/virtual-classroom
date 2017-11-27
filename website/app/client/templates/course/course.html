@@ -33,7 +33,7 @@
 							{{#if lectures}}
 								{{#each lectures}}
 									<a href='/course/{{courseCode}}/{{title}}' class="collection-item flex-container">
-										<div class="left-item">{{title}}  {{#if lectureIsActive _id}}<span class="live-now active-blink">LIVE NOW</span>{{/if}}</div>
+										<div class="left-item">{{title}}  {{#if lectureIsActive _id}}<span class="live-now active-blink">LIVE</span>{{/if}}</div>
 										<div class="right-item">{{prettyDate createdAt}}</div>
 									</a>
 								{{/each}}
