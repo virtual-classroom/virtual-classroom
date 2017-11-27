@@ -75,12 +75,10 @@ LectureController = RouteController.extend({
 		var lecture_code = Router.current().params.lecture
 		var course = Courses.findOne({'code':course_code})
 		if (course) {
-			// get instructor info, course title and course description
 			var title = course.title
-			var description = course.description
 			SEO.set({
-				title: lecture_code + " " + course_code + " | PlzStopMe",
-			});
+				title: lecture_code + " " + course_code + " | Virtual Classroom"
+			})
 		}
 	},
 	onStop: function () {
