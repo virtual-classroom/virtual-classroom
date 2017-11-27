@@ -64,9 +64,9 @@ CourseController = RouteController.extend({
 		var course = Courses.findOne({'code':Router.current().params.code.toUpperCase()})
 		if (course) {
 			SEO.set({
-				title: course.code + " " + course.title + " | PlzStopMe",
+				title: course.code + " " + course.title + " | Virtual Classroom",
 				meta: {
-					"description": course.description
+					"description": course.description.substring(0, 100) + '...'
 				}
 			});
 		}
