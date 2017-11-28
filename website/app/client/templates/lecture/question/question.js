@@ -18,8 +18,8 @@ Template.Question.events({
 	},
 	'click .read-status': function() {
 		var question = Audios.findOne(this.question)
-		if (!question.meta.read)
-			Meteor.call('updateAudioStatus', this.question, true)
+		if (!question.meta.read) 
+			Meteor.call('readAudioQuestion', this.question, true)
 	}
 });
 
@@ -37,20 +37,6 @@ Template.Question.helpers({
 		// change play icon when recording is playing
 		if (Session.get(this.question)) return 'pause'
 		else return 'play_arrow'
-	},
-	getReadStatus:function() {
-		var question = Audios.findOne(this.question)
-		if (question) {
-			if (question.meta.read) {
-				return 'read'
-			} else {
-				return 'unread'
-			}
-		}
-	},
-	read: function() {
-		var question = Audios.findOne(this.question)
-		if (question) return question.meta.read
 	}
 });
 

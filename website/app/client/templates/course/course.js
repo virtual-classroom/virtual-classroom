@@ -95,7 +95,6 @@ Template.Course.helpers({
 	lectures: function() {
 		var lectures = Lectures.find({courseCode: Session.get('courseCode')},
 			{sort: {createdAt:1}})
-		console.log(lectures.count())
 		if (lectures.count()) return lectures
 	},
 	course: function() {

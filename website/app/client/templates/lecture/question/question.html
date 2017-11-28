@@ -7,7 +7,7 @@
 			<span class="left-item">Confidence: {{getPercentage question.meta.confidence}}</span>
 			<div class="right-item">
 				<span>{{livestamp question.createdAt}}</span>
-				<span id="{{question._id}}-status" class="read-status" style="{{#unless read}}color:red;{{/unless}}">({{getReadStatus}})</span>
+				{{#unless question.meta.read}}<span id="{{question._id}}-status" class="read-status" style="color:red;">(unread)</span>{{/unless}}
 			</div>
 		</div>
 		<p>{{question.meta.transcript}}</p>

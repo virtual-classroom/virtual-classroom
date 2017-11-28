@@ -129,7 +129,8 @@ function uploadAudio() {
 			transcript: transcript,
 			confidence: confidence,
 			mode: lecture.mode,
-			read: false
+			read: false,
+			notified: false
 		}
 	}, false)
 	upload.on('end', function(error, fileObj) {

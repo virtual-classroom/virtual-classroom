@@ -1,3 +1,5 @@
+const interval = null
+
 /*****************************************************************************/
 /* Lecture: Event Handlers */
 /*****************************************************************************/
@@ -48,7 +50,6 @@ Template.Lecture.events({
 	},
 	'change #instructorNotification': function() {
 		var notification = document.getElementById('instructorNotification').checked
-		Session.set('notification', notification)
 		if (notification) {
 			Notification.requestPermission().then(function(result) {
 				if (result === 'denied') {
@@ -59,6 +60,9 @@ Template.Lecture.events({
 				}
 			})
 			instructorNotification()
+		} else {
+			Meteor.clearInterval(interval)
+			interval = null
 		}
 	}
 });
@@ -147,24 +151,24 @@ function userIsCourseOwner(userId) {
 }
 
 function instructorNotification() {
-	// check if there are new unread questions every 5 minutes
-	if (userIsCourseInstructor()) {
-		Meteor.setInterval((function() {
-			if (Session.get('notification')) {
-				var questions = Audios.collection.find({
-					'meta.lectureId': Session.get("lectureId"),
-					'meta.read': false
-				})
-				if (questions.count()) {
-					var title = Router.current().params.lecture
-					var options = {
-						body: 'You have ' + questions.count() + ' unread questions!',
-						icon: "/icons/cardboard.png"
-					}
-					new Notification(title, options)
+	var lecture = Lectures.findOne(Session.get('lectureId'))
+	// check if there are new unread questions every 5 seconds
+	if (userIsCourseInstructor() && lecture && lecture.active) {
+		interval = Meteor.setInterval((function() {
+			var questions = Audios.collection.find({
+				'meta.lectureId': lecture._id,
+				'meta.notified': false
+			})
+			if (questions.count()) {
+				var title = Router.current().params.lecture
+				var options = {
+					body: 'You have ' + questions.count() + ' new questions!',
+					icon: "/icons/cardboard.png"
 				}
+				new Notification(title, options)
+				Meteor.call('notifiedAudioQuestion', lecture._id, questions.fetch())
 			}
-		}), 300000);
+		}), 5000)
 	}
 }
 
@@ -186,8 +190,6 @@ Template.Lecture.onRendered(function () {
 	var lecture = Lectures.findOne({$and: [{title: title}, {courseCode:courseCode}]})
 	if (course) Session.set('courseId', course._id)
 	if (lecture) Session.set('lectureId', lecture._id)
-
-	Session.set('notification', false)
 });
 
 Template.Lecture.onDestroyed(function () {
