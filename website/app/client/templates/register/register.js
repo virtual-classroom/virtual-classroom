@@ -100,7 +100,7 @@ Template.Register.events({
 			Session.set('studentAccount', false)
 		}
 	},
-	'click #cancel': function() {
+	'click #register-cancel': function() {
 		resetInput()
 		$('#register-modal').modal('close')
 	}

@@ -30,7 +30,7 @@ Template.Login.events({
 			});
 		}
 	},
-	'click #cancel':function(event) {
+	'click #login-cancel':function(event) {
 		resetInput()
 		$('#login-modal').modal('close')
 	}
