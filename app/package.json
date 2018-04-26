@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.40",
+    "@babel/runtime": "^7.0.0-beta.46",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "meteor-babel": "^0.24.7",
