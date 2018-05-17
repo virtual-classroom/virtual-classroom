@@ -1,5 +1,5 @@
-const peers = {}
-const phone = false
+var peers = {}
+var phone = false
 
 /*****************************************************************************/
 /* Stream: Event Handlers */
