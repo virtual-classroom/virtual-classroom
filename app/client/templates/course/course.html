@@ -64,17 +64,28 @@
 										</select>
 
 									</div>
-									<span class="card-title-small">Group Settings</span>
-									<div class="input-field file-field">
-										<span class="label">Note: The CSV file has to contain "ID" and "Group" columns.</span>
-										<div class="btn">
-											<span>File</span>
-											<input id="group-csv" type="file" accept=".csv">
-										</div>
-										<div class="file-path-wrapper">
-											<input class="file-path validate" type="text">
-										</div>
-									</div>
+                                    <span class="card-title-small">Enroll Students and Groups</span>
+                                    <div class="input-field file-field">
+                                        <span class="label">Note: The CSV file has to contain a "StudentID" and "Group" columns.</span>
+                                        <div class="btn">
+                                            <span>File</span>
+                                            <input id="student-csv" type="file" accept=".csv">
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text">
+                                        </div>
+                                    </div>
+									<!--<span class="card-title-small">Group Settings</span>-->
+									<!--<div class="input-field file-field">-->
+										<!--<span class="label">Note: The CSV file has to contain "ID" and "Group" columns.</span>-->
+										<!--<div class="btn">-->
+											<!--<span>File</span>-->
+											<!--<input id="group-csv" type="file" accept=".csv">-->
+										<!--</div>-->
+										<!--<div class="file-path-wrapper">-->
+											<!--<input class="file-path validate" type="text">-->
+										<!--</div>-->
+									<!--</div>-->
 									{{#if groups}}
 										<table class="group-table">
 											<thead>
