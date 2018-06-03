@@ -8,7 +8,9 @@ Template.Stream.events({
 	'click #recorder-modal-trigger': function() {
 		Session.set('recorder', true)
 		Session.set('audioURL', false)
-		$('#recorder-modal').modal('open')
+        document.getElementById("recorder-confidence").innerHTML = "Average Confidence: 0.00%"
+        document.getElementById("textBox").value = ""
+        $('#recorder-modal').modal('open')
 	},
 	'click #group-discussion-modal-trigger': function() {
 		var user = Meteor.user()
