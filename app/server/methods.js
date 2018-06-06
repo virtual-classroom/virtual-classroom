@@ -71,10 +71,6 @@ Meteor.methods({
                             }
                         }
                     }
-                    else {
-                        throw new Meteor.Error("Update error", "Access denied",
-                            "Access denied")
-                    }
                 }
             });
         } else throw new Meteor.Error("Update error", "Access denied",
