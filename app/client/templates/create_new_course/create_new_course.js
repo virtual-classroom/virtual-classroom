@@ -1,3 +1,4 @@
+import Papa from 'papaparse'
 /*****************************************************************************/
 /* createNewCourse: Event Handlers */
 /*****************************************************************************/
@@ -6,10 +7,11 @@ Template.CreateNewCourse.events({
 		// Prevent default browser form submit
 		event.preventDefault();
 		// Get values from form element
+		console.log(event);
 		var title = event.target.newCourseName.value;
 		var code = event.target.newCourseCode.value.toUpperCase();
 		var description = event.target.newCourseDescription.value;
-		var key = event.target.newCoursePassword.value;
+		var file = event.target[3].files[0];
 
 		if (title == "") {
 			// check if course title is empty
@@ -30,27 +32,45 @@ Template.CreateNewCourse.events({
 			$('#newCourseDescription').addClass('invalid')
 			$('#newCourseDescription-label').attr("data-error", "Course description cannot be empty")
 			Session.set("validCourseDescription", false)
-		} else if (key == "") {
-			// check if unique is empty
-			$('#newCoursePassword').removeClass('valid')
-			$('#newCoursePassword').addClass('invalid')
-			$('#newCoursePassword-label').attr("data-error", "Unique key cannot be empty")
-			Session.set("validPassword", false)
-		} else if (Session.get("validCourseCode") && Session.get("validPassword")) {
+		} else if (Session.get("validCourseCode")) {
 			var courseInfo = {}
 			courseInfo.title = title
 			courseInfo.code = code.toUpperCase()
 			courseInfo.description = description
-			courseInfo.key = key
-			Meteor.call('addCourse', courseInfo, function(error, result) {
-				if (error) {
-					console.log(error)
-					Materialize.toast('Error: ' + error.message, 8000)
-				} else {
-					Materialize.toast('Course ' + code + " added.", 4000)
-					Router.go('/course/' + courseInfo.code)
-				}
-			})
+            if(file) {
+                Papa.parse(file, {
+                    header: true,
+                    complete: function (results, file) {
+                        if (results.error) {
+                            Materialize.toast('CSV Parse Error: ' + results.error)
+                        } else if (results.meta.fields.indexOf('StudentID') < 0 ||
+                            results.meta.fields.indexOf('Group') < 0) {
+                            Materialize.toast('Incorrect CSV format')
+                        } else {
+                            Meteor.call('addCourse', courseInfo,
+                                results.data, function (error) {
+                                    if (error) console.log(error)
+                                    else  {
+                                    	Materialize.toast('Course added and Enrolled Students')
+                                        Router.go('/course/' + courseInfo.code)
+                                    }
+                                }
+                            )
+                        }
+                    }
+                })
+            }
+            else{
+                Meteor.call('addCourse', courseInfo, null, function(error, result) {
+                    if (error) {
+                        console.log(error)
+                        Materialize.toast('Error: ' + error.message, 8000)
+                    } else {
+                        Materialize.toast('Course ' + code + " added.", 4000)
+                        Router.go('/course/' + courseInfo.code)
+                    }
+                })
+			}
 		}
 	},
 	'click #cancel': function() {
@@ -81,19 +101,6 @@ Template.CreateNewCourse.events({
 			Session.set("validCourseCode", true)
 		}
 	},
-	'keyup #newCoursePassword': function() {
-		var input = $('#newCoursePassword').val()
-		if (input.length != 0 && input.length < 4) {
-			$('#newCoursePassword').removeClass('valid')
-			$('#newCoursePassword').addClass('invalid')
-			$('#newCoursePassword-label').attr("data-error", "Unqiue key must be at least 4 characters long")
-			Session.set("validPassword", false)
-		} else {
-			$('#newCoursePassword').addClass('valid')
-			$('#newCoursePassword').removeClass('invalid')
-			Session.set("validPassword", true)
-		}
-	}
 });
 
 /*****************************************************************************/

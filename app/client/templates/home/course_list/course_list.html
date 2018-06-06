@@ -12,17 +12,23 @@
 			</div>
 		{{/if}}
 		{{#if courses}}
+            {{#if userIsInstructor}}
+                <div class="card-action">
+                    <p>Courses Taught by You</p>
+                </div>
+            {{else}}
+                <div class="card-action">
+                    <p>Your Enrolled Courses</p>
+                </div>
+            {{/if}}
 			{{#each relatedCourses}}
-				{{> CourseCard courseId=_id}}
-			{{/each}}
-			{{#each unrelatedCourses}}
 				{{> CourseCard courseId=_id}}
 			{{/each}}
 		{{else}}
 			{{#if userIsInstructor}}
 				<p>There are no course available yet. Please create a course</p>
 			{{else}}
-				<p>No course is available right now.</p>
+				<p>No course is available right now. Please ask your instructor to enroll you into a course</p>
 			{{/if}}
 		{{/if}}
 	</div>
@@ -36,23 +42,6 @@
 			<button class="waves-effect waves-light modal-action btn-flat" type="button" id="remove-course-cancel">Cancel</button>
 			<button class="waves-effect waves-light modal-action btn-flat" type="button" id="confirm-remove">Confirm</button>
 		</div>
-		{{/if}}
-	</div>
-	<div id="enroll-course-modal" class="modal">
-		{{#if userIsStudent}}
-		<form id="enroll-form" class="enroll-form">
-			<div class="modal-content">
-				<h3>Enroll course {{getSelectedCourseCode}}</h3>
-				<div class="input-field">
-					<input id="enrollKey" name="enrollKey" type="text" class="validate" autocomplete="off">
-					<label id="enrollKey-label" for="enrollKey">Course Key</label>
-				</div>
-			</div>
-			<div class="modal-footer row button-row">
-				<button class="waves-effect waves-light modal-action btn-flat" id="enroll-course-cancel" type="button">Cancel</button>
-				<button class="waves-effect waves-light modal-action btn-flat" type="submit">Enroll</button>
-			</div>
-		</form>
 		{{/if}}
 	</div>
 </template>

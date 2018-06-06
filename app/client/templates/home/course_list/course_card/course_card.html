@@ -24,9 +24,6 @@
 				{{#if userIsCourseInstructor course.code}}
 					<button class="waves-effect waves-teal btn-flat modal-trigger remove-course-modal-trigger" type="button" id="{{course.code}}">Remove</button>
 				{{/if}}
-				{{#if studentNotInCourse course.code}}
-					<button class="waves-effect waves-teal btn-flat modal-trigger enroll-modal-trigger" type="button" id="{{course.code}}">Enroll</button>
-				{{/if}}
 			</div>
 		</div>
 		{{/if}}

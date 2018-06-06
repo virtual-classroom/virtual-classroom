@@ -57,7 +57,7 @@ Template.registerHelper('studentIsInCourse', function(courseCode) {
 	// return true if this student is enrolled in this course
 	var course = Courses.findOne({code: courseCode})
 	var user = Meteor.user()
-	if (course && user && user.accountType == 'student') 
+	if (course && user && user.profile.accountType == 'student')
 		return course.students.indexOf(user._id) >= 0
 })
 
