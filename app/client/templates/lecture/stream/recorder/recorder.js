@@ -99,8 +99,7 @@ function recorder() {
                 chunks.push(event.data)
                 // if recorder is 'inactive' then recording has finished
                 if (recorder.state == 'inactive') {
-                    let blob = new Blob(chunks, {type: 'audio/webm'})
-
+                    blob = new Blob(chunks, {type: 'audio/webm'})
                     var time = new Date().getTime()
                     blob.name = Session.get('lectureId') + '-' + Meteor.userId() + '-' + time + '.webm'
 
@@ -142,6 +141,7 @@ function recorder() {
 }
 
 function uploadAudio() {
+    console.log(blob)
     var lecture = Lectures.findOne(Session.get('lectureId'))
     var upload = Audios.insert({
         file: blob,
