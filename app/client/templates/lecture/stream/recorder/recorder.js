@@ -1,8 +1,9 @@
 import {audioLevel} from './audio-meter'
 
-blob = []
-transcript = 'Unable to transcript audio'
-confidence = 0
+let blob = []
+let transcript = 'Unable to transcript audio'
+let confidence = 0
+let average_confidence = 0;
 
 /*****************************************************************************/
 /* Recorder: Event Handlers */
@@ -116,6 +117,7 @@ function recorder() {
                         transcript += event.results[i][0].transcript;
                         confidence += event.results[i][0].confidence;
                         let new_confidence = confidence / event.results.length;
+                        average_confidence = new_confidence
                         document.getElementById("recorder-confidence").innerHTML = "Average Confidence: " +
                             (new_confidence * 100).toFixed(2) + "%"
                     } else {
@@ -149,7 +151,7 @@ function uploadAudio() {
             lectureId: lecture._id,
             groupId: Session.get('groundId'),
             transcript: transcript,
-            confidence: confidence,
+            confidence: average_confidence,
             mode: lecture.mode,
             read: false,
             notified: false
@@ -162,6 +164,7 @@ function uploadAudio() {
             blob = []
             transcript = ''
             confidence = 0
+            average_confidence = 0
             Materialize.toast('Question sent!', 4000)
         }
     })
@@ -169,6 +172,7 @@ function uploadAudio() {
 }
 function resetTranscriptConfidence() {
     confidence = 0
+    average_confidence = 0
     document.getElementById("recorder-confidence").innerHTML = "Average Confidence: 0.00%"
     document.getElementById("textBox").value = ""
 }

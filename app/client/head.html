@@ -1,19 +1,42 @@
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>Virtual Classroom</title>
-	<meta name="description" content="Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment"/>
-	<meta name="theme-color" content="#2196F3"/>
-	<meta property="og:title" content='Virtual Classroom'>
-	<meta property='og:url' content="https://vr.bryanli.io">
-	<meta property="og:image" content="https://vr.bryanli.io/icons/cardboard.png"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:description" content="Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment"/>
-	<link rel="icon" type="image/png”" href="/icons/cardboard.png"/>
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-	<script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Virtual Classroom</title>
+    <meta name="description"
+          content="Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment"/>
+    <meta name="theme-color" content="#2196F3"/>
+    <meta property="og:title" content='Virtual Classroom'>
+    <meta property='og:url' content="https://vr.bryanli.io">
+    <meta property="og:image" content="https://vr.bryanli.io/icons/cardboard.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:description"
+          content="Utilize affordable 360 cameras and VR headset like Google Cardboard to create a virtual environment"/>
+    <link rel="icon" type="image/png”" href="/icons/cardboard.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+    <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+    <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+    <!--<script src="https://cdn.socket.io/socket.io-1.0.6.js"></script>-->
+    <!--<script type="javascript">-->
+        <!--import Response from 'http-browserify/lib/response';-->
+        <!--if (!Response.prototype.setEncoding) {-->
+            <!--Response.prototype.setEncoding = function (encoding) {-->
+                <!--// do nothing-->
+            <!--}-->
+        <!--}-->
+
+        <!--// Socket io client-->
+        <!--const PORT = 3000;-->
+        <!--let socket = require('socket.io-client')(`http://localhost:${PORT}`);-->
+
+        <!--socket.on('connect', function () {-->
+            <!--console.log('Client connected');-->
+        <!--});-->
+        <!--socket.on('disconnect', function () {-->
+            <!--console.log('Client disconnected');-->
+        <!--});</script>-->
 </head>

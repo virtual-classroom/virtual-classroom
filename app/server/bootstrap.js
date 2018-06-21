@@ -1,2 +1,2 @@
-Meteor.startup(function () {
+Meteor.startup(() => {
 });

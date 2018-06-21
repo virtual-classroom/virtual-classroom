@@ -59,7 +59,6 @@ for (i = 1; i <= number; i++) {
 		Accounts.createUser(options)
 	}
 }
-
 // create test instructor
 for (i = 1; i < 4; i ++) {
 	var last = "0" + i
@@ -158,3 +157,28 @@ SeoCollection.update(
 		upsert:true
 	}
 );
+
+// import http from 'http';
+// import socket_io from 'socket.io';
+//
+// const PORT = 3000;
+//
+// Meteor.startup(() => {
+//     // Server
+//     const server = http.createServer();
+//     const io = socket_io(server, {'connect timeout': 1000});
+// 	console.log(io)
+//     let counter = 0;
+//
+//     // New client
+//     io.on('connection', function(socket) {
+//         console.log('new socket client');
+//     });
+//
+//     // Start server
+//     try {
+//         server.listen(PORT);
+//     } catch (e) {
+//         console.error(e);
+//     }
+// });

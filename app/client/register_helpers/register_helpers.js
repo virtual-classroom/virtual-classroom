@@ -105,6 +105,14 @@ Template.registerHelper('lectureIsActive', function(id) {
 	if (lecture) return lecture.active
 })
 
+Template.registerHelper('groupExists', function(id) {
+    // return true if this course is own by this instructor
+    var group = Groups.findOne({'lectureId': id})
+	console.log(id)
+	console.log(group)
+    if (group) return group
+})
+
 Template.registerHelper('numberOfEnrolledStudent', function(courseId) {
 	// return a list of students who enrolled into courseId
 	var course = Courses.findOne({code:courseId})

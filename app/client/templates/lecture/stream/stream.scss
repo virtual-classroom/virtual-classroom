@@ -2,7 +2,10 @@
 /* Stream: Style */
 /*****************************************************************************/
 .stream {
-	.overlay-btn {
+	#voiceChat{
+		display: block;
+	}
+	.overlay-btn-right {
 		width: 35px;
 		height:35px;
 		position:absolute;
@@ -38,5 +41,30 @@
 	}
 	.group-selector {
 		margin: 5em auto;
+	}
+	.overlay-btn-left{
+		width: 35px;
+		height:35px;
+		position:absolute;
+		top: 50px;
+		left: 80px;
+		padding: 0;
+		@media only screen and (max-width: 600px) {
+			top: 20px;
+			right: 40px;
+		}
+		img {
+			width: 35px;
+			height:35px;
+			opacity: 0.8;
+			-webkit-transition: opacity .3s ease;
+			-moz-transition: opacity .3s ease;
+			-o-transition: opacity .3s ease;
+			-ms-transition: opacity .3s ease;
+			transition: opacity .3s ease;
+			&:hover {
+				opacity: 1;
+			}
+		}
 	}
 }
