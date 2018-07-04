@@ -17,6 +17,11 @@
                                         class="lever"></span>ON</label>
                             {{/if}}
                         </div>
+                        <div class="switch toggle-lecture-available-container">
+                            {{#if userIsCourseInstructor lecture.courseCode}}
+                                <label class="toggle-lecture-available"><input type="checkbox" checked="{{#if lectureIsAvailable}}true{{/if}}" {{disableActiveToggle}}><span class="lever"></span>Save Lecture video</label>
+                            {{/if}}
+                        </div>                                                                                                                                                                                                               
                     </div>
                     <div class="card">
                         <div class="card-content">
@@ -24,17 +29,19 @@
                             {{#if userIsCourseInstructor lecture.courseCode}}
                                 <div class="input-field">
                                     <input id="youtubeURL" name="youtubeURL" type="text" class="validate"
-                                           autocomplete="off" value={{lecture.youtube}}>
+                                           autocomplete="off" value={{lecture.youtube}}  readonly="{{#if lecture.available}}readonly{{/if}}" >
                                     <label id="youtubeURL-label" for="youtubeURL" class={{activeYouTubeInputField
                                             lecture.youtube}}>YouTube URL</label>
                                 </div>
                             {{/if}}
-                            {{#if lecture.active}}
+                            {{#if canViewLecture}}
                                 {{#if lecture.youtube}}
-                                    <div class="video-container">
-                                        <iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0"
-                                                allowfullscreen></iframe>
-                                    </div>
+                                     <div class="video-container">
+                                         <iframe width="560" height="315" src={{getLectureYouTubeURL2 lecture._id}} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                     	<!--<video width=960 height=540 id="video" controls autoplay>-->
+                                     		<!--<source src="http://localhost:80/live/lstest-lec2/index.m3u8" type="application/x-shockwave-flash">-->
+                                     	<!--</video>-->                                                                                                                                                
+                                     </div>
                                 {{else}}
                                     <p>YouTube stream not available.</p>
                                 {{/if}}
