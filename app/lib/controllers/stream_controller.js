@@ -92,7 +92,7 @@ StreamController = RouteController.extend({
 				}
 			});
 		}
-	},
+    },
 	onStop: function () {
 	}
 });

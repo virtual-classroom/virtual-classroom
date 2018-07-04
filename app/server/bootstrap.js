@@ -1,2 +1,4 @@
-Meteor.startup(function () {
+// import { setupServer } from './easyrtc-server';
+Meteor.startup(() => {
+    // setupServer()
 });

@@ -57,7 +57,7 @@ Template.registerHelper('studentIsInCourse', function(courseCode) {
 	// return true if this student is enrolled in this course
 	var course = Courses.findOne({code: courseCode})
 	var user = Meteor.user()
-	if (course && user && user.accountType == 'student') 
+	if (course && user && user.profile.accountType == 'student')
 		return course.students.indexOf(user._id) >= 0
 })
 
@@ -89,6 +89,14 @@ Template.registerHelper('getUserAvatar', function(userId) {
 	}
 })
 
+Template.registerHelper('template1', function () {
+	return '<template id="doodle-template"><a-entity class="test" line></a-entity></template>'
+})
+
+Template.registerHelper('template2', function(){
+	return '<template id="avatar-template"> <a-entity class="avatar" networked-audio-source> <a-sphere class="head" color="#5985ff" scale="0.45 0.5 0.4" ></a-sphere> <a-entity class="face" position="0 0.05 0" > <a-sphere class="eye" color="#efefef" position="0.16 0.1 -0.35" scale="0.12 0.12 0.12" > <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2" ></a-sphere> </a-sphere> <a-sphere class="eye" color="#efefef" position="-0.16 0.1 -0.35" scale="0.12 0.12 0.12" > <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2" ></a-sphere> </a-sphere> </a-entity> </a-entity> </template>'
+})
+
 Template.registerHelper('getUserNameById', function(userId) {
 	var user = Meteor.users.findOne(userId)
 	if (user) return user.profile.first_name + " " + user.profile.last_name
@@ -103,6 +111,14 @@ Template.registerHelper('lectureIsActive', function(id) {
 	// return true if this course is own by this instructor
 	var lecture = Lectures.findOne({'_id': id})
 	if (lecture) return lecture.active
+})
+
+Template.registerHelper('groupExists', function(id) {
+    // return true if this course is own by this instructor
+    var group = Groups.findOne({'lectureId': id})
+	console.log(id)
+	console.log(group)
+    if (group) return group
 })
 
 Template.registerHelper('numberOfEnrolledStudent', function(courseId) {

@@ -6,11 +6,20 @@ Meteor.methods({
     'server/method_name': function () {
         // server method logic
     },
-    'addCourse': function (courseInfo) {
-        var user = Meteor.user()
+    'addCourse': function (courseInfo, result) {
+        let user = Meteor.user()
+        let enrolledStudents = []
+        if(result != null){
+            for (let i = 0; i < result.length; i++) {
+                let entry = result[i]
+                if (entry.hasOwnProperty('StudentID')) {
+                    enrolledStudents.push(entry['StudentID'])
+                }
+            }
+        }
         if (user && user.profile.accountType == 'instructor') {
             var error = false
-            Courses.insert({
+            return Courses.insert({
                 ownerId: user._id,
                 instructors: [user._id],
                 title: courseInfo.title,
@@ -18,12 +27,51 @@ Meteor.methods({
                 status: "active",
                 lectures: [],
                 description: courseInfo.description,
-                key: courseInfo.key,
-                students: [],
+                students: enrolledStudents,
                 createdAt: new Date()
-            }, function (error) {
+            }, function (error, data) {
                 if (error) throw new Meteor.Error("Update error", error.message,
                     error.message)
+                else {
+                    if (result != null) {
+                        // add all group in groups to Groups collection
+                        let groups = {}
+                        for (let i = 0; i < result.length; i++) {
+                            let entry = result[i]
+                            if (entry.hasOwnProperty('StudentID') && entry.hasOwnProperty('Group')) {
+                                let student = Meteor.users.findOne(entry['StudentID'])
+                                let groupNumber = entry['Group']
+                                if (student && groupNumber) {
+                                    temp = []
+                                    if (groups.hasOwnProperty(groupNumber))
+                                        temp = groups[groupNumber]
+                                    if (temp.indexOf(student._id) < 0)
+                                        temp.push(student._id)
+                                    groups[groupNumber] = temp
+                                }
+                            }
+                        }
+                        for (var name in groups) {
+                            if (groups.hasOwnProperty(name)) {
+                                var members = groups[name]
+                                var leader = members[Math.floor(Math.random() * members.length)]
+                                Groups.insert({
+                                    courseId: data,
+                                    creator: user._id,
+                                    leader: leader,
+                                    name: name,
+                                    members: members,
+                                    active: false,
+                                    default: true,
+                                    createdAt: new Date()
+                                }, function (error) {
+                                    if (error) throw new Meteor.Error("Insert Group Error",
+                                        error.message, error.message)
+                                })
+                            }
+                        }
+                    }
+                }
             });
         } else throw new Meteor.Error("Update error", "Access denied",
             "Access denied");

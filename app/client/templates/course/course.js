@@ -89,7 +89,6 @@ Template.Course.events({
     // },
     'change #student-csv': function (event) {
         var course = Courses.findOne({code: Session.get('courseCode')})
-        console.log(course.students)
         if (course && userIsCourseOwner()) {
             Papa.parse(event.target.files[0], {
                 header: true,

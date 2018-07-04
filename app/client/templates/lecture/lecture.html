@@ -1,116 +1,143 @@
 <template name="Lecture">
-	<div class="main">
-		<div class="innerMain lecture">
-			{{#if lecture}}
-				{{#with lecture}}
-					<div class="flex-container">
-						<div class="title">
-							<p>{{lecture.title}}</p>
-						</div>
-						<div class="switch toggle-lecture-active-container">
-							{{#if active}}
-								<span class="live-now active-blink">LIVE NOW</span>
-							{{/if}}
-							{{#if userIsCourseInstructor lecture.courseCode}}
-								<label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if lectureIsActive}}true{{/if}}" {{disableActiveToggle}}><span class="lever"></span>ON</label>
-							{{/if}}
-						</div>
-					</div>
-					<div class="card">
-						<div class="card-content">
-							<div class="card-title">{{#if lecture.active}}Live{{else}}Offline{{/if}}</div>
-							{{#if userIsCourseInstructor lecture.courseCode}}
-								<div class="input-field">
-									<input id="youtubeURL" name="youtubeURL" type="text" class="validate" autocomplete="off" value={{lecture.youtube}}>
-									<label id="youtubeURL-label" for="youtubeURL" class={{activeYouTubeInputField lecture.youtube}}>YouTube URL</label>
-								</div>
-							{{/if}}
-							{{#if lecture.active}}
-								{{#if lecture.youtube}}
-									<div class="video-container">
-										<iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
-									</div>
-								{{else}}
-									<p>YouTube stream not available.</p>
-								{{/if}}
-							{{else}}
-								<p>Lecture is not active, please check again later.</p>
-							{{/if}}
-						</div>
-						{{#if lecture.active}}
-						<div class="card-action">
-							<a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream" class="waves-effect waves-teal btn-flat">Enter Stream</a>
-						</div>
-						{{/if}}
-					</div>
-					{{#if userIsCourseInstructor lecture.courseCode}}
-						{{#if questions}}
-							<ul class="collection with-header card">
-								<li class="collection-header flex-container">
-									<p>Questions</p>
-									<div class="switch">
-										<label style="cursor:unset; padding-right:5px;">Notification</label>
-										<label>Off<input id="instructorNotification" type="checkbox"><span class="lever"></span>On</label>
-									</div>
-								</li>
-								{{#each question in questions}}
-								<li class="collection-item avatar">
-									{{> Question question=question._id}}
-								</li>
-								{{/each}}
-							</ul>
-						{{/if}}
-						{{#if lecture.active}}
-							<div class="card group-settings">
-								<div class="card-content">
-									<div class="card-title flex-container">
-										<p class="left-item">Group Mode</p>
-										<div class="right-item switch toggle-group-active-container">
-											<label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
-										</div>
-									</div>
-									<p style="color:grey">Class size: {{numberOfEnrolledStudents}} | Online students: {{numberOfOnlineStudents}}</p>
-									<div class="group-settings-form">
-										<div class="group-range-field">
-											<div class="range-field">
-												<label class="range-field-label">Group size</label>
-												<input {{disableGroupSizeRange}} type="range" id="group-size-range" value={{getGroupSize}} min="2" max={{numberOfEnrolledStudents}} />
-												<label>Note: group size cannot be changed while group mode is enabled.</label>
-											</div>
-										</div>
-									</div>
-									<div class="input-field">
-										<textarea id="displayQuestion" name="displayQuestion" class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
-										<label id="displayQuestion-label" class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
-									</div>
-								</div>
-								{{#if groupIsActive}}
-								<div class="card-action">
-									<button id="update-display-question" class="waves-effect waves-teal btn-flat" type="button">Update</button>
-									<button id="clear-display-question" class="waves-effect waves-teal btn-flat" type="button">Clear</button>
-								</div>
-								{{/if}}
-							</div>
-						{{/if}}
-					{{/if}}
-					{{#if groups}}
-						<ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">
-							{{#each group in groups}}
-							<li>
-								<div class="collapsible-header">
-									<i class="material-icons">group</i>Group {{group.name}}
-								</div>
-								<div class="collapsible-body">
-									{{> GroupContent groupId=group._id}}
-								</div>
-							</li>
-							{{/each}}
-						</ul>
-					{{/if}}
-				{{/with}}
-			{{else}}
-				{{> NotFound}}
-			{{/if}}
+    <div class="main">
+        <div class="innerMain lecture">
+            {{#if lecture}}
+                {{#with lecture}}
+                    <div class="flex-container">
+                        <div class="title">
+                            <p>{{lecture.title}}</p>
+                        </div>
+                        <div class="switch toggle-lecture-active-container">
+                            {{#if active}}
+                                <span class="live-now active-blink">LIVE NOW</span>
+                            {{/if}}
+                            {{#if userIsCourseInstructor lecture.courseCode}}
+                                <label class="toggle-lecture-active">OFF<input type="checkbox" checked="{{#if
+                                        lectureIsActive}}true{{/if}}" {{disableActiveToggle}}><span
+                                        class="lever"></span>ON</label>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="card-title">{{#if lecture.active}}Live{{else}}Offline{{/if}}</div>
+                            {{#if userIsCourseInstructor lecture.courseCode}}
+                                <div class="input-field">
+                                    <input id="youtubeURL" name="youtubeURL" type="text" class="validate"
+                                           autocomplete="off" value={{lecture.youtube}}>
+                                    <label id="youtubeURL-label" for="youtubeURL" class={{activeYouTubeInputField
+                                            lecture.youtube}}>YouTube URL</label>
+                                </div>
+                            {{/if}}
+                            {{#if lecture.active}}
+                                {{#if lecture.youtube}}
+                                    <div class="video-container">
+                                        <iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0"
+                                                allowfullscreen></iframe>
+                                    </div>
+                                {{else}}
+                                    <p>YouTube stream not available.</p>
+                                {{/if}}
+                            {{else}}
+                                <p>Lecture is not active, please check again later.</p>
+                            {{/if}}
+                        </div>
+                        {{#if lecture.active}}
+                            <div class="card-action">
+                                {{#if groupIsActive}}
+                                {{else}}
+                                    <a href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream"
+                                       class="waves-effect waves-teal btn-flat">Enter Stream</a>
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                    </div>
+                    {{#if userIsCourseInstructor lecture.courseCode}}
+                        {{#if questions}}
+                            <ul class="collection with-header card">
+                                <li class="collection-header flex-container">
+                                    <p>Questions</p>
+                                    <div class="switch">
+                                        <label style="cursor:unset; padding-right:5px;">Notification</label>
+                                        <label>Off<input id="instructorNotification" type="checkbox"><span
+                                                class="lever"></span>On</label>
+                                    </div>
+                                </li>
+                                {{#each question in questions}}
+                                    <li class="collection-item avatar">
+                                        {{> Question question=question._id}}
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        {{/if}}
+                        {{#if lecture.active}}
+                            <div class="card group-settings">
+                                <div class="card-content">
+                                    <div class="card-title flex-container">
+                                        <p class="left-item">Group Mode</p>
+                                        <div class="right-item switch toggle-group-active-container">
+                                            <label class="toggle-group-active">OFF<input type="checkbox" checked="{{#if
+                                                    groupIsActive}}true{{/if}}"><span class="lever"></span>ON</label>
+                                        </div>
+                                    </div>
+                                    <p style="color:grey">Class size: {{numberOfEnrolledStudents}} | Online
+                                        students: {{numberOfOnlineStudents}}</p>
+                                    <div class="group-settings-form">
+                                        <div class="group-range-field">
+                                            <div class="range-field">
+                                                <label class="range-field-label">Group size</label>
+                                                <input {{disableGroupSizeRange}} type="range" id="group-size-range"
+                                                                                 value={{getGroupSize}} min="2"
+                                                                                 max={{numberOfEnrolledStudents}}/>
+                                                <label>Note: group size cannot be changed while group mode is
+                                                    enabled.</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-field">
+                                        <textarea id="displayQuestion" name="displayQuestion"
+                                                  class="materialize-textarea">{{lecture.displayQuestion}}</textarea>
+                                        <label id="displayQuestion-label"
+                                               class={{activeDisplayQuestion}} for="displayQuestion-label">Question</label>
+                                    </div>
+                                </div>
+                                {{#if groupIsActive}}
+                                    <div class="card-action">
+                                        <button id="update-display-question" class="waves-effect waves-teal btn-flat"
+                                                type="button">Update
+                                        </button>
+                                        <button id="clear-display-question" class="waves-effect waves-teal btn-flat"
+                                                type="button">Clear
+                                        </button>
+                                    </div>
+                                {{/if}}
+                            </div>
+                        {{/if}}
+                    {{/if}}
+                    {{#if groups}}
+                        <ul id="groups-collapsible" class="collapsible card" data-collapsible="accordion">
+                            {{#each group in groups}}
+                                <li>
+                                    <div class="collapsible-header">
+                                        <i class="material-icons">group</i>Group {{group.name}}
+                                    </div>
+                                    <div class="collapsible-body">
+                                        {{> GroupContent groupId=group._id}}
+                                    </div>
+                                    {{#if groupIsActive userIsCourseInstructor lecture.courseCode}}
+                                        <div class="card-action"><a
+                                                href="/course/{{lecture.courseCode}}/{{lecture.title}}/stream"
+                                                data-value={{group._id}} class="enter-group-stream waves-effect
+                                                waves-teal btn-flat">Enter Stream</a></div>
+                                    {{/if}}
+                                </li>
+                            {{/each}}
+                        </ul>
+                    {{/if}}
+                {{/with}}
+            {{else}}
+                {{> NotFound}}
+            {{/if}}
         </div>
-    </div>    
+    </div>
 </template>

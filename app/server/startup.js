@@ -8,7 +8,6 @@ _.map(admin, function(email) {
 		}
 	}
 })
-
 // initialize Avatars collections
 var avatars = ['1F602.svg', '1F606.svg', '1F610.svg', '1F611.svg', '1F626.svg', '1F634.svg', '1F642.svg', '1F913.svg']
 _.map(avatars, function(avatarName) {
@@ -59,7 +58,6 @@ for (i = 1; i <= number; i++) {
 		Accounts.createUser(options)
 	}
 }
-
 // create test instructor
 for (i = 1; i < 4; i ++) {
 	var last = "0" + i
