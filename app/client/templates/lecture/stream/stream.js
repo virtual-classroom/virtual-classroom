@@ -218,7 +218,7 @@ function voiceCallTerminate() {
 
 function createConnection() {
     peerConnection = new RTCMultiConnection()
-    peerConnection.socketURL = 'https://rtcmulticonnection.herokuapp.com/';
+    peerConnection.socketURL = "https://rtc-connection-server.herokuapp.com/";
     peerConnection.socketMessageEvent = 'audio-conference-demo';
     peerConnection.session = {
         audio: true,
