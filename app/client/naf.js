@@ -512,14 +512,33 @@
                     if (this.validateSchema(schema)) {
                         this.schemaDict[schema.template] = schema;
                         var templateEl = document.querySelector(schema.template);
+                        console.log(templateEl);
                         if (!templateEl) {
                             NAF.log.error('Template el not found for ' + schema.template + ', make sure NAF.schemas.add is called after <a-scene> is defined.');
                             return;
                         }
-                        if (!this.validateTemplate(schema, templateEl)) {
-                            return;
-                        }
-                        this.templateCache[schema.template] = document.importNode(templateEl.content, true);
+                        // if (!this.validateTemplate(schema, templateEl)) {
+                        //     return;
+                        // }
+
+                        console.log("temp: " + templateEl);
+
+                        var a = templateEl;
+
+                        var  el = document.createElement('template');
+
+                        el.innerHTML = a.innerHTML;
+                        a.parentNode.replaceChild(el, a);
+
+                        console.log("a: " + el.content.childElementCount);
+
+
+
+                        console.log("temp: " + el);
+
+
+                        this.templateCache[schema.template] = document.importNode(el.content, true);
+
                     } else {
                         NAF.log.error('Schema not valid: ', schema);
                         NAF.log.error('See https://github.com/haydenjameslee/networked-aframe#syncing-custom-components');
@@ -583,7 +602,8 @@
             }, {
                 key: 'isTemplateTag',
                 value: function isTemplateTag(el) {
-                    return el.tagName.toLowerCase() === 'template';
+                    return true;
+                    // return el.tagName.toLowerCase() === 'template';
                 }
             }, {
                 key: 'templateHasOneOrZeroChildren',
