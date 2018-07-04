@@ -1,0 +1,85 @@
+<template name="Stream1">
+<div class="stream">
+    {{#with lecture}}
+        {{#if groupMode lecture.mode}}
+            <audio id='voiceChat' autoplay="autoplay"></audio>
+            <a-scene>
+                <!-- blackboard -->
+                <a-text position="0 5 -8" value={{getDisplayQuestion}} width="18" align="center"
+                        color="white" opacity="0.8" wrap-count="25"></a-text>
+                <a-plane position="0 5 -8" height="10" width="20" rotation="0 0 0"
+                         color="#604020"></a-plane>
+                <a-plane position="0 5 -8" height="9.5" width="19.5" rotation="0 0 0"
+                         color="black"></a-plane>
+                <!-- desk -->
+                <a-text position="0 0.6 -0.4" value={{discussion}} rotation="-90 0 0
+                " width="1.4" align="center" color="black" wrap-count="30"></a-text>
+                <a-plane position="0 0.6 -0.4" rotation="-90 0 0" width="1.5" height="2"
+                         color="white"></a-plane>
+                <a-cylinder position="0 -0.2 -0.6" rotation="0 0 0" radius="1.5" height="1.5"
+                            color="#5c5c5c"></a-cylinder>
+                <a-plane position="0 -1.5 0" rotation="-90 0 0" width="50" height="50"
+                         color="#7BC8A4"></a-plane>
+                <!-- user avatars -->
+                {{#each member in getGroupMembers}}
+                    <a-image position={{avatarPosition @index}} src={{getUserAvatar member}} width="0.8"
+                             height="0.8"></a-image>
+                    <a-text position={{namePosition @index}} value={{getUserNameById member}} align="center"
+                            color="#000" opacity="0.8" wrap-count="55"></a-text>
+                {{/each}}
+
+                <!-- discussion panel -->
+                <!-- 							{{#each discussion in groupDiscussion}}
+								<a-plane position="-1.5 1.5 1" rotation="0 90 0" width="2" height="1" color="black"></a-plane>
+								<a-text position="-1.5 1.5 1" value={{getUserNameById discussion.userId}} align="center" color="#000" opacity="0.8" wrap-count="55"></a-text>
+							{{/each}} -->
+                <a-sky color="#ECECEC"></a-sky>
+                <a-entity position="0 1.5 1">
+                    <a-entity camera look-controls wasd-controls></a-entity>
+                </a-entity>
+            </a-scene>
+        {{else}}
+            {{#if lecture.youtube}}
+                <div class="video-container" style="width:100%;height:100vh">
+                    <iframe src={{getLectureYouTubeURL lecture._id}} frameborder="0" allowfullscreen></iframe>
+                </div>
+            {{else}}
+                <div class="valign-wrapper" style="height:100vh"><h3 style="margin:0 auto;">YouTube stream not
+                    available.</h3></div>
+            {{/if}}
+        {{/if}}
+
+        {{#if groupMode lecture.mode}}
+            <a href="/course/{{lecture.courseCode}}/{{lecture.title}}" id="exit-group-discussion" class="waves-light btn-flat overlay-btn-left">EXIT</a>
+            <button data-target="group-discussion-modal" id="group-discussion-modal-trigger"
+                        class="modal-trigger waves-light btn-flat overlay-btn-right"><img src="/icons/memo.svg"></button>
+        {{else}}
+            <button data-target="recorder-modal" id="recorder-modal-trigger"
+                    class="modal-trigger waves-light btn-flat overlay-btn-right"><img src="/icons/stop.svg"></button>
+        {{/if}}
+        <div id="group-discussion-modal" class="modal">
+                <form class="group-discussion-form">
+                    <div class="modal-content">
+                        <h3>Group {{number}}</h3>
+                        <div class="input-field">
+                                <textarea id="group-discussion-textarea" class="materialize-textarea"
+                                          value={{discussion}} {{userCanEditDiscussion}}></textarea>
+                            <label for="group-discussion-textarea" class={{activeTextarea
+                                    discussion}}>Discussion</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="waves-effect waves-teal modal-action btn-flat" type="button"
+                                id="group-discussion-modal-close">Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        <div id="recorder-modal" class="modal">
+            <div class="modal-content">
+                {{> Recorder}}
+            </div>
+        </div>
+    {{/with}}
+    </div>
+</template>

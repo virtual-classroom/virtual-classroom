@@ -128,7 +128,7 @@ function recorder() {
             }
             $('#recorder-toggle').click(function () {
                 if (recorder.state != 'inactive') {
-                    recorder.stop()
+                    recorder.close()
                 }
             })
             $('#recorder-cancel').click(function () {

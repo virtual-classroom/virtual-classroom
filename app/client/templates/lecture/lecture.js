@@ -1,6 +1,4 @@
-const interval = null
-connections = {}
-peerConnection = null;
+let interval = null
 /*****************************************************************************/
 /* Lecture: Event Handlers */
 /*****************************************************************************/
@@ -69,20 +67,10 @@ Template.Lecture.events({
         }
     },
     'click .enter-group-stream': function (event) {
-        console.log(event.target.dataset.value)
-        var lecture = Lectures.findOne(Session.get('lectureId'))
-        if (lecture.mode == 'group') {
-            if (peerConnection == null) {
-                createConnection()
-                console.log(peerConnection)
-            }
-            if (connections[event.target.dataset.value] == null) {
-                enterGroupStreamRoom(event.target.dataset.value)
-            }
-            else {
-                reEnterGroupStreamRoom(event.target.dataset.value)
-            }
-        }
+        groupid = event.target.dataset.value;
+        let roomGroupId = event.target.dataset.value;
+        Session.set('groupId', roomGroupId);
+
     }
 });
 
@@ -153,51 +141,6 @@ Template.Lecture.helpers({
     }
 });
 
-function createConnection() {
-    peerConnection = new RTCMultiConnection()
-    peerConnection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-    peerConnection.socketMessageEvent = 'audio-conference-demo';
-    peerConnection.session = {
-        audio: true,
-        video: false
-    };
-    peerConnection.mediaConstraints = {
-        audio: true,
-        video: false
-    };
-    peerConnection.sdpConstraints.mandatory = {
-        OfferToReceiveAudio: true,
-        OfferToReceiveVideo: false
-    };
-    peerConnection.autoCloseEntireSession = false
-}
-
-function enterGroupStreamRoom(roomid) {
-    console.log('checking presence...');
-    peerConnection.checkPresence(roomid, function (roomExist, roomid) {
-        console.log('Room exists=' + roomExist);
-        if (roomExist === true) {
-            console.log('I am a participant');
-            connections[roomid] = peerConnection.join(roomid);
-        } else {
-            console.log('I am the moderator');
-            peerConnection.open(roomid);
-            // peerConnection.
-        }
-    });
-    peerConnection.onopen = function (event) {
-        console.log('WebRTC chat opened!');
-    };
-    // peerConnection.open(roomid)
-    // connections[roomid] = peerConnection.join(roomid)
-    // peerConnection.openOrJoin(roomid)
-}
-
-function reEnterGroupStreamRoom(roomid) {
-    console.log("Rejoined!");
-    peerConnection.rejoin(connections[roomid])
-}
-
 function userIsCourseInstructor(userId) {
     var course = Courses.findOne(Session.get('courseId'))
     if (course) {
@@ -235,7 +178,6 @@ function instructorNotification() {
         }), 5000)
     }
 }
-
 
 /*****************************************************************************/
 /* Lecture: Lifecycle Hooks */

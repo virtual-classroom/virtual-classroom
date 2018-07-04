@@ -8,7 +8,6 @@ _.map(admin, function(email) {
 		}
 	}
 })
-
 // initialize Avatars collections
 var avatars = ['1F602.svg', '1F606.svg', '1F610.svg', '1F611.svg', '1F626.svg', '1F634.svg', '1F642.svg', '1F913.svg']
 _.map(avatars, function(avatarName) {
@@ -157,28 +156,3 @@ SeoCollection.update(
 		upsert:true
 	}
 );
-
-// import http from 'http';
-// import socket_io from 'socket.io';
-//
-// const PORT = 3000;
-//
-// Meteor.startup(() => {
-//     // Server
-//     const server = http.createServer();
-//     const io = socket_io(server, {'connect timeout': 1000});
-// 	console.log(io)
-//     let counter = 0;
-//
-//     // New client
-//     io.on('connection', function(socket) {
-//         console.log('new socket client');
-//     });
-//
-//     // Start server
-//     try {
-//         server.listen(PORT);
-//     } catch (e) {
-//         console.error(e);
-//     }
-// });
