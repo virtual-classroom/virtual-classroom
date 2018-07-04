@@ -22,6 +22,10 @@ var LecturesSchema = new SimpleSchema({
 		type: Boolean,
 		defaultValue: false
 	},
+    available: {
+        type: Boolean,
+        defaultValue: false
+    },
 	others: {
 		type: String,
 		optional: true
