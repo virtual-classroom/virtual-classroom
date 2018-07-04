@@ -1,10 +1,32 @@
 {
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.46",
+    "aframe": "^0.8.2",
+    "aframe-template-component": "^3.2.1",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
+    "bufferutil": "^3.0.5",
+    "easyrtc": "^1.1.0",
+    "engine.io": "^3.2.0",
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "http-browserify": "^1.7.0",
+    "index.js": "0.0.3",
     "meteor-babel": "^0.24.7",
+    "networked-aframe": "^0.6.1",
+    "npm": "^6.1.0",
     "papaparse": "^4.3.6",
-    "pathwatcher": "^7.1.1"
+    "pathwatcher": "^7.1.1",
+    "rtcmulticonnection": "^3.4.5",
+    "rtcmulticonnection-v3": "^3.4.5",
+    "serve-static": "^1.13.2",
+    "signalmaster-sockjs": "0.0.1",
+    "socket.io": "^2.1.1",
+    "utf-8-validate": "^4.0.2",
+    "ws": "^5.2.0"
+  },
+  "devDependencies": {
+    "meteor-node-stubs": "^0.4.1",
+    "socket.io-client": "^2.1.1"
   }
 }

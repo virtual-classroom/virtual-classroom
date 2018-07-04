@@ -1,4 +1,14 @@
+<head>
+    <meta charset="utf-8">
+    <title>Networked-Aframe Example — naf-uws-adapter</title>
+    <meta name="description" content="Dev Example — naf-uws-adapter">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="../../../naf.js"></script>
+    <script src="https://unpkg.com/aframe-randomizer-components@^3.0.1/dist/aframe-randomizer-components.min.js"></script>
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
+</head>
 <template name="Stream">
+<<<<<<< HEAD
 	<div class="stream">
 		{{#with lecture}}
 			{{#if groupMode lecture.mode}}
@@ -102,3 +112,212 @@
 		{{/with}}
 	</div>
 </template>
+=======
+    <body>
+    <a-scene networked-scene="
+      app: myApp;
+      room: {{getGroupId}};
+      adapter: uws;
+      debug: true;
+      audio: true;
+      serverURL: ws://uws-adapter.herokuapp.com;
+    " vr-mode-ui="enabled: true">
+        <a-assets>
+            <img id="slide" src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fslide.png?1530110254475">
+            <img id="clouds"
+                 src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fclouds.jpg?1530201686662">
+        </a-assets>
+        <a-assets>
+        </a-assets>
+        <a-plane id="ground"
+                 class="collidable"
+                 width="10"
+                 height="10"
+                 color="green"
+                 rotation="-90 0 0"
+                 teleport2>
+        </a-plane>
+
+        <a-cylinder id="pedestal"
+                    height="1"
+                    radius="0.3"
+                    position="0 0.5 -3">
+        </a-cylinder>
+
+        <a-sphere id="button"
+                  position="0 1 -3"
+                  radius="0.2"
+                  color="#ef2b45"
+                  class="collidable"
+                  change-color-on-hover="color: #961021"
+                  event-set__enter="_event: mouseenter; _target: #buttonText; visible: true"
+                  event-set__leave="_event: mouseleave; _target: #buttonText; visible: false"
+                  button_down="text: help">
+            <a-text id="buttonText"
+                    value="Press For Help"
+                    align="center"
+                    visible="false"
+                    position="0 -0.5 0.31"
+                    geometry="primitive: plane; width: 1.62; height: 0.4"
+                    material="color: #848484">
+            </a-text>
+        </a-sphere>
+
+        <a-image id="board"
+                 src="#slide"
+                 width="10"
+                 height="5"
+                 color="#ffffff"
+                 rotation="180 0 180"
+                 position="0 2.5 7"
+                 button_down_board="index: 0; doodle_index: 0; delay: 2"
+                 class="collidable">
+        </a-image>
+
+        <a-box id="red_box"
+               position="6 4 7"
+               color="red"
+               class="collidable"
+               change-drawing-color="color: red">
+        </a-box>
+
+        <a-box id="blue_box"
+               position="6 2.5 7"
+               color="blue"
+               class="collidable"
+               change-drawing-color="color: blue">
+        </a-box>
+
+        <a-box id="green_box"
+               position="6 1 7"
+               color="green"
+               class="collidable"
+               change-drawing-color="color: green">
+        </a-box>
+
+        <a-box id="eraser_button"
+               position="-6 2.5 7"
+               color="white"
+               class="collidable"
+               erase_toggle>
+        </a-box>
+
+
+        <!--
+        <a-cylinder id="teleporter0"
+          position="3 0 3"
+          height="0.1"
+          radius="0.5"
+          color="red"
+          change-color-on-hover="color: #961021"
+          class="collidable"
+          teleport>
+        </a-cylinder>
+
+        <a-cylinder id="teleporter1"
+          position="-3 0 3"
+          height="0.1"
+          radius="0.5"
+          color="red"
+          change-color-on-hover="color: #961021"
+          class="collidable"
+          teleport>
+        </a-cylinder>
+
+        <a-cylinder id="teleporter2"
+          position="0 0 -1"
+          height="0.1"
+          radius="0.5"
+          color="red"
+          change-color-on-hover="color: #961021"
+          class="collidable"
+          teleport>
+        </a-cylinder>
+
+        <a-box id="test"></a-box>
+        -->
+
+        <a-torus id="target" visible="false" rotation="90 0 0" radius="0.2" radius-tubular="0.01"></a-torus>
+
+
+        <a-sky id="skybox" src="#clouds"></a-sky>
+
+        <a-entity id="player" spawn-in-circle="radius:3;"
+                  networked="template:#avatar-template;attachTemplateToLocal:false;" camera position="0 1.3 0"
+                  look-controls>
+            <a-cursor id="cursor"
+                      raycaster="objects: .collidable">
+
+                <a-image id="crosshair"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fadd_plus-512.png?1530123029481"
+                         position="0 0 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="false">
+                </a-image>
+
+                <a-image id="circle"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fcircle-512.png?1530124205149"
+                         position="0 0 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="true">
+                </a-image>
+
+                <a-image id="pen"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fpen-15.png?1530123029217"
+                         position="0.1 0.1 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="false">
+                </a-image>
+
+                <a-image id="paint"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fpaint-icon-72090.png?1530126049197"
+                         position="0.1 0.1 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="false"
+                         material="color: black">
+                </a-image>
+
+                <a-image id="eraser"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Feraser-512.png?1530199743157"
+                         position="0.1 0.1 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="false">
+                </a-image>
+
+                <a-image id="steps"
+                         src="https://cdn.glitch.com/3ac31fd5-b9c6-4c63-b076-a7d4b243896d%2Fbasic3-120_shoes_foot_step_footsteps-512.png?1530200010638"
+                         position="0.1 0.1 -1"
+                         width="0.1"
+                         height="0.1"
+                         visible="false">
+                </a-image>
+            </a-cursor>
+
+            <a-text id="UI"
+                    value="Help Requested"
+                    align="center"
+                    position="0 1 -2"
+                    color="red"
+                    visible="false">
+            </a-text>
+        </a-entity>
+    </a-scene>
+    <script>
+        // Define custom schema for syncing avatar components
+        NAF.schemas.add({
+            template: '#doodle-template',
+            components: [
+                'position',
+                'rotation',
+                'line'
+            ]
+        });
+    </script>
+    </body>
+</template>
+>>>>>>> fece4ece8cc46cfcd0af447cc8bc72d9a9bcc193

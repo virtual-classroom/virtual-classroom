@@ -33,11 +33,6 @@ var CoursesSchema = new SimpleSchema({
 		label: 'Course Description',
 		optional: true
 	},
-	key: {
-		type: String,
-		label: 'Unique Key',
-		min: 4
-	},
 	students: {
 		type: [String],
 		label: 'List of Students',

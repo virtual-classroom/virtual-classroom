@@ -17,10 +17,17 @@
 						<textarea id="newCourseDescription" name="newCourseDescription" class="materialize-textarea"></textarea>
 						<label for="newCourseDescription-label">Course Description</label>
 					</div>
-					<div class="input-field">
-						<input id="newCoursePassword" name="newCoursePassword" type="text" autocomplete="off">
-						<label id="newCoursePassword-label" for="newCoursePassword">Unique Key</label>
-					</div>
+                    <span class="card-title-small">Enroll Students and Groups (Optional)</span>
+                    <div class="input-field file-field">
+                        <span class="label">Note: The CSV file has to contain a "StudentID" and "Group" columns.</span>
+                        <div class="btn">
+                            <span>File</span>
+                            <input id="student-csv" type="file" accept=".csv">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
 				</div>
 				<div class="card-action">
 					<a class="waves-effect waves-teal btn-flat" id="cancel">Cancel</a>
