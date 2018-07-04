@@ -149,6 +149,10 @@ Template.Lecture.helpers({
     activeYouTubeInputField: function (yotube) {
         var lecture = Lectures.findOne(Session.get('lectureId'))
         if (lecture && lecture.youtube) return 'active'
+    },
+    canViewLecture: function(){
+        var lecture = Lectures.findOne(Session.get('lectureId'))
+        return lecture.active || lecture.available
     }
 });
 
