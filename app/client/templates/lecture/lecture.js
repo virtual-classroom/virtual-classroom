@@ -75,6 +75,7 @@ Template.Lecture.events({
     'click .enter-group-stream': function (event) {
         groupid = event.target.dataset.value;
         let roomGroupId = event.target.dataset.value;
+        console.log(roomGroupId)
         Session.set('groupId', roomGroupId);
 
     }
