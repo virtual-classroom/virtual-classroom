@@ -140,6 +140,23 @@ Meteor.methods({
             })
         }
     },
+    'toggleLecturePermaLink': function (lectureId, youtube) {
+        var user = Meteor.user()
+        var lecture = Lectures.findOne(lectureId)
+        var course = Courses.findOne({code: lecture.courseCode})
+
+        if (user && course && course.instructors.indexOf(user._id) >= 0) {
+             Lectures.update(lectureId, {
+                 $set: {
+                     available: !lecture.available,
+                     youtube: youtube
+                 }
+             }, function (error) {
+                 if (error) throw new Meteor.Error("Update error",
+                     error.message, error.message)
+             })
+         }
+    },
     'addDefaultStudents': function (courseCode, data) {
         let user = Meteor.user()
         let course = Courses.findOne({code: courseCode})

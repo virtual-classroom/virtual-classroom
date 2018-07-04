@@ -116,6 +116,17 @@ Template.registerHelper('getLectureYouTubeURL', function(lectureId) {
 	if (lecture && lecture.youtube) return lecture.youtube + "?rel=0&amp;controls=0&amp;showinfo=0"
 })
 
+Template.registerHelper('getLectureYouTubeURL2', function(lectureId) {
+	var lecture = Lectures.findOne(lectureId)
+	console.log(lectureId)
+	console.log(lecture.youtube)
+	if (lecture && lecture.youtube) {
+		var splitURL =  lecture.youtube.split("watch?v=")
+		return splitURL[0] + "embed/" + splitURL[1]	
+	}
+})
+
+
 //****************************************************************************************************
 //											Route based
 //****************************************************************************************************

@@ -10,6 +10,12 @@ Template.Lecture.events({
 		if (!youtube) Materialize.toast('Please provide YouTube URL', 4000)
 		Meteor.call('toggleLecture', Session.get('lectureId'), youtube)
 	},
+    'change .toggle-lecture-available input': function(event) {
+        // toggle active and inactive of lecture
+        var youtube = $('#youtubeURL').val()
+        if (!youtube) Materialize.toast('Please provide YouTube URL', 4000)
+        Meteor.call('toggleLecturePermaLink', Session.get('lectureId'), youtube)
+    },
 	'click #lecture-file-upload-trigger': function() {
 		$('#lecture-file-upload-modal').modal('open')
 	},
@@ -79,6 +85,11 @@ Template.Lecture.helpers({
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture) return lecture.active
 	},
+    lectureIsAvailable: function() {
+        // return true is this lecture is active
+        var lecture = Lectures.findOne(Session.get('lectureId'))
+        if (lecture) return lecture.available
+    },
 	groupIsActive: function() {
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture) return lecture.mode === 'group'
@@ -131,7 +142,13 @@ Template.Lecture.helpers({
 	activeYouTubeInputField: function(yotube) {
 		var lecture = Lectures.findOne(Session.get('lectureId'))
 		if (lecture && lecture.youtube) return 'active'
+	},
+	canViewLecture: function(){
+        var lecture = Lectures.findOne(Session.get('lectureId'))
+		return lecture.active || lecture.available;
 	}
+
+
 });
 
 function userIsCourseInstructor(userId) {
