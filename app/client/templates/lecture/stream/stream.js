@@ -14,13 +14,13 @@ Template.Stream.events({
         Session.set('audioURL', false)
         document.getElementById("recorder-confidence").innerHTML = "Average Confidence: 0.00%"
         document.getElementById("textBox").value = ""
-        Template.$('#recorder-modal').modal('open')
+        $('#recorder-modal').modal('open')
     },
     'click #group-discussion-modal-trigger': function () {
-        Template.$('#group-discussion-modal').modal('open')
+        $('#group-discussion-modal').modal('open')
     },
     'click #group-discussion-modal-close': function () {
-        Template.$('#group-discussion-modal').modal('close')
+        $('#group-discussion-modal').modal('close')
     },
     'keyup #group-discussion-textarea': function () {
         // update discussion every 5 seconds after keyup
@@ -36,36 +36,40 @@ Template.Stream.events({
     'click .enter-group-discussion': function (event) {
     },
     'click #exit-group-discussion': function () {
-        console.log(peerConnection)
-        console.log(peerConnection.getAllParticipants())
-        let moderatorShifted = false
-        if (peerConnection.getAllParticipants().length == 0) {
-            peerConnection.closeEntireSession(function () {
-                console.log("Entire session has been closed")
-            });
-            peerConnection.closeSocket()
-            console.log("Socket closed!")
-            peerConnection.attachStreams.forEach(function (localStream) {
-                localStream.stop();
-            });
+        var lecture = Lectures.findOne(Session.get('lectureId'))
+        if (lecture.mode == 'group') {
+
+            console.log(peerConnection)
+            console.log(peerConnection.getAllParticipants())
+            let moderatorShifted = false
+            if (peerConnection.getAllParticipants().length == 0) {
+                peerConnection.closeEntireSession(function () {
+                    console.log("Entire session has been closed")
+                });
+                peerConnection.closeSocket()
+                console.log("Socket closed!")
+                peerConnection.attachStreams.forEach(function (localStream) {
+                    localStream.stop();
+                });
+            }
+            else {
+                peerConnection.getAllParticipants().forEach(function (participantId) {
+                    if (peerConnection.userid == peerConnection.sessionid && moderatorShifted == false) {
+                        peerConnection.shiftModerationControl(participantId, peerConnection.broadcasters, false);
+                        console.log(peerConnection.broadcasters)
+                        console.log("Moderator requesting shift to " + participantId);
+                        moderatorShifted = true;
+                    }
+                    peerConnection.disconnectWith(participantId);
+                });
+                peerConnection.attachStreams.forEach(function (localStream) {
+                    localStream.stop();
+                });
+                peerConnection.close()
+            }
+            peerConnection = null
+            groupid = null;
         }
-        else {
-            peerConnection.getAllParticipants().forEach(function (participantId) {
-                if (peerConnection.userid == peerConnection.sessionid && moderatorShifted == false) {
-                    peerConnection.shiftModerationControl(participantId, peerConnection.broadcasters, false);
-                    console.log(peerConnection.broadcasters)
-                    console.log("Moderator requesting shift to " + participantId);
-                    moderatorShifted = true;
-                }
-                peerConnection.disconnectWith(participantId);
-            });
-            peerConnection.attachStreams.forEach(function (localStream) {
-                localStream.stop();
-            });
-            peerConnection.close()
-        }
-        peerConnection = null
-        groupid = null;
     }
 });
 /*****************************************************************************/
@@ -80,7 +84,7 @@ Template.Stream.helpers({
         var group = Groups.findOne(Session.get('groupId'))
         if (group) return group
     },
-    getGroupId: function (){
+    getGroupId: function () {
         return Session.get('groupId')
     },
     groups: function () {
@@ -284,7 +288,7 @@ function reEnterGroupStreamRoom(roomid) {
     currentRoomId = roomid
 }
 
-function aframeInit(){
+function aframeInit() {
     AFRAME.registerComponent('button_down', {
         schema: {
             text: {default: 'Press For Help'}
@@ -315,8 +319,7 @@ function aframeInit(){
     });
 
     AFRAME.registerComponent('teleport', {
-        schema: {
-        },
+        schema: {},
 
         init: function () {
             var data = this.data;
@@ -367,7 +370,7 @@ function aframeInit(){
 
                 var camera = document.querySelector('#player');
                 var cameraPos = camera.getAttribute('position');
-                var cameraRot = camera.object3D.getWorldDirection ();
+                var cameraRot = camera.object3D.getWorldDirection();
 
                 var mult = cameraPos.y / cameraRot.y;
                 var line_rot = {
@@ -413,7 +416,7 @@ function aframeInit(){
 
                 var camera = document.querySelector('#player');
                 var cameraPos = camera.getAttribute('position');
-                var cameraRot = camera.object3D.getWorldDirection ();
+                var cameraRot = camera.object3D.getWorldDirection();
 
                 var mult = cameraPos.y / cameraRot.y;
                 var line_rot = {
@@ -428,7 +431,6 @@ function aframeInit(){
 
 
     });
-
 
 
 //Drawing on the Board
@@ -544,7 +546,7 @@ function aframeInit(){
 
 
                     var cameraPos = camera.getAttribute('position');
-                    var cameraRot = camera.object3D.getWorldDirection ();
+                    var cameraRot = camera.object3D.getWorldDirection();
 
                     var mult = (6.9 - cameraPos.z) / -cameraRot.z;
                     var line_rot = line_rot = {
@@ -558,14 +560,14 @@ function aframeInit(){
 
                         line.setAttribute('line', {
                             start: {
-                                x:line_rot.x,
-                                y:line_rot.y,
-                                z:line_rot.z
+                                x: line_rot.x,
+                                y: line_rot.y,
+                                z: line_rot.z
                             },
                             end: {
-                                x:line_rot.x,
-                                y:line_rot.y,
-                                z:line_rot.z
+                                x: line_rot.x,
+                                y: line_rot.y,
+                                z: line_rot.z
                             },
                             color: data.color
                         });
@@ -579,14 +581,14 @@ function aframeInit(){
                         var previous_line = previous_doodle.getDOMAttribute('line');
                         line.setAttribute('line', {
                                 start: {
-                                    x:previous_line.end.x,
-                                    y:previous_line.end.y,
-                                    z:previous_line.end.z
+                                    x: previous_line.end.x,
+                                    y: previous_line.end.y,
+                                    z: previous_line.end.z
                                 },
                                 end: {
-                                    x:line_rot.x,
-                                    y:line_rot.y,
-                                    z:line_rot.z
+                                    x: line_rot.x,
+                                    y: line_rot.y,
+                                    z: line_rot.z
                                 },
                                 color: data.color
                             }
@@ -738,18 +740,16 @@ function aframeInit(){
 /* Stream: Lifecycle Hooks */
 /*****************************************************************************/
 Template.Stream.onCreated(function () {
-    console.log(Session.get('groupId'))
+    console.log('Group ID of this VR room is: '+ Session.get('groupId'))
 });
 
 Template.Stream.onRendered(function () {
-    console.log(Session.get('groupId'))
     var courseCode = Router.current().params.code
     var title = Router.current().params.lecture
     var lecture = Lectures.findOne({$and: [{title: title}, {courseCode: courseCode}]})
     Session.set('lectureId', lecture._id)
     Session.set('recorder', false)
     Session.set('groupId', false)
-    console.log(Session.get('groupId'))
     var group = Groups.findOne({members: Meteor.userId(), active: true})
     if (group) Session.set('groupId', group._id)
 
@@ -779,37 +779,7 @@ Template.Stream.onRendered(function () {
 });
 
 Template.Stream.onDestroyed(function () {
-    Session.set('groupId', false)
     document.documentElement.style.overflow = "auto"
-    console.log(peerConnection)
-    console.log(peerConnection.getAllParticipants())
-    let moderatorShifted = false
-    if (peerConnection.getAllParticipants().length == 0) {
-        peerConnection.closeEntireSession(function () {
-            console.log("Entire session has been closed")
-        });
-        peerConnection.closeSocket()
-        console.log("Socket closed!")
-        peerConnection.attachStreams.forEach(function (localStream) {
-            localStream.stop();
-        });
-    }
-    else {
-        peerConnection.getAllParticipants().forEach(function (participantId) {
-            if (peerConnection.userid == peerConnection.sessionid && moderatorShifted == false) {
-                peerConnection.shiftModerationControl(participantId, peerConnection.broadcasters, false);
-                console.log(peerConnection.broadcasters)
-                console.log("Moderator requesting shift to " + participantId);
-                moderatorShifted = true;
-            }
-            peerConnection.disconnectWith(participantId);
-        });
-        peerConnection.attachStreams.forEach(function (localStream) {
-            localStream.stop();
-        });
-        peerConnection.close()
-    }
-    peerConnection = null
-    groupid = null;
 });
+
 
