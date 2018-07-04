@@ -749,7 +749,6 @@ Template.Stream.onRendered(function () {
     var lecture = Lectures.findOne({$and: [{title: title}, {courseCode: courseCode}]})
     Session.set('lectureId', lecture._id)
     Session.set('recorder', false)
-    Session.set('groupId', false)
     var group = Groups.findOne({members: Meteor.userId(), active: true})
     if (group) Session.set('groupId', group._id)
 
@@ -780,6 +779,7 @@ Template.Stream.onRendered(function () {
 
 Template.Stream.onDestroyed(function () {
     document.documentElement.style.overflow = "auto"
+    Session.set('groupId', false)
 });
 
 

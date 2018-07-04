@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
 </head>
 <template name="Stream">
+    <div class="stream">
     {{#with lecture}}
         {{#if groupMode lecture.mode}}
             <body>
@@ -299,4 +300,5 @@
             </div>
         </div>
     {{/with}}
+    </div>
 </template>
